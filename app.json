@@ -39,6 +39,9 @@
           "cameraPermission": "영양 성분 검색을 위해 카메라 권한이 필요합니다."
         }
       ]
-    ]
+    ],
+    "experiments": {
+      "tsconfigPaths": true
+    }
   }
 }
