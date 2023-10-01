@@ -1,17 +1,17 @@
-import { css } from "@emotion/native";
+import type { DimensionValue, FlexStyle } from "react-native";
 
-const style = (attribute: string) => (value: number) => css`
-  ${attribute}: ${value.toString()}px;
-`;
+const style =
+  (attribute: keyof FlexStyle) =>
+  (value: DimensionValue): FlexStyle => ({ [attribute]: value });
 
 const applyPrefix = (prefix: "padding" | "margin") =>
   Object.assign(style(prefix), {
-    top: style(`${prefix}-top`),
-    bottom: style(`${prefix}-bottom`),
-    left: style(`${prefix}-left`),
-    right: style(`${prefix}-right`),
-    vertical: style(`${prefix}-block`),
-    horizontal: style(`${prefix}-inline`),
+    top: style(`${prefix}Top`),
+    bottom: style(`${prefix}Bottom`),
+    left: style(`${prefix}Left`),
+    right: style(`${prefix}Right`),
+    vertical: style(`${prefix}Vertical`),
+    horizontal: style(`${prefix}Horizontal`),
   });
 
 /**
