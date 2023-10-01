@@ -1,7 +1,7 @@
 import { css } from "@emotion/native";
 
 const style = (attribute: string) => (value: number) => css`
-  ${attribute}: ${value}px;
+  ${attribute}: ${value.toString()}px;
 `;
 
 const applyPrefix = (prefix: "padding" | "margin") =>

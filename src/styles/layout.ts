@@ -55,5 +55,5 @@ export const align = {
  * gap(10) // Apply 10px gap
  */
 export const gap = (value: number) => css`
-  gap: ${value}px;
+  gap: ${value.toString()}px;
 `;

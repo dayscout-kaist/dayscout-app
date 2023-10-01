@@ -2,8 +2,8 @@ import { css } from "@emotion/native";
 import { mapColors } from "./color";
 
 const style = (size: number, weight: number) => css`
-  font-size: ${size}px;
-  font-weight: ${weight};
+  font-size: ${size.toString()}px;
+  font-weight: ${weight.toString()};
 `;
 
 /**
