@@ -16,4 +16,7 @@ export const round = {
   xl: css`
     border-radius: 15px;
   `,
+  full: css`
+    border-radius: 1000px;
+  `,
 } as const;
