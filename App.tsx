@@ -1,5 +1,10 @@
 import { RootStack } from "@/navigation/RootStack";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
-const App = () => <RootStack/>;
+const App = () => (
+  <SafeAreaProvider>
+    <RootStack/>
+  </SafeAreaProvider>
+);
 
 export default App;
