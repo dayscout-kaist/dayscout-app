@@ -1,52 +1,36 @@
-import { css } from "@emotion/native";
+import { FlexStyle } from "react-native";
 
-export const column = css`
-  display: flex;
-  flex-direction: column;
-`;
+export const column: FlexStyle = {
+  display: "flex",
+  flexDirection: "column",
+};
 
-export const row = css`
-  display: flex;
-  flex-direction: row;
-`;
+export const row: FlexStyle = {
+  display: "flex",
+  flexDirection: "row",
+};
 
-export const center = css`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+export const center: FlexStyle = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+};
 
-export const justify = {
-  start: css`
-    justify-content: flex-start;
-  `,
-  center: css`
-    justify-content: center;
-  `,
-  end: css`
-    justify-content: flex-end;
-  `,
-  between: css`
-    justify-content: space-between;
-  `,
-  around: css`
-    justify-content: space-around;
-  `,
+type Justify = "start" | "center" | "end" | "between" | "around";
+export const justify: Record<Justify, FlexStyle> = {
+  start: { justifyContent: "flex-start" },
+  center: { justifyContent: "center" },
+  end: { justifyContent: "flex-end" },
+  between: { justifyContent: "space-between" },
+  around: { justifyContent: "space-around" },
 } as const;
 
-export const align = {
-  start: css`
-    align-items: flex-start;
-  `,
-  center: css`
-    align-items: center;
-  `,
-  end: css`
-    align-items: flex-end;
-  `,
-  stretch: css`
-    align-items: stretch;
-  `,
+type Align = "start" | "center" | "end" | "stretch";
+export const align: Record<Align, FlexStyle> = {
+  start: { alignItems: "flex-start" },
+  center: { alignItems: "center" },
+  end: { alignItems: "flex-end" },
+  stretch: { alignItems: "stretch" },
 } as const;
 
 /**
@@ -54,6 +38,4 @@ export const align = {
  * @example
  * gap(10) // Apply 10px gap
  */
-export const gap = (value: number) => css`
-  gap: ${value.toString()}px;
-`;
+export const gap = (value: number): FlexStyle => ({ gap: value });
