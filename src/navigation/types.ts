@@ -5,11 +5,15 @@ import type {
 import type { StackScreenProps } from "@react-navigation/stack";
 import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 
+import type { FoodInfo } from "@/types/food";
+
 export type RootStackParamList = {
   HomeTab: NavigatorScreenParams<HomeTabParamList>;
   ImageSearch: undefined;
   TextSearch: undefined;
-  FoodInfo: undefined;
+  FoodInfo: {
+    foodInfo: FoodInfo;
+  };
   SelectIntake: undefined;
 }
 
