@@ -47,8 +47,9 @@ export const ImageSearch: React.FC<RootStackScreenProps<"ImageSearch">> = ({ nav
         }
       });
 
-    console.log(res);
-
+    navigation.navigate("FoodInfo", {
+      foodInfo: res.data,
+    });
   }, [cameraRef.current]);
 
   if (!permission?.granted) return (
