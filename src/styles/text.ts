@@ -1,10 +1,5 @@
-import { css } from "@emotion/native";
+import type { TextStyle } from "react-native";
 import { mapColors } from "./color";
-
-const style = (size: number, weight: number) => css`
-  font-size: ${size.toString()}px;
-  font-weight: ${weight.toString()};
-`;
 
 /**
  * Applies typography styles and text color
@@ -13,20 +8,17 @@ const style = (size: number, weight: number) => css`
  * text.gray300  // Apply gray300 text color
  */
 export const text = {
-  ...mapColors(
-    color => css`
-      color: ${color};
-    `,
-  ),
-  title1: style(15, 500),
-  title2: style(14, 500),
-  title3: style(13, 500),
-  subtitle: style(11, 500),
-  body: style(12, 500),
-  option1: style(10, 500),
-  option2: style(9, 500),
-  boldtitle1: style(14, 700),
-  boldtitle2: style(13, 700),
-  boldtitle3: style(12, 700),
-  boldtitle4: style(11, 700),
-} as const;
+  title1: { fontSize: 28, lineHeight: 34 },
+  title1Emph: { fontSize: 28, lineHeight: 34, fontWeight: "700" },
+  title2: { fontSize: 22, lineHeight: 28 },
+  title3: { fontSize: 20, lineHeight: 25 },
+  headline: { fontSize: 17, lineHeight: 22, fontWeight: "600" },
+  body: { fontSize: 17, lineHeight: 22 },
+  bodyEmph: { fontSize: 17, lineHeight: 22, fontWeight: "600" },
+  callout: { fontSize: 16, lineHeight: 21 },
+  subhead: { fontSize: 15, lineHeight: 20 },
+  footnote: { fontSize: 13, lineHeight: 18 },
+  caption1: { fontSize: 12, lineHeight: 16 },
+  caption2: { fontSize: 11, lineHeight: 13 },
+  ...mapColors((color) => ({ color })),
+} as const satisfies Record<string, TextStyle>;
