@@ -75,10 +75,6 @@ export const FoodInfo: React.FC<RootStackScreenProps<"FoodInfo">> = ({
     { name: "지방", val: data.fat },
   ];
 
-export const FoodInfo: React.FC<RootStackScreenProps<"FoodInfo">> = ({
-  route: { params },
-  navigation
-}) => {
   return (
     <View style={[bg.white, { flex: 1 }]}>
       <View
@@ -119,7 +115,7 @@ export const FoodInfo: React.FC<RootStackScreenProps<"FoodInfo">> = ({
       <MyButton
         title="다음"
         onPress={() => {
-          navigation.navigate("SelectIntake");
+          // navigation.navigate("SelectIntake");
         }}
       />
       <Text>{params.foodInfo.name}</Text>

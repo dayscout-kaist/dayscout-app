@@ -14,7 +14,9 @@ export type RootStackParamList = {
   FoodInfo: {
     foodInfo: FoodInfo;
   };
-  SelectIntake: undefined;
+  SelectIntake: {
+    foodInfo: FoodInfo;
+  };
 }
 
 export type RootStackScreenProps<T extends keyof RootStackParamList> =
