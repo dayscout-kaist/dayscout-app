@@ -16,10 +16,14 @@ export const RootStack: React.FC = () => (
         component={HomeTab}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="ImageSearch" component={ImageSearch} />
-      <Stack.Screen name="TextSearch" component={TextSearch} />
-      <Stack.Screen name="FoodInfo" component={FoodInfo} />
-      <Stack.Screen name="SelectIntake" component={SelectIntake} />
+      <Stack.Screen
+        name="ImageSearch"
+        component={ImageSearch}
+        options={{ title: "이미지로 입력", headerBackTitleVisible: false }}
+      />
+      <Stack.Screen name="TextSearch" component={TextSearch}/>
+      <Stack.Screen name="FoodInfo" component={FoodInfo}/>
+      <Stack.Screen name="SelectIntake" component={SelectIntake}/>
     </Stack.Navigator>
   </NavigationContainer>
 );
