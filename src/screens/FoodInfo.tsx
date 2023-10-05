@@ -118,6 +118,7 @@ export const FoodInfo: React.FC<RootStackScreenProps<"FoodInfo">> = ({
           // navigation.navigate("SelectIntake");
         }}
       />
+      <Text>{params.foodInfo.name}</Text>
     </View>
   );
 };

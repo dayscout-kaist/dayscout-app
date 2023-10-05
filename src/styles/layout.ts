@@ -16,22 +16,20 @@ export const center: FlexStyle = {
   alignItems: "center",
 };
 
-type Justify = "start" | "center" | "end" | "between" | "around";
-export const justify: Record<Justify, FlexStyle> = {
+export const justify = {
   start: { justifyContent: "flex-start" },
   center: { justifyContent: "center" },
   end: { justifyContent: "flex-end" },
   between: { justifyContent: "space-between" },
   around: { justifyContent: "space-around" },
-} as const;
+} as const satisfies Record<string, FlexStyle>;
 
-type Align = "start" | "center" | "end" | "stretch";
-export const align: Record<Align, FlexStyle> = {
+export const align = {
   start: { alignItems: "flex-start" },
   center: { alignItems: "center" },
   end: { alignItems: "flex-end" },
   stretch: { alignItems: "stretch" },
-} as const;
+} as const satisfies Record<string, FlexStyle>;
 
 /**
  * Applies flexbox with column direction

@@ -1,19 +1,5 @@
 import type { TextStyle } from "react-native";
-import { mapColors, type ColorKeys } from "./color";
-
-type Typography =
-  | "title1"
-  | "title1Emph"
-  | "title2"
-  | "title3"
-  | "headline"
-  | "body"
-  | "bodyEmph"
-  | "callout"
-  | "subhead"
-  | "footnote"
-  | "caption1"
-  | "caption2";
+import { mapColors } from "./color";
 
 /**
  * Applies typography styles and text color
@@ -21,7 +7,7 @@ type Typography =
  * text.title1   // Apply title1 typography
  * text.gray300  // Apply gray300 text color
  */
-export const text: Record<Typography | ColorKeys, TextStyle> = {
+export const text = {
   title1: { fontSize: 28, lineHeight: 34 },
   title1Emph: { fontSize: 28, lineHeight: 34, fontWeight: "700" },
   title2: { fontSize: 22, lineHeight: 28 },
@@ -35,4 +21,4 @@ export const text: Record<Typography | ColorKeys, TextStyle> = {
   caption1: { fontSize: 12, lineHeight: 16 },
   caption2: { fontSize: 11, lineHeight: 13 },
   ...mapColors((color) => ({ color })),
-} as const;
+} as const satisfies Record<string, TextStyle>;
