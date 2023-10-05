@@ -18,12 +18,6 @@ import {
   text,
 } from "@/styles";
 
-<<<<<<< HEAD
-export const FoodInfo: React.FC<RootStackScreenProps<"FoodInfo">> = ({
-  route: { params },
-  navigation
-}) => {
-=======
 interface NutritionFacts {
   id: number;
   name: string;
@@ -41,7 +35,6 @@ const MyButton: React.FC<{
   title: string;
   onPress: (event: GestureResponderEvent) => void;
 }> = ({ title, onPress }) => {
->>>>>>> edc933a (:sparkles: Impl nutrition facts page)
   return (
     <View style={{ padding: 16 }}>
       <TouchableOpacity
@@ -122,10 +115,9 @@ export const FoodInfo: React.FC<RootStackScreenProps<"FoodInfo">> = ({
       <MyButton
         title="다음"
         onPress={() => {
-          navigation.navigate("SelectIntake");
+          // navigation.navigate("SelectIntake");
         }}
       />
-      <Text>{params.foodInfo.name}</Text>
     </View>
   );
 };

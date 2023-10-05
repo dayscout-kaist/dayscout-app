@@ -1,23 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, GestureResponderEvent } from 'react-native';
 import { css } from '@emotion/native';
+import type { RootStackScreenProps } from "@/navigation/types";
 import { Picker } from '@react-native-picker/picker';
+import {
+  bg,
+  column,
+  gap,
+  justify,
+  margin,
+  padding,
+  round,
+  row,
+  text,
+} from "@/styles";
 
 interface FoodData {
   식품명: string;
   제조사명: string;
   단위중량: string;
   식품중량: string;
-  에너지_kcal: number;
-  단백질_g: number;
-  지방_g: number;
-  탄수화물_g: number;
-  당류_g: number;
+  단백질: number|null;
+  지방: number|null;
+  탄수화물: number|null;
+  당류: number|null;
 }
+
 
 type Props = {
   data?: FoodData;
 };
+
+export interface AbsoluteUnit {
+  type: "absolute";
+}
+
 
 const containerStyle = css`
   padding: 20px;
@@ -35,17 +52,32 @@ const infoContainerStyle = css`
   margin-top: 20px;
 `;
 
-export const SelectIntake: React.FC<Props> = ({ data = {
-  식품명: "국밥_돼지머리",
-  제조사명: "해당없음",
-  단위중량: "100g",
-  식품중량: "900g",
-  에너지_kcal: 137,
-  단백질_g: 6.7,
-  지방_g: 5.16,
-  탄수화물_g: 15.94,
-  당류_g: 0.16,
-} }) => {
+const MyButton: React.FC<{
+  title: string;
+  onPress: (event: GestureResponderEvent) => void;
+}> = ({ title, onPress }) => {
+  return (
+    <View style={{ padding: 16 }}>
+      <TouchableOpacity
+        style={[
+          round.lg,
+          padding.horizontal(16),
+          padding.vertical(11),
+          bg.primary,
+          { alignItems: "center" },
+        ]}
+        onPress={onPress}
+      >
+        <Text style={[text.body]}>{title}</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+export const FoodInfo: React.FC<RootStackScreenProps<"FoodInfo">> = ({
+  route: { params },
+  navigation,
+}) => {
   
   const [unit, setUnit] = useState('전체 중량');
   const [quantity, setQuantity] = useState<number | string>('');
@@ -53,19 +85,18 @@ export const SelectIntake: React.FC<Props> = ({ data = {
   const [unitWeight,setUnitWeight] = useState<number>(1);
 
   const calculateNutrition = (selectedUnit: string, selectedQuantity: number | string) => {
-    setUnitWeight(selectedUnit === '한 컵' ? 250 : selectedUnit === '한 공기' ? 300 : selectedUnit === '그램' ? 1 : selectedUnit === '한 스푼' ? 15 : Number(data.식품중량.replace('g', '')));
-    const factor = Number(selectedQuantity) * unitWeight / Number(data.단위중량.replace('g', ''));
+    setUnitWeight(selectedUnit === '컵' ? 250 : selectedUnit === '공기' ? 300 : selectedUnit === '그램' ? 1 : selectedUnit === '한 스푼' ? 15 : params.foodInfo.content.totalWeight);
+    const factor = Number(selectedQuantity) * unitWeight / 100;
 
     return {
-      식품명: data.식품명,
-      제조사명: data.제조사명,
-      단위중량: data.단위중량,
-      식품중량: data.식품중량,
-      에너지_kcal: data.에너지_kcal * factor,
-      단백질_g: data.단백질_g * factor,
-      지방_g: data.지방_g * factor,
-      탄수화물_g: data.탄수화물_g * factor,
-      당류_g: data.당류_g * factor,
+      식품명: params.foodInfo.name,
+      제조사명: params.foodInfo.manufacturer,
+      단위중량: `100${params.foodInfo.content.primaryUnit}`,
+      식품중량: `${params.foodInfo.content.totalWeight}${params.foodInfo.content.primaryUnit}`,
+      단백질: params.foodInfo.content.nutrients.protein ? params.foodInfo.content.nutrients.protein * factor : null,
+      지방: params.foodInfo.content.nutrients.fat ? params.foodInfo.content.nutrients.fat * factor : null,
+      탄수화물: params.foodInfo.content.nutrients.carbohydrate? params.foodInfo.content.nutrients.carbohydrate * factor : null,
+      당류: params.foodInfo.content.nutrients.sugar ? params.foodInfo.content.nutrients.sugar * factor : null,
     };
   };
 
@@ -94,7 +125,7 @@ export const SelectIntake: React.FC<Props> = ({ data = {
           style={inputStyle}
         /> :
         <Picker selectedValue={quantity} onValueChange={(itemValue: React.SetStateAction<string | number>) => setQuantity(itemValue)}>
-          {[1/4, 1/3, 1/2, ...Array.from({ length: (Math.floor(Number(data.식품중량.replace('g', '')) / unitWeight))}, (_, i) => i + 1)].map((opt, index) => (
+          {[1/4, 1/3, 1/2, ...Array.from({ length: (Math.floor(params.foodInfo.content.totalWeight / unitWeight))}, (_, i) => i + 1)].map((opt, index) => (
             <Picker.Item key={index} label={String(opt)} value={opt} />
           ))}
         </Picker>
@@ -106,11 +137,10 @@ export const SelectIntake: React.FC<Props> = ({ data = {
           <Text>제조사명: {nutritionInfo.제조사명}</Text>
           <Text>식품전체중량: {nutritionInfo.식품중량}</Text>
           <Text>입력한식품중량: {Number(quantity) * unitWeight}</Text>
-          <Text>에너지(kcal): {nutritionInfo.에너지_kcal.toFixed(2)}</Text>
-          <Text>단백질(g): {nutritionInfo.단백질_g.toFixed(2)}</Text>
-          <Text>지방(g): {nutritionInfo.지방_g.toFixed(2)}</Text>
-          <Text>탄수화물(g): {nutritionInfo.탄수화물_g.toFixed(2)}</Text>
-          <Text>당류(g): {nutritionInfo.당류_g.toFixed(2)}</Text>
+          <Text>단백질: {nutritionInfo.단백질? `${nutritionInfo.단백질.toFixed(2)}g` : "해당없음"}</Text>
+          <Text>지방: {nutritionInfo.지방? `${nutritionInfo.지방.toFixed(2)}g` : "해당없음"}</Text>
+          <Text>탄수화물: {nutritionInfo.탄수화물? `${nutritionInfo.탄수화물.toFixed(2)}g` : "해당없음"}</Text>
+          <Text>당류: {nutritionInfo.당류? `${nutritionInfo.당류.toFixed(2)}g` : "해당없음"}</Text>
         </View>
       )}
     </View>
