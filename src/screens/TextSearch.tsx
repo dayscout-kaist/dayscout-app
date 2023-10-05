@@ -2,7 +2,7 @@ import type { RootStackScreenProps } from "@/navigation/types";
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button } from 'react-native';
 import axios from 'axios';
-import { ListItem } from 'react-native-elements';
+// import { ListItem } from 'react-native-elements';
 
 export const TextSearch: React.FC<RootStackScreenProps<"TextSearch">> = ({ navigation }) => {
   // return (
@@ -46,7 +46,11 @@ export const TextSearch: React.FC<RootStackScreenProps<"TextSearch">> = ({ navig
                 onChangeText={setSearchText}
                 placeholder="Enter search text"
             />
-            <Button title="Search" onPress={handleSearch} />
+            <Button 
+                title="Search" 
+                // onPress={handleSearch} 
+                // onPress={() => {navigation.navigate("SelectIntake");}}
+            />
 
             {results.map((result, index) => {
                 const nameParts = result.productName.split('_');
@@ -54,14 +58,15 @@ export const TextSearch: React.FC<RootStackScreenProps<"TextSearch">> = ({ navig
                 const name = nameParts.slice(1).join('_');
 
                 return (
-                    <ListItem key={index} onPress={() => navigation.navigate("FoodInfo")}>
-                        <ListItem.Content>
-                            <ListItem.Title>{name}</ListItem.Title>
-                            <ListItem.Subtitle>{result.company}</ListItem.Subtitle>
-                            <ListItem.Subtitle>{represent}</ListItem.Subtitle>
-                            <ListItem.Subtitle>{result.totalWeight}</ListItem.Subtitle>
-                        </ListItem.Content>
-                    </ListItem>
+                    null
+                    // <ListItem key={index} onPress={() => navigation.navigate("FoodInfo")}>
+                    //     <ListItem.Content>
+                    //         <ListItem.Title>{name}</ListItem.Title>
+                    //         <ListItem.Subtitle>{result.company}</ListItem.Subtitle>
+                    //         <ListItem.Subtitle>{represent}</ListItem.Subtitle>
+                    //         <ListItem.Subtitle>{result.totalWeight}</ListItem.Subtitle>
+                    //     </ListItem.Content>
+                    // </ListItem>
                 );
             })}
         </View>

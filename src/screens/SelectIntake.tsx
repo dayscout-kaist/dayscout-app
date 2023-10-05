@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, GestureResponderEvent } from 'react-native';
 import { css } from '@emotion/native';
 import type { RootStackScreenProps } from "@/navigation/types";
-import { Picker } from '@react-native-picker/picker';
+// import { Picker } from '@react-native-picker/picker';
 import {
   bg,
   column,
@@ -74,7 +74,7 @@ const MyButton: React.FC<{
   );
 };
 
-export const FoodInfo: React.FC<RootStackScreenProps<"FoodInfo">> = ({
+export const SelectIntake: React.FC<RootStackScreenProps<"SelectIntake">> = ({
   route: { params },
   navigation,
 }) => {
@@ -108,13 +108,13 @@ export const FoodInfo: React.FC<RootStackScreenProps<"FoodInfo">> = ({
 
   return (
     <View style={containerStyle}>
-      <Picker selectedValue={unit} onValueChange={(itemValue: React.SetStateAction<string>) => setUnit(itemValue)}>
+      {/* <Picker selectedValue={unit} onValueChange={(itemValue: React.SetStateAction<string>) => setUnit(itemValue)}>
         <Picker.Item label="전체 중량" value="전체 중량" />
         <Picker.Item label="한 컵" value="한 컵" />
         <Picker.Item label="한 공기" value="한 공기" />
         <Picker.Item label="한 스푼" value="한 스푼" />
         <Picker.Item label="그램" value="그램" />
-      </Picker>
+      </Picker> */}
 
       {unit && (unit === '그램' || unit === '한 스푼') ?
         <TextInput
@@ -123,12 +123,12 @@ export const FoodInfo: React.FC<RootStackScreenProps<"FoodInfo">> = ({
           placeholder="입력해주세요"
           keyboardType="numeric"
           style={inputStyle}
-        /> :
-        <Picker selectedValue={quantity} onValueChange={(itemValue: React.SetStateAction<string | number>) => setQuantity(itemValue)}>
-          {[1/4, 1/3, 1/2, ...Array.from({ length: (Math.floor(params.foodInfo.content.totalWeight / unitWeight))}, (_, i) => i + 1)].map((opt, index) => (
-            <Picker.Item key={index} label={String(opt)} value={opt} />
-          ))}
-        </Picker>
+        /> : null
+        // <Picker selectedValue={quantity} onValueChange={(itemValue: React.SetStateAction<string | number>) => setQuantity(itemValue)}>
+        //   {[1/4, 1/3, 1/2, ...Array.from({ length: (Math.floor(params.foodInfo.content.totalWeight / unitWeight))}, (_, i) => i + 1)].map((opt, index) => (
+        //     <Picker.Item key={index} label={String(opt)} value={opt} />
+        //   ))}
+        // </Picker>
       }
 
       {nutritionInfo && (
