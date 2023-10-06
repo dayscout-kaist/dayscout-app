@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, GestureResponderEvent } from 'react-native';
 import { css } from '@emotion/native';
 import type { RootStackScreenProps } from "@/navigation/types";
-// import { Picker } from '@react-native-picker/picker';
+import { Picker } from '@react-native-picker/picker';
 import {
   bg,
   column,
@@ -31,25 +31,12 @@ type Props = {
   data?: FoodData;
 };
 
-export interface AbsoluteUnit {
-  type: "absolute";
-}
-
-
-const containerStyle = css`
-  padding: 20px;
-`;
-
 const inputStyle = css`
   height: 40px;
   border-color: gray;
   border-width: 1px;
   padding: 10px;
   margin-bottom: 20px;
-`;
-
-const infoContainerStyle = css`
-  margin-top: 20px;
 `;
 
 const MyButton: React.FC<{
@@ -81,11 +68,11 @@ export const SelectIntake: React.FC<RootStackScreenProps<"SelectIntake">> = ({
   
   const [unit, setUnit] = useState('전체 중량');
   const [quantity, setQuantity] = useState<number | string>('');
-  const [nutritionInfo, setNutritionInfo] = useState<FoodData | null>(null);
+  const [nutritionInfo, setNutritionInfo] = useState<FoodData>({식품명:"",제조사명:"",단위중량:"",식품중량:"",단백질:0,지방:0,탄수화물:0,당류:0});
   const [unitWeight,setUnitWeight] = useState<number>(1);
 
   const calculateNutrition = (selectedUnit: string, selectedQuantity: number | string) => {
-    setUnitWeight(selectedUnit === '컵' ? 250 : selectedUnit === '공기' ? 300 : selectedUnit === '그램' ? 1 : selectedUnit === '한 스푼' ? 15 : params.foodInfo.content.totalWeight);
+    setUnitWeight(selectedUnit === '컵' ? 250 : selectedUnit === '공기' ? 300 : selectedUnit === '그램' ? 1 : selectedUnit === '스푼' ? 15 : params.foodInfo.content.totalWeight);
     const factor = Number(selectedQuantity) * unitWeight / 100;
 
     return {
@@ -106,43 +93,90 @@ export const SelectIntake: React.FC<RootStackScreenProps<"SelectIntake">> = ({
     }
   }, [unit, quantity]);
 
+  const essentialNutrients = [
+    { name: "단백질", val: nutritionInfo.단백질? `${nutritionInfo.단백질.toFixed(2)}g` : "해당없음" },
+    { name: "지방", val: nutritionInfo.지방? `${nutritionInfo.지방.toFixed(2)}g` : "해당없음" },
+    { name: "탄수화물", val: nutritionInfo.탄수화물? `${nutritionInfo.탄수화물.toFixed(2)}g` : "해당없음" },
+    { name: "당류", val: nutritionInfo.당류? `${nutritionInfo.당류.toFixed(2)}g` : "해당없음" },
+    // { name: "에너지", val: data.fat },
+  ];
+
   return (
-    <View style={containerStyle}>
-      {/* <Picker selectedValue={unit} onValueChange={(itemValue: React.SetStateAction<string>) => setUnit(itemValue)}>
-        <Picker.Item label="전체 중량" value="전체 중량" />
-        <Picker.Item label="한 컵" value="한 컵" />
-        <Picker.Item label="한 공기" value="한 공기" />
-        <Picker.Item label="한 스푼" value="한 스푼" />
-        <Picker.Item label="그램" value="그램" />
-      </Picker> */}
+    <View  style={[bg.white, { flex: 1 }]}>
+      <View
+        style={[
+          column,
+          gap(4),
+          padding.top(20),
+          padding.horizontal(16),
+          padding.bottom(24),
+        ]}
+      >
+        <Text style={[text.subhead, text.gray6D]}>{nutritionInfo.제조사명}</Text>
+        <Text style={[text.title1Emph]}>{nutritionInfo.식품명}</Text>
+      </View>
 
-      {unit && (unit === '그램' || unit === '한 스푼') ?
-        <TextInput
-          value={String(quantity)}
-          onChangeText={(text) => setQuantity(Number(text))}
-          placeholder="입력해주세요"
-          keyboardType="numeric"
-          style={inputStyle}
-        /> : null
-        // <Picker selectedValue={quantity} onValueChange={(itemValue: React.SetStateAction<string | number>) => setQuantity(itemValue)}>
-        //   {[1/4, 1/3, 1/2, ...Array.from({ length: (Math.floor(params.foodInfo.content.totalWeight / unitWeight))}, (_, i) => i + 1)].map((opt, index) => (
-        //     <Picker.Item key={index} label={String(opt)} value={opt} />
-        //   ))}
-        // </Picker>
-      }
+      <Text style={[padding.horizontal(16), text.body]}>
+        총 내용량 {nutritionInfo.식품중량}
+      </Text>
+      <Text style={[padding.horizontal(16), text.body]}>
+        내가 선택한 내용량 {(Number(quantity) * unitWeight).toFixed(2)}{params.foodInfo.content.primaryUnit}
+      </Text>
 
-      {nutritionInfo && (
-        <View style={infoContainerStyle}>
-          <Text>식품명: {nutritionInfo.식품명}</Text>
-          <Text>제조사명: {nutritionInfo.제조사명}</Text>
-          <Text>식품전체중량: {nutritionInfo.식품중량}</Text>
-          <Text>입력한식품중량: {Number(quantity) * unitWeight}</Text>
-          <Text>단백질: {nutritionInfo.단백질? `${nutritionInfo.단백질.toFixed(2)}g` : "해당없음"}</Text>
-          <Text>지방: {nutritionInfo.지방? `${nutritionInfo.지방.toFixed(2)}g` : "해당없음"}</Text>
-          <Text>탄수화물: {nutritionInfo.탄수화물? `${nutritionInfo.탄수화물.toFixed(2)}g` : "해당없음"}</Text>
-          <Text>당류: {nutritionInfo.당류? `${nutritionInfo.당류.toFixed(2)}g` : "해당없음"}</Text>
-        </View>
-      )}
+      <View style={{ flexDirection: 'row' }}>
+        <Picker 
+          style={{ flex: 0.5 }}
+          selectedValue={unit} 
+          onValueChange={(itemValue: React.SetStateAction<string>) => setUnit(itemValue)}
+        >
+          <Picker.Item label="전체 중량" value="전체 중량" />
+          <Picker.Item label="컵" value="컵" />
+          <Picker.Item label="공기" value="공기" />
+          <Picker.Item label="스푼" value="스푼" />
+          <Picker.Item label="그램" value="그램" />
+        </Picker>
+
+        {unit && (unit === '그램' || unit === '스푼') ?
+          <TextInput
+            style={{ flex: 0.5 }}
+            value={String(quantity)}
+            onChangeText={(text) => setQuantity(Number(text))}
+            placeholder="입력해주세요"
+            keyboardType="numeric"
+            // style={inputStyle}
+          /> : 
+          <Picker style={{ flex: 0.5 }} selectedValue={quantity} onValueChange={(itemValue: React.SetStateAction<string | number>) => setQuantity(itemValue)}>
+            {[1/4, 1/3, 1/2, ...Array.from({ length: (Math.floor(params.foodInfo.content.totalWeight / unitWeight))}, (_, i) => i + 1)].map((opt, index) => (
+              <Picker.Item key={index} label={String(opt)} value={opt} />
+            ))}
+          </Picker>
+        }
+      </View>
+
+      <View style={[margin(16), round.lg, bg.grayF2]}>
+        {essentialNutrients.map((el) => (
+          <View
+            key={el.name}
+            style={[
+              row,
+              justify.between,
+              padding.horizontal(16),
+              padding.vertical(11),
+            ]}
+          >
+            <Text style={text.body}>{el.name}</Text>
+            <Text style={[text.body, { textAlign: "right" }]}>
+              {el.val}
+            </Text>
+          </View>
+        ))}
+      </View>
+      <MyButton
+        title="저장"
+        onPress={() => {
+          // navigation.navigate("SelectIntake",{foodInfo: params.foodInfo});
+        }}
+      />
     </View>
   );
 };

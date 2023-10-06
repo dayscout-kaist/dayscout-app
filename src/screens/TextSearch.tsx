@@ -2,6 +2,7 @@ import type { RootStackScreenProps } from "@/navigation/types";
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button } from 'react-native';
 import axios from 'axios';
+import { FoodInfo } from "@/types/food";
 // import { ListItem } from 'react-native-elements';
 
 export const TextSearch: React.FC<RootStackScreenProps<"TextSearch">> = ({ navigation }) => {
@@ -39,6 +40,25 @@ export const TextSearch: React.FC<RootStackScreenProps<"TextSearch">> = ({ navig
         }
     };
 
+    const sampleFoodInfo: FoodInfo = {
+        name: "Sample Food",
+        category: "Sample Category",
+        manufacturer: "Sample Manufacturer",
+        content: {
+            totalWeight: 400,
+            unit: {
+                type: "absolute"
+            }, // 가정: Unit 타입이 "g" 또는 "ml" 중 하나라고 가정합니다.
+            primaryUnit: "g",
+            nutrients: {
+                carbohydrate: 30,
+                protein: 10,
+                fat: 5,
+                sugar: 10
+            }
+        }
+    };
+    
     return (
         <View>
             <TextInput
@@ -49,7 +69,7 @@ export const TextSearch: React.FC<RootStackScreenProps<"TextSearch">> = ({ navig
             <Button 
                 title="Search" 
                 // onPress={handleSearch} 
-                // onPress={() => {navigation.navigate("SelectIntake");}}
+                onPress={() => {navigation.navigate("FoodInfo", {foodInfo: sampleFoodInfo});}}
             />
 
             {results.map((result, index) => {
