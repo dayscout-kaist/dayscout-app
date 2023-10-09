@@ -18,8 +18,9 @@ import {
 interface FoodData {
   식품명: string;
   제조사명: string;
-  단위중량: string;
+  단위중량: number;
   식품중량: string;
+  선택중량: string;
   단백질: number|null;
   지방: number|null;
   탄수화물: number|null;
@@ -67,19 +68,24 @@ export const SelectIntake: React.FC<RootStackScreenProps<"SelectIntake">> = ({
 }) => {
   
   const [unit, setUnit] = useState('전체 중량');
-  const [quantity, setQuantity] = useState<number | string>('');
-  const [nutritionInfo, setNutritionInfo] = useState<FoodData>({식품명:"",제조사명:"",단위중량:"",식품중량:"",단백질:0,지방:0,탄수화물:0,당류:0});
-  const [unitWeight,setUnitWeight] = useState<number>(1);
+  const [quantity, setQuantity] = useState<number | string>(1);
+  const [nutritionInfo, setNutritionInfo] = useState<FoodData>({식품명:"",제조사명:"",단위중량:1,식품중량:"",선택중량:"",단백질:0,지방:0,탄수화물:0,당류:0});
+  // const [unitWeight,setUnitWeight] = useState<number>(1);
 
-  const calculateNutrition = (selectedUnit: string, selectedQuantity: number | string) => {
-    setUnitWeight(selectedUnit === '컵' ? 250 : selectedUnit === '공기' ? 300 : selectedUnit === '그램' ? 1 : selectedUnit === '스푼' ? 15 : params.foodInfo.content.totalWeight);
-    const factor = Number(selectedQuantity) * unitWeight / 100;
+  const calculateNutrition = () => {
+    const currentUnitWeight = unit === '컵' ? 200 
+      : unit === '공기' ? 250 
+      : unit === '그램' ? 1 
+      : unit === '스푼' ? 15 
+      : params.foodInfo.content.totalWeight;
+    const factor = Number(quantity) * currentUnitWeight / 100; 
 
     return {
       식품명: params.foodInfo.name,
       제조사명: params.foodInfo.manufacturer,
-      단위중량: `100${params.foodInfo.content.primaryUnit}`,
+      단위중량: currentUnitWeight, //TODO: Unit Type에 따라 수정필요
       식품중량: `${params.foodInfo.content.totalWeight}${params.foodInfo.content.primaryUnit}`,
+      선택중량: `${(Number(quantity) * currentUnitWeight).toFixed(2)}${params.foodInfo.content.primaryUnit}`,
       단백질: params.foodInfo.content.nutrients.protein ? params.foodInfo.content.nutrients.protein * factor : null,
       지방: params.foodInfo.content.nutrients.fat ? params.foodInfo.content.nutrients.fat * factor : null,
       탄수화물: params.foodInfo.content.nutrients.carbohydrate? params.foodInfo.content.nutrients.carbohydrate * factor : null,
@@ -89,9 +95,13 @@ export const SelectIntake: React.FC<RootStackScreenProps<"SelectIntake">> = ({
 
   useEffect(() => {
     if (unit && quantity) {
-      setNutritionInfo(calculateNutrition(unit, quantity));
+      setNutritionInfo(calculateNutrition());
     }
   }, [unit, quantity]);
+
+  useEffect(() => {
+    setNutritionInfo(calculateNutrition()); 
+  }, [])
 
   const essentialNutrients = [
     { name: "단백질", val: nutritionInfo.단백질? `${nutritionInfo.단백질.toFixed(2)}g` : "해당없음" },
@@ -120,38 +130,49 @@ export const SelectIntake: React.FC<RootStackScreenProps<"SelectIntake">> = ({
         총 내용량 {nutritionInfo.식품중량}
       </Text>
       <Text style={[padding.horizontal(16), text.body]}>
-        내가 선택한 내용량 {(Number(quantity) * unitWeight).toFixed(2)}{params.foodInfo.content.primaryUnit}
+        내가 선택한 내용량 {nutritionInfo.선택중량}
       </Text>
 
       <View style={{ flexDirection: 'row' }}>
+        {unit && (unit === '그램' || unit === '스푼') ?
+          <TextInput
+            style={[
+                { flex: 0.5, borderColor: 'gray', borderWidth: 1, borderRadius: 5, height: 40, marginVertical: 87.5, marginHorizontal:0 },
+            ]}
+            value={String(quantity || 0)} // 값이 없으면 "0"으로 설정
+            onChangeText={(text) => setQuantity(text ? Number(text) : 0)}
+            placeholder="입력해주세요"
+            keyboardType="numeric"
+            returnKeyType="done"
+            textAlign='center'
+          /> : 
+          <Picker style={{ flex: 0.5 }} selectedValue={quantity} onValueChange={(itemValue: React.SetStateAction<string | number>) => setQuantity(itemValue)}>
+            {[
+              { label: '1/4', value: 1/4 },
+              { label: '1/3', value: 1/3 },
+              { label: '1/2', value: 1/2 },
+              ...Array.from({ length: Math.floor(params.foodInfo.content.totalWeight / nutritionInfo.단위중량 * 3) }, (_, i) => ({ label: String(i + 1), value: i + 1 }))
+            ].map((opt, index) => (
+        <Picker.Item key={index} label={opt.label} value={opt.value} />
+    ))}
+          </Picker>
+        }
         <Picker 
           style={{ flex: 0.5 }}
           selectedValue={unit} 
           onValueChange={(itemValue: React.SetStateAction<string>) => setUnit(itemValue)}
         >
-          <Picker.Item label="전체 중량" value="전체 중량" />
+          <Picker.Item label="그램" value="그램" />
+          <Picker.Item label="스푼" value="스푼" />
           <Picker.Item label="컵" value="컵" />
           <Picker.Item label="공기" value="공기" />
-          <Picker.Item label="스푼" value="스푼" />
-          <Picker.Item label="그램" value="그램" />
+          <Picker.Item label="전체 중량" value="전체 중량" />
         </Picker>
-
-        {unit && (unit === '그램' || unit === '스푼') ?
-          <TextInput
-            style={{ flex: 0.5 }}
-            value={String(quantity)}
-            onChangeText={(text) => setQuantity(Number(text))}
-            placeholder="입력해주세요"
-            keyboardType="numeric"
-            // style={inputStyle}
-          /> : 
-          <Picker style={{ flex: 0.5 }} selectedValue={quantity} onValueChange={(itemValue: React.SetStateAction<string | number>) => setQuantity(itemValue)}>
-            {[1/4, 1/3, 1/2, ...Array.from({ length: (Math.floor(params.foodInfo.content.totalWeight / unitWeight))}, (_, i) => i + 1)].map((opt, index) => (
-              <Picker.Item key={index} label={String(opt)} value={opt} />
-            ))}
-          </Picker>
-        }
       </View>
+
+      <Text style={[padding.horizontal(16), text.body]}>
+        {(unit === "컵" || unit === "공기" || unit === "스푼") ? "주의: 음식 종류에 따라 g이 다를 수 있습니다" : ""}
+      </Text>
 
       <View style={[margin(16), round.lg, bg.grayF2]}>
         {essentialNutrients.map((el) => (
