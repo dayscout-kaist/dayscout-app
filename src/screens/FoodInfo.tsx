@@ -1,124 +1,96 @@
 import React from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  type GestureResponderEvent,
-} from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import type { RootStackScreenProps } from "@/navigation/types";
 import {
+  align,
   bg,
+  colors,
   column,
+  fill,
   gap,
   justify,
   margin,
   padding,
-  round,
   row,
+  safe,
   text,
 } from "@/styles";
-
-interface NutritionFacts {
-  id: number;
-  name: string;
-  unit: string;
-  total_size: number;
-  serving_size: number;
-  calories: number;
-  fat: number;
-  carbohydrate: number;
-  protein: number;
-  source: string;
-}
-
-const MyButton: React.FC<{
-  title: string;
-  onPress: (event: GestureResponderEvent) => void;
-}> = ({ title, onPress }) => {
-  return (
-    <View style={{ padding: 16 }}>
-      <TouchableOpacity
-        style={[
-          round.lg,
-          padding.horizontal(16),
-          padding.vertical(11),
-          bg.primary,
-          { alignItems: "center" },
-        ]}
-        onPress={onPress}
-      >
-        <Text style={[text.body]}>{title}</Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
+import {
+  BottomButton,
+  NumberInput,
+  NumberInputWithUnit,
+  ToggleButton,
+} from "@/components";
 
 export const FoodInfo: React.FC<RootStackScreenProps<"FoodInfo">> = ({
   navigation,
+  route: {
+    params: { foodInfo },
+  },
 }) => {
-  const data: NutritionFacts = {
-    id: 1,
-    name: "데자와",
-    unit: "g",
-    total_size: 240,
-    serving_size: 240,
-    calories: 95,
-    fat: 1.9,
-    carbohydrate: 18,
-    protein: 2,
-    source: "식품영양성분 DB",
-  };
-
-  const essentialNutrients = [
-    { name: "탄수화물", val: data.carbohydrate },
-    { name: "단백질", val: data.protein },
-    { name: "지방", val: data.fat },
-  ];
-
   return (
-    <View style={[bg.white, { flex: 1 }]}>
+    <View style={[bg.white, padding.horizontal(safe.horizontal), { flex: 1 }]}>
+      <View style={[column, gap(4), padding.top(20), padding.bottom(24)]}>
+        <Text style={[text.subhead, text.gray6D]}>{foodInfo.manufacturer}</Text>
+        <Text style={[text.title1Emph]}>{foodInfo.name}</Text>
+      </View>
+      <View style={[row, justify.between, align.center]}>
+        <Text style={[text.body]}>총 내용량</Text>
+        <View style={[row, gap(10)]}>
+          <NumberInput
+            placeholder="0"
+            initVal={foodInfo.content.totalWeight}
+            style={{ width: 120 }}
+          />
+          <ToggleButton
+            key1="g"
+            key2="ml"
+            initVal={foodInfo.content.primaryUnit}
+          />
+        </View>
+      </View>
       <View
         style={[
-          column,
-          gap(4),
-          padding.top(20),
-          padding.horizontal(16),
-          padding.bottom(24),
+          margin.vertical(16),
+          {
+            borderBottomColor: colors.gray97,
+            borderBottomWidth: StyleSheet.hairlineWidth,
+          },
         ]}
-      >
-        <Text style={[text.subhead, text.gray6D]}>{data.source}</Text>
-        <Text style={[text.title1Emph]}>{data.name}</Text>
+      />
+      <View style={[row, gap(16)]}>
+        <View style={[fill, column, gap(4)]}>
+          <Text style={[padding.left(5), text.body]}>탄수화물</Text>
+          <NumberInputWithUnit
+            unit="g"
+            placeholder="0"
+            initVal={foodInfo.content.nutrients.carbohydrate}
+          />
+        </View>
+        <View style={[fill, column, gap(4)]}>
+          <Text style={[padding.left(5), text.body]}>단백질</Text>
+          <NumberInputWithUnit
+            unit="g"
+            placeholder="0"
+            initVal={foodInfo.content.nutrients.protein}
+          />
+        </View>
+        <View style={[fill, column, gap(4)]}>
+          <Text style={[padding.left(5), text.body]}>지방</Text>
+          <NumberInputWithUnit
+            unit="g"
+            placeholder="0"
+            initVal={foodInfo.content.nutrients.fat}
+          />
+        </View>
       </View>
-      <Text style={[padding.horizontal(16), text.body]}>
-        총 내용량 {data.total_size}
-        {data.unit}
-      </Text>
-      <View style={[margin(16), round.lg, bg.grayF2]}>
-        {essentialNutrients.map((el) => (
-          <View
-            key={el.name}
-            style={[
-              row,
-              justify.between,
-              padding.horizontal(16),
-              padding.vertical(11),
-            ]}
-          >
-            <Text style={text.body}>{el.name}</Text>
-            <Text style={[text.body, { textAlign: "right" }]}>
-              {el.val}
-              {data.unit}
-            </Text>
-          </View>
-        ))}
-      </View>
-      <MyButton
+      <BottomButton
         title="다음"
         onPress={() => {
-          // navigation.navigate("SelectIntake");
+          // TODO: Send modified informations to the next page
+          navigation.navigate("SelectIntake", { foodInfo: foodInfo });
         }}
       />
-      <Text>{params.foodInfo.name}</Text>
     </View>
   );
 };
