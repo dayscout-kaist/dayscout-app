@@ -13,6 +13,8 @@ export interface FoodContent {
   };
 }
 
+export type FoodContentOptional = Partial<FoodContent>;
+
 export interface FoodInfo {
   name: string;
   category: string;
@@ -20,4 +22,3 @@ export interface FoodInfo {
   content: FoodContent;
 }
 
-export type Res = FoodInfo[];
