@@ -54,6 +54,7 @@ const MyButton: React.FC<{
 };
 
 export const FoodInfo: React.FC<RootStackScreenProps<"FoodInfo">> = ({
+  route: { params },
   navigation,
 }) => {
   const data: NutritionFacts = {
@@ -115,10 +116,10 @@ export const FoodInfo: React.FC<RootStackScreenProps<"FoodInfo">> = ({
       <MyButton
         title="다음"
         onPress={() => {
-          // navigation.navigate("SelectIntake");
+          navigation.navigate("SelectIntake",{foodInfo: params.foodInfo});
         }}
       />
-      <Text>{params.foodInfo.name}</Text>
+      {/* <Text>{params.foodInfo.name}</Text> */}
     </View>
   );
 };
