@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import type { RootStackScreenProps } from "@/navigation/types";
+import {
+  BottomButton,
+  NumberInput,
+  NumberInputWithUnit,
+  ToggleButton,
+} from "@/components";
 import {
   align,
   bg,
@@ -15,12 +21,6 @@ import {
   safe,
   text,
 } from "@/styles";
-import {
-  BottomButton,
-  NumberInput,
-  NumberInputWithUnit,
-  ToggleButton,
-} from "@/components";
 
 export const FoodInfo: React.FC<RootStackScreenProps<"FoodInfo">> = ({
   navigation,
@@ -28,6 +28,19 @@ export const FoodInfo: React.FC<RootStackScreenProps<"FoodInfo">> = ({
     params: { foodInfo },
   },
 }) => {
+  const [totalWeight, setTotalWeight] = useState<number>(
+    foodInfo.content.totalWeight
+  );
+  const [carbohydrate, setCarbohydrate] = useState<number | undefined>(
+    foodInfo.content.nutrients.carbohydrate
+  );
+  const [protein, setProtein] = useState<number | undefined>(
+    foodInfo.content.nutrients.protein
+  );
+  const [fat, setFat] = useState<number | undefined>(
+    foodInfo.content.nutrients.fat
+  );
+
   return (
     <View style={[bg.white, padding.horizontal(safe.horizontal), { flex: 1 }]}>
       <View style={[column, gap(4), padding.top(20), padding.bottom(24)]}>
@@ -38,8 +51,9 @@ export const FoodInfo: React.FC<RootStackScreenProps<"FoodInfo">> = ({
         <Text style={[text.body]}>총 내용량</Text>
         <View style={[row, gap(10)]}>
           <NumberInput
+            value={totalWeight}
+            setValue={setTotalWeight}
             placeholder="0"
-            initVal={foodInfo.content.totalWeight}
             style={{ width: 120 }}
           />
           <ToggleButton
@@ -62,33 +76,49 @@ export const FoodInfo: React.FC<RootStackScreenProps<"FoodInfo">> = ({
         <View style={[fill, column, gap(4)]}>
           <Text style={[padding.left(5), text.body]}>탄수화물</Text>
           <NumberInputWithUnit
+            value={carbohydrate}
+            setValue={setCarbohydrate}
             unit="g"
             placeholder="0"
-            initVal={foodInfo.content.nutrients.carbohydrate}
           />
         </View>
         <View style={[fill, column, gap(4)]}>
           <Text style={[padding.left(5), text.body]}>단백질</Text>
           <NumberInputWithUnit
+            value={protein}
+            setValue={setProtein}
             unit="g"
             placeholder="0"
-            initVal={foodInfo.content.nutrients.protein}
           />
         </View>
         <View style={[fill, column, gap(4)]}>
           <Text style={[padding.left(5), text.body]}>지방</Text>
           <NumberInputWithUnit
+            value={fat}
+            setValue={setFat}
             unit="g"
             placeholder="0"
-            initVal={foodInfo.content.nutrients.fat}
           />
         </View>
       </View>
       <BottomButton
         title="다음"
         onPress={() => {
-          // TODO: Send modified informations to the next page
-          navigation.navigate("SelectIntake", { foodInfo: foodInfo });
+          navigation.navigate("SelectIntake", {
+            foodInfo: {
+              ...foodInfo,
+              content: {
+                ...foodInfo.content,
+                totalWeight,
+                nutrients: {
+                  ...foodInfo.content.nutrients,
+                  carbohydrate,
+                  protein,
+                  fat,
+                },
+              },
+            },
+          });
         }}
       />
     </View>
