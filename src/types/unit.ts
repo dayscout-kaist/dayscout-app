@@ -10,7 +10,6 @@ export interface AbsoluteUnit {
  */
 export interface TotalUnit {
   type: "total";
-  totalWeight: number;
 }
 
 /**

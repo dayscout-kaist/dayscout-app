@@ -19,11 +19,23 @@ export const RootStack: React.FC = () => (
       <Stack.Screen
         name="ImageSearch"
         component={ImageSearch}
-        options={{ title: "이미지로 입력", headerBackTitleVisible: false }}
+        options={{ title: "이미지로 검색", headerBackTitleVisible: false }}
       />
-      <Stack.Screen name="TextSearch" component={TextSearch}/>
-      <Stack.Screen name="FoodInfo" component={FoodInfo}/>
-      <Stack.Screen name="SelectIntake" component={SelectIntake}/>
+      <Stack.Screen
+        name="TextSearch"
+        component={TextSearch}
+        options={{ title: "텍스트로 검색", headerBackTitleVisible: false }}
+      />
+      <Stack.Screen
+        name="FoodInfo"
+        component={FoodInfo}
+        options={{ title: "음식 영양정보", headerBackTitleVisible: false }}
+      />
+      <Stack.Screen
+        name="SelectIntake"
+        component={SelectIntake}
+        options={{ title: "섭취량 입력", headerBackTitleVisible: false }}
+      />
     </Stack.Navigator>
   </NavigationContainer>
 );

@@ -1,7 +1,6 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Button, Text, TouchableOpacity, View } from "react-native";
 import { css } from "@emotion/native";
-import axios from "axios";
 import { Camera } from "expo-camera";
 
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -15,12 +14,15 @@ import {
   w,
   h,
   round,
-  text
+  text,
 } from "@/styles";
+import { searchByBarcode, searchByImage } from "@/api";
+import { BarCodeScanner } from "expo-barcode-scanner";
 
 export const ImageSearch: React.FC<RootStackScreenProps<"ImageSearch">> = ({ navigation }) => {
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const insets = useSafeAreaInsets();
+  const [loading, setLoading] = useState(false);
 
   const cameraRef = useRef<Camera>(null);
 
@@ -29,33 +31,40 @@ export const ImageSearch: React.FC<RootStackScreenProps<"ImageSearch">> = ({ nav
   }, [requestPermission]);
 
   const captureImage = useCallback(async () => {
-    if (!cameraRef.current) return;
+    if (loading || !cameraRef.current) return;
 
-    cameraRef.current.pausePreview();
+    setLoading(true);
     const picture = await cameraRef.current.takePictureAsync();
-    const formData = new FormData();
-    formData.append("file", {
-      uri: picture.uri,
-      name: "image.jpg",
-      type: "image/jpeg"
-    } as any);
 
-    const res = await axios.post(
-      "http://172.30.1.34:8000/nutrition-facts-image", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        }
+    try {
+      const foodContent = await searchByImage(picture.uri);
+
+      navigation.navigate("FoodInfo", {
+        content: foodContent,
       });
+    } catch (error) {
+      alert(error);
+    }
+  }, [cameraRef.current, loading, setLoading]);
 
-    navigation.navigate("FoodInfo", {
-      foodInfo: res.data,
-    });
-  }, [cameraRef.current]);
+  const handleBarCodeScanned = useCallback((code: number) => {
+    if (loading) return;
+
+    setLoading(true);
+    searchByBarcode(code).then(food =>
+      navigation.navigate("TextSearch", { query: food.name }),
+    );
+
+  }, [navigation, loading, setLoading]);
+
+  useEffect(() => {
+    if (loading) cameraRef.current?.pausePreview();
+  }, [loading, cameraRef.current]);
 
   if (!permission?.granted) return (
     <View style={stretch}>
       <Text>Permission not granted</Text>
-      <Button title="Request permission" onPress={() => requestPermission()}/>
+      <Button title="Request permission" onPress={() => requestPermission()} />
     </View>
   );
 
@@ -64,6 +73,13 @@ export const ImageSearch: React.FC<RootStackScreenProps<"ImageSearch">> = ({ nav
       <Camera
         ref={cameraRef}
         style={stretch}
+        barCodeScannerSettings={{
+          barCodeTypes: [
+            BarCodeScanner.Constants.BarCodeType.ean8,
+            BarCodeScanner.Constants.BarCodeType.ean13,
+          ],
+        }}
+        onBarCodeScanned={e => handleBarCodeScanned(parseInt(e.data))}
       />
 
 

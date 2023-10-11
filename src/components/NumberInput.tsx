@@ -14,6 +14,7 @@ export const NumberInput: React.FC<{
     placeholder={placeholder}
     keyboardType="numeric"
     style={[round.lg, padding(12), bg.grayF2, text.body, style]}
+    returnKeyType="done"
     placeholderTextColor={colors.gray97}
   />
 );

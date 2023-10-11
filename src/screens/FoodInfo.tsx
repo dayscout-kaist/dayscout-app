@@ -23,30 +23,29 @@ import {
 } from "@/styles";
 
 export const FoodInfo: React.FC<RootStackScreenProps<"FoodInfo">> = ({
-  route: { params },
   navigation,
   route: {
-    params: { foodInfo },
+    params: { name, category, manufacturer, content },
   },
 }) => {
   const [totalWeight, setTotalWeight] = useState<number>(
-    foodInfo.content.totalWeight
+    content.totalWeight || 0,
   );
   const [carbohydrate, setCarbohydrate] = useState<number | undefined>(
-    foodInfo.content.nutrients.carbohydrate
+    content.nutrients.carbohydrate,
   );
   const [protein, setProtein] = useState<number | undefined>(
-    foodInfo.content.nutrients.protein
+    content.nutrients.protein,
   );
   const [fat, setFat] = useState<number | undefined>(
-    foodInfo.content.nutrients.fat
+    content.nutrients.fat,
   );
 
   return (
     <View style={[bg.white, padding.horizontal(safe.horizontal), { flex: 1 }]}>
       <View style={[column, gap(4), padding.top(20), padding.bottom(24)]}>
-        <Text style={[text.subhead, text.gray6D]}>{foodInfo.manufacturer}</Text>
-        <Text style={[text.title1Emph]}>{foodInfo.name}</Text>
+        <Text style={[text.subhead, text.gray6D]}>{manufacturer}</Text>
+        <Text style={[text.title1Emph]}>{name}</Text>
       </View>
       <View style={[row, justify.between, align.center]}>
         <Text style={[text.body]}>총 내용량</Text>
@@ -60,7 +59,7 @@ export const FoodInfo: React.FC<RootStackScreenProps<"FoodInfo">> = ({
           <ToggleButton
             key1="g"
             key2="ml"
-            initVal={foodInfo.content.primaryUnit}
+            initVal={content.primaryUnit}
           />
         </View>
       </View>
@@ -107,12 +106,15 @@ export const FoodInfo: React.FC<RootStackScreenProps<"FoodInfo">> = ({
         onPress={() => {
           navigation.navigate("SelectIntake", {
             foodInfo: {
-              ...foodInfo,
+              name: name || "",
+              category: category || "",
+              manufacturer: manufacturer || "",
               content: {
-                ...foodInfo.content,
-                totalWeight,
+                unit: content.unit || { type: "total" },
+                primaryUnit: content.primaryUnit || "g",
+                totalWeight: totalWeight || 0,
                 nutrients: {
-                  ...foodInfo.content.nutrients,
+                  ...content.nutrients,
                   carbohydrate,
                   protein,
                   fat,
