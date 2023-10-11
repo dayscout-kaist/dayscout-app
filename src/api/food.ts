@@ -5,16 +5,18 @@ import type { FoodContentOptional, FoodInfo } from "@/types/food";
 export const searchByText = async (query: string): Promise<FoodInfo[]> => {
   const res = await apiClient.get<FoodInfo[]>(
     "/food/search",
-    { params: { query } }
+    { params: { query } },
   );
 
   return res.data;
 };
 
-export const searchByBarcode = async (code: string): Promise<FoodInfo[]> => {
-  const res = await apiClient.get<FoodInfo[]>(
+export const searchByBarcode = async (code: number): Promise<{
+  name: string
+}> => {
+  const res = await apiClient.get<{ name: string }>(
     "/food/search/barcode",
-    { params: { code } }
+    { params: { code } },
   );
 
   return res.data;
@@ -25,13 +27,13 @@ export const searchByImage = async (localImageUri: string): Promise<FoodContentO
   formData.append("file", {
     uri: localImageUri,
     name: "image.jpg",
-    type: "image/jpeg"
+    type: "image/jpeg",
   } as any);
 
   const res = await apiClient.post<FoodContentOptional>(
     "/food/ocr",
     formData,
-    { headers: { "Content-Type": "multipart/form-data" } }
+    { headers: { "Content-Type": "multipart/form-data" } },
   );
 
   return res.data;

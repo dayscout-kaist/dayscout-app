@@ -1,18 +1,21 @@
 import type {
   CompositeScreenProps,
-  NavigatorScreenParams
+  NavigatorScreenParams,
 } from "@react-navigation/native";
 import type { StackScreenProps } from "@react-navigation/stack";
 import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 
-import type { FoodInfo } from "@/types/food";
+import type { FoodContentOptional, FoodInfo } from "@/types/food";
 
 export type RootStackParamList = {
   HomeTab: NavigatorScreenParams<HomeTabParamList>;
   ImageSearch: undefined;
-  TextSearch: undefined;
+  TextSearch?: { query: string };
   FoodInfo: {
-    foodInfo: FoodInfo;
+    name?: string;
+    category?: string;
+    manufacturer?: string;
+    content: FoodContentOptional;
   };
   SelectIntake: {
     foodInfo: FoodInfo;

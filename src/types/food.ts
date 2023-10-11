@@ -1,4 +1,5 @@
 import type { Unit } from "@/types/unit";
+import type { Optional } from "@/utils/types";
 
 export interface FoodContent {
   totalWeight: number;
@@ -13,7 +14,7 @@ export interface FoodContent {
   };
 }
 
-export type FoodContentOptional = Partial<FoodContent>;
+export type FoodContentOptional = Optional<FoodContent, "totalWeight" | "unit" | "primaryUnit">;
 
 export interface FoodInfo {
   name: string;
@@ -21,4 +22,3 @@ export interface FoodInfo {
   manufacturer: string;
   content: FoodContent;
 }
-

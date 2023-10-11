@@ -28,6 +28,7 @@ export const NumberInputWithUnit: React.FC<{
       keyboardType="numeric"
       style={[fill, text.body]}
       placeholderTextColor={colors.gray97}
+      returnKeyType="done"
     />
     <Text style={[text.body, text.gray97]}>{unit}</Text>
   </View>
