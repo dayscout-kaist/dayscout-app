@@ -23,6 +23,7 @@ import {
 } from "@/styles";
 
 export const FoodInfo: React.FC<RootStackScreenProps<"FoodInfo">> = ({
+  route: { params },
   navigation,
   route: {
     params: { foodInfo },
