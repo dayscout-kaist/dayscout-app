@@ -55,13 +55,16 @@ export const TextSearch: React.FC<RootStackScreenProps<"TextSearch">> = ({ navig
                 data={results}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item: result }) => (
-                    <ListItem onPress={() => navigation.navigate("FoodInfo", {foodInfo: result})}>
-                        <ListItem.Content>
+                  <ListItem onPress={() => navigation.navigate("FoodInfo", {foodInfo: result})} style={{borderColor: "black",borderBottomWidth: 1}}>
+                    <ListItem.Content>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                             <ListItem.Title style={[text.body]}>{result.name}</ListItem.Title>
-                            <ListItem.Subtitle style={[text.body, { textAlign: "right" }]}>{result.category}</ListItem.Subtitle>
-                            <ListItem.Subtitle style={[text.caption1, { textAlign: "right" }]}>{result.manufacturer} | {result.content.totalWeight} {result.content.primaryUnit}</ListItem.Subtitle>
-                        </ListItem.Content>
-                    </ListItem>
+                            <View style={[bg.white, { flex: 1 }]}></View>
+                            <ListItem.Subtitle style={[text.body]}>{result.category}</ListItem.Subtitle>
+                        </View>
+                        <ListItem.Subtitle style={[text.caption1]}>{result.manufacturer} | {result.content.totalWeight} {result.content.primaryUnit}</ListItem.Subtitle>
+                    </ListItem.Content>
+                  </ListItem>
                 )}
             />
         </View>
