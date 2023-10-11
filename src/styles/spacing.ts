@@ -29,3 +29,8 @@ export const padding = applyPrefix("padding");
  * margin.horizontal(8)  // 8px margin for left and right
  */
 export const margin = applyPrefix("margin");
+
+export const safe = {
+  horizontal: 24,
+  bottom: 50,
+} as const satisfies Record<string, DimensionValue>;

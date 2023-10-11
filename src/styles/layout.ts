@@ -37,3 +37,5 @@ export const align = {
  * gap(10) // Apply 10px gap
  */
 export const gap = (value: number): FlexStyle => ({ gap: value });
+
+export const fill = { flex: 1 } as const satisfies FlexStyle;
