@@ -3,16 +3,15 @@ import React from 'react';
 import { View, Text, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const FoodInfo = () => {
+const AddArchive = () => {
   const navigation = useNavigation();
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Food Info Page</Text>
-      <Button title="AddArchive" onPress={() => navigation.navigate('AddArchive')} />
-      <Button title="SelectInTake" onPress={() => navigation.navigate('SelectInTake')} />
+      <Button title="Archive" onPress={() => navigation.navigate('Archive')} />
     </View>
   );
 };
 
-export default FoodInfo;
+export default AddArchive;
