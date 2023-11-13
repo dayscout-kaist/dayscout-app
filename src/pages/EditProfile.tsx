@@ -2,15 +2,15 @@ import React from 'react';
 import { View, Text, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const Setting = () => {
+const EditProfile = () => {
   const navigation = useNavigation();
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>설정</Text>
-      <Button title="EditProfile" onPress={() => navigation.navigate('EditProfile')} />
+      <Text>EditProfile Page</Text>
+      {/* <Button title="Archive" onPress={() => navigation.navigate('Archive')} /> */}
     </View>
   );
 };
 
-export default Setting;
+export default EditProfile;

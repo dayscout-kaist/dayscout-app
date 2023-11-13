@@ -1,16 +1,17 @@
+// src/pages/FoodInfo.tsx
 import React from 'react';
 import { View, Text, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const Setting = () => {
+const AddReview = () => {
   const navigation = useNavigation();
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>설정</Text>
-      <Button title="EditProfile" onPress={() => navigation.navigate('EditProfile')} />
+      <Text>Food Info Page</Text>
+      <Button title="Review" onPress={() => navigation.navigate('Review')} />
     </View>
   );
 };
 
-export default Setting;
+export default AddReview;

@@ -1,17 +1,17 @@
-// src/pages/FoodInfo.tsx
 import React from 'react';
 import { View, Text, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const AddArchive = () => {
+const Camera = () => {
   const navigation = useNavigation();
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Food Info Page</Text>
-      <Button title="Archive" onPress={() => navigation.navigate('Archive')} />
+      <Text>Camera Page</Text>
+      <Button title="FoodAdd" onPress={() => navigation.navigate('FoodAdd')} />
+      <Button title="Search" onPress={() => navigation.navigate('Search')} />
     </View>
   );
 };
 
-export default AddArchive;
+export default Camera;

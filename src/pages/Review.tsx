@@ -2,15 +2,15 @@ import React from 'react';
 import { View, Text, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const Explore = () => {
+const Review = () => {
   const navigation = useNavigation();
-
+  
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>탐색</Text>
-      <Button title="FoodInfo" onPress={() => navigation.navigate('FoodInfo')} />
+      <Text>기록</Text>
+      <Button title="AddReview" onPress={() => navigation.navigate('AddReview')} />
     </View>
   );
 };
 
-export default Explore;
+export default Review;

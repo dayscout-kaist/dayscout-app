@@ -1,18 +1,17 @@
-// src/pages/FoodInfo.tsx
 import React from 'react';
 import { View, Text, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const FoodInfo = () => {
+const FoodCalculate = () => {
   const navigation = useNavigation();
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Food Info Page</Text>
-      <Button title="AddArchive" onPress={() => navigation.navigate('AddArchive')} />
-      <Button title="SelectInTake" onPress={() => navigation.navigate('SelectInTake')} />
+      <Text>FoodCalculate Page</Text>
+      <Button title="Search" onPress={() => navigation.navigate('Search')} />
+      <Button title="Review" onPress={() => navigation.navigate('Review')} />
     </View>
   );
 };
 
-export default FoodInfo;
+export default FoodCalculate;

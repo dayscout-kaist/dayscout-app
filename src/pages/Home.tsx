@@ -8,7 +8,8 @@ const Home = () => {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>홈</Text>
-      <Button title="Explore" onPress={() => navigation.navigate('Explore')} />
+      <Button title="Search" onPress={() => navigation.navigate('Search')} />
+      <Button title="Camera" onPress={() => navigation.navigate('Camera')} />
     </View>
   );
 };
