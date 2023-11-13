@@ -2,9 +2,16 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import type { RootStackParamList } from "@/navigation/types";
 import { HomeTab } from "@/navigation/HomeTab";
-import { FoodInfo, ImageSearch, SelectIntake, TextSearch } from "@/screens";
+import type { RootStackParamList } from "@/navigation/types";
+import {
+  AddReview,
+  Camera,
+  EditProfile,
+  FoodCalculate,
+  FoodDetail,
+  FoodReview,
+} from "@/screens";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -17,24 +24,34 @@ export const RootStack: React.FC = () => (
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="ImageSearch"
-        component={ImageSearch}
-        options={{ title: "이미지로 검색", headerBackTitleVisible: false }}
+        name="Camera"
+        component={Camera}
+        options={{ headerBackTitleVisible: false }}
       />
       <Stack.Screen
-        name="TextSearch"
-        component={TextSearch}
-        options={{ title: "텍스트로 검색", headerBackTitleVisible: false }}
+        name="FoodDetail"
+        component={FoodDetail}
+        options={{ headerBackTitleVisible: false }}
       />
       <Stack.Screen
-        name="FoodInfo"
-        component={FoodInfo}
-        options={{ title: "음식 영양정보", headerBackTitleVisible: false }}
+        name="EditProfile"
+        component={EditProfile}
+        options={{ headerBackTitleVisible: false }}
       />
       <Stack.Screen
-        name="SelectIntake"
-        component={SelectIntake}
-        options={{ title: "섭취량 입력", headerBackTitleVisible: false }}
+        name="FoodReview"
+        component={FoodReview}
+        options={{ headerBackTitleVisible: false }}
+      />
+      <Stack.Screen
+        name="AddReview"
+        component={AddReview}
+        options={{ headerBackTitleVisible: false }}
+      />
+      <Stack.Screen
+        name="FoodCalculate"
+        component={FoodCalculate}
+        options={{ headerBackTitleVisible: false }}
       />
     </Stack.Navigator>
   </NavigationContainer>
