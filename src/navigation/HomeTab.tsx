@@ -1,57 +1,85 @@
 import React from "react";
-import Icon from "react-native-vector-icons/Ionicons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import type { HomeTabParamList } from "@/navigation/types";
 import { Home, Review, Search, Settings } from "@/screens";
-import { colors } from "@/styles";
+import { colors, text } from "@/styles";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+import { Icon, type IconType } from "./icons";
 
 const Tab = createBottomTabNavigator<HomeTabParamList>();
 
 const TabIcon =
-  (name: string): React.FC<{ focused: boolean; color: string; size: number }> =>
-  ({ focused, size }) =>
-    (
-      <Icon
-        name={name}
-        size={size}
-        color={focused ? colors.primary : colors.gray400}
-      />
-    );
+  (
+    name: IconType
+  ): React.FC<{ focused: boolean; color: string; size: number }> =>
+  ({ color }) => {
+    const Ic = Icon[name];
+    return <Ic width={30} height={30} fill={color} />;
+  };
 
-export const HomeTab: React.FC = () => (
-  <Tab.Navigator>
-    <Tab.Screen
-      name="Home"
-      component={Home}
-      options={{
-        tabBarShowLabel: false,
-        tabBarIcon: TabIcon("home"),
+export const HomeTab: React.FC = () => {
+  const insets = useSafeAreaInsets();
+
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.gray200,
+        tabBarStyle: {
+          position: "absolute",
+          height: 60 + insets.bottom,
+          paddingHorizontal: 10,
+        },
+        tabBarItemStyle: {
+          gap: 2,
+          margin: 0,
+          padding: 0,
+        },
+        tabBarIconStyle: {
+          marginTop: 8,
+        },
+        tabBarLabelStyle: {
+          ...text.bottomNav,
+          marginBottom: 8,
+          paddingTop: 2,
+        },
       }}
-    />
-    <Tab.Screen
-      name="Search"
-      component={Search}
-      options={{
-        tabBarShowLabel: false,
-        tabBarIcon: TabIcon("search"),
-      }}
-    />
-    <Tab.Screen
-      name="Review"
-      component={Review}
-      options={{
-        tabBarShowLabel: false,
-        tabBarIcon: TabIcon("pricetags"),
-      }}
-    />
-    <Tab.Screen
-      name="Settings"
-      component={Settings}
-      options={{
-        tabBarShowLabel: false,
-        tabBarIcon: TabIcon("settings"),
-      }}
-    />
-  </Tab.Navigator>
-);
+    >
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          title: "홈",
+          tabBarIcon: TabIcon("home"),
+        }}
+      />
+      <Tab.Screen
+        name="Search"
+        component={Search}
+        options={{
+          title: "검색",
+          tabBarIcon: TabIcon("search"),
+        }}
+      />
+      <Tab.Screen
+        name="Review"
+        component={Review}
+        options={{
+          title: "포스트",
+          tabBarIcon: TabIcon("sticker"),
+        }}
+      />
+      <Tab.Screen
+        name="Settings"
+        component={Settings}
+        options={{
+          title: "정보",
+          tabBarIcon: TabIcon("user"),
+        }}
+      />
+    </Tab.Navigator>
+  );
+};
