@@ -8,9 +8,11 @@ import { mapColors } from "./color";
  * text.gray300  // Apply gray300 text color
  */
 export const text = {
-  title1: { fontSize: 24, fontFamily: "Pretendard-Bold" },
+  title1: { fontSize: 26, fontFamily: "Pretendard-Bold" },
   title2: { fontSize: 22, fontFamily: "Pretendard-Bold" },
+  subtitle1: { fontSize: 20, fontFamily: "Pretendard-SemiBold" },
   body: { fontSize: 18, fontFamily: "Pretendard-Medium" },
+  caption: { fontSize: 16, fontFamily: "Pretendard-Medium" },
   tag: { fontSize: 16, fontFamily: "Pretendard-SemiBold" },
   button: { fontSize: 20, fontFamily: "Pretendard-Bold" },
   bottomNav: {
