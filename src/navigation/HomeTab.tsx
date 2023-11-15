@@ -1,12 +1,12 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
+import { Icon, type IconType } from "@/icons";
 import type { HomeTabParamList } from "@/navigation/types";
 import { Home, Review, Search, Settings } from "@/screens";
 import { colors, text } from "@/styles";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { Icon, type IconType } from "./icons";
 const Tab = createBottomTabNavigator<HomeTabParamList>();
 
 const TabIcon =
