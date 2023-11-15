@@ -1,5 +1,9 @@
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import {
+  DefaultTheme,
+  NavigationContainer,
+  type Theme,
+} from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import { HomeTab } from "@/navigation/HomeTab";
@@ -12,11 +16,23 @@ import {
   FoodDetail,
   FoodReview,
 } from "@/screens";
+import { colors } from "@/styles";
+
+const AppTheme: Theme = {
+  dark: false,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: colors.primary,
+    background: colors.gray50,
+    card: colors.white,
+    border: colors.gray50,
+  },
+};
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 export const RootStack: React.FC = () => (
-  <NavigationContainer>
+  <NavigationContainer theme={AppTheme}>
     <Stack.Navigator initialRouteName="HomeTab">
       <Stack.Screen
         name="HomeTab"
