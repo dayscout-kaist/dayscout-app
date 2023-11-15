@@ -2,6 +2,8 @@ import React from "react";
 import { Button, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
+import { BottomButton } from "@/components";
+
 export const FoodDetail: React.FC = () => {
   const navigation = useNavigation();
 
@@ -19,6 +21,11 @@ export const FoodDetail: React.FC = () => {
       <Button
         title="FoodCalculate"
         onPress={() => navigation.navigate("FoodCalculate")}
+      />
+      <BottomButton
+        title="영양성분 계산하기"
+        onPress={() => {}}
+        style="primary"
       />
     </View>
   );
