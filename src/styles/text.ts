@@ -8,17 +8,15 @@ import { mapColors } from "./color";
  * text.gray300  // Apply gray300 text color
  */
 export const text = {
-  title1: { fontSize: 28, lineHeight: 34 },
-  title1Emph: { fontSize: 28, lineHeight: 34, fontWeight: "700" },
-  title2: { fontSize: 22, lineHeight: 28 },
-  title3: { fontSize: 20, lineHeight: 25 },
-  headline: { fontSize: 17, lineHeight: 22, fontWeight: "600" },
-  body: { fontSize: 17, lineHeight: 22 },
-  bodyEmph: { fontSize: 17, lineHeight: 22, fontWeight: "600" },
-  callout: { fontSize: 16, lineHeight: 21 },
-  subhead: { fontSize: 15, lineHeight: 20 },
-  footnote: { fontSize: 13, lineHeight: 18 },
-  caption1: { fontSize: 12, lineHeight: 16 },
-  caption2: { fontSize: 11, lineHeight: 13 },
+  title1: { fontSize: 24, fontFamily: "Pretendard-Bold" },
+  title2: { fontSize: 22, fontFamily: "Pretendard-Bold" },
+  body: { fontSize: 18, fontFamily: "Pretendard-Medium" },
+  tag: { fontSize: 16, fontFamily: "Pretendard-SemiBold" },
+  button: { fontSize: 20, fontFamily: "Pretendard-Bold" },
+  bottomNav: {
+    fontSize: 12,
+    lineHeight: 12,
+    fontFamily: "Pretendard-SemiBold",
+  },
   ...mapColors((color) => ({ color })),
 } as const satisfies Record<string, TextStyle>;
