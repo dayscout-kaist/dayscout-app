@@ -29,6 +29,7 @@ export const align = {
   center: { alignItems: "center" },
   end: { alignItems: "flex-end" },
   stretch: { alignItems: "stretch" },
+  baseline: { alignItems: "baseline" },
 } as const satisfies Record<string, FlexStyle>;
 
 /**

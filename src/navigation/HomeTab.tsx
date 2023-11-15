@@ -7,7 +7,6 @@ import { colors, text } from "@/styles";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Icon, type IconType } from "./icons";
-
 const Tab = createBottomTabNavigator<HomeTabParamList>();
 
 const TabIcon =
