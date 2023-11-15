@@ -18,6 +18,8 @@ import {
 } from "@/screens";
 import { colors } from "@/styles";
 
+import { HeaderBackImage } from "./Header";
+
 const AppTheme: Theme = {
   dark: false,
   colors: {
@@ -33,42 +35,32 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 export const RootStack: React.FC = () => (
   <NavigationContainer theme={AppTheme}>
-    <Stack.Navigator initialRouteName="HomeTab">
+    <Stack.Navigator
+      initialRouteName="HomeTab"
+      screenOptions={{
+        headerBackTitleVisible: false,
+        headerBackImage: HeaderBackImage(colors.gray500),
+      }}
+    >
       <Stack.Screen
         name="HomeTab"
         component={HomeTab}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
-        name="Camera"
-        component={Camera}
-        options={{ headerBackTitleVisible: false }}
-      />
+      <Stack.Screen name="Camera" component={Camera} />
       <Stack.Screen
         name="FoodDetail"
         component={FoodDetail}
-        options={{ headerBackTitleVisible: false }}
+        options={{
+          title: "",
+          headerTransparent: true,
+          headerBackImage: HeaderBackImage(colors.white),
+        }}
       />
-      <Stack.Screen
-        name="EditProfile"
-        component={EditProfile}
-        options={{ headerBackTitleVisible: false }}
-      />
-      <Stack.Screen
-        name="FoodReview"
-        component={FoodReview}
-        options={{ headerBackTitleVisible: false }}
-      />
-      <Stack.Screen
-        name="AddReview"
-        component={AddReview}
-        options={{ headerBackTitleVisible: false }}
-      />
-      <Stack.Screen
-        name="FoodCalculate"
-        component={FoodCalculate}
-        options={{ headerBackTitleVisible: false }}
-      />
+      <Stack.Screen name="EditProfile" component={EditProfile} />
+      <Stack.Screen name="FoodReview" component={FoodReview} />
+      <Stack.Screen name="AddReview" component={AddReview} />
+      <Stack.Screen name="FoodCalculate" component={FoodCalculate} />
     </Stack.Navigator>
   </NavigationContainer>
 );
