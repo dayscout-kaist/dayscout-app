@@ -7,7 +7,7 @@ import type { ViewStyle } from "react-native";
  * round.lg  // Apply 10px radius
  */
 export const round = {
-  md: { borderRadius: 5 },
+  md: { borderRadius: 6 },
   lg: { borderRadius: 10 },
   xl: { borderRadius: 20 },
   full: { borderRadius: 1000 },
