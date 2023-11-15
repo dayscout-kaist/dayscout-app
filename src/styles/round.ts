@@ -1,4 +1,4 @@
-import { css } from "@emotion/native";
+import type { ViewStyle } from "react-native";
 
 /**
  * Applies border radius
@@ -7,16 +7,8 @@ import { css } from "@emotion/native";
  * round.lg  // Apply 10px radius
  */
 export const round = {
-  md: css`
-    border-radius: 5px;
-  `,
-  lg: css`
-    border-radius: 10px;
-  `,
-  xl: css`
-    border-radius: 15px;
-  `,
-  full: css`
-    border-radius: 1000px;
-  `,
-} as const;
+  md: { borderRadius: 5 },
+  lg: { borderRadius: 10 },
+  xl: { borderRadius: 20 },
+  full: { borderRadius: 1000 },
+} as const satisfies Record<string, ViewStyle>;

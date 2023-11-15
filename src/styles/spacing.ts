@@ -32,5 +32,5 @@ export const margin = applyPrefix("margin");
 
 export const safe = {
   horizontal: 24,
-  bottom: 50,
+  bottom: 34,
 } as const satisfies Record<string, DimensionValue>;
