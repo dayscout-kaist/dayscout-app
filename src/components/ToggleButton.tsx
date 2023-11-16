@@ -26,7 +26,7 @@ export const ToggleButton: React.FC<{
           },
         ]}
       >
-        <Text style={[text.body, val === key1 ? text.black : text.gray97]}>
+        <Text style={[text.body1, val === key1 ? text.black : text.gray97]}>
           {key1}
         </Text>
       </TouchableOpacity>
@@ -45,7 +45,7 @@ export const ToggleButton: React.FC<{
           },
         ]}
       >
-        <Text style={[text.body, val === key2 ? text.black : text.gray97]}>
+        <Text style={[text.body1, val === key2 ? text.black : text.gray97]}>
           {key2}
         </Text>
       </TouchableOpacity>
