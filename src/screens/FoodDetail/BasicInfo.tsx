@@ -35,11 +35,11 @@ export const BasicInfo: React.FC<{
             ))}
           </View>
           <View style={[row, align.baseline, gap(8)]}>
-            <Text style={[text.title1, text.gray600]}>{name}</Text>
-            <Text style={[text.subtitle1, text.gray300]}>{category}</Text>
+            <Text style={[text.h2, text.gray600]}>{name}</Text>
+            <Text style={[text.sub1, text.gray300]}>{category}</Text>
           </View>
         </View>
-        <Text style={[text.caption, text.gray300]}>{description}</Text>
+        <Text style={[text.body2, text.gray300]}>{description}</Text>
       </View>
     </View>
   );

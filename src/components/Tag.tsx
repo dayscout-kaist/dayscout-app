@@ -16,6 +16,6 @@ export const Tag: React.FC<{
       { height: 26, backgroundColor: bgClr },
     ]}
   >
-    <Text style={[text.tag, { color: txtClr }]}>{children}</Text>
+    <Text style={[text.body2, { color: txtClr }]}>{children}</Text>
   </View>
 );

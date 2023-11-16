@@ -47,7 +47,7 @@ export const BottomButton: React.FC<{
       onPress={onPress}
       disabled={disabled}
     >
-      <Text style={[text.button, theme.txt]}>{title}</Text>
+      <Text style={[text.btn1, theme.txt]}>{title}</Text>
     </TouchableOpacity>
   );
 };

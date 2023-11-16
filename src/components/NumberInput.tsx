@@ -13,7 +13,7 @@ export const NumberInput: React.FC<{
     onChangeText={(text) => setValue(Number(text))}
     placeholder={placeholder}
     keyboardType="numeric"
-    style={[round.lg, padding(12), bg.grayF2, text.body, style]}
+    style={[round.lg, padding(12), bg.grayF2, text.body1, style]}
     returnKeyType="done"
     placeholderTextColor={colors.gray97}
   />

@@ -26,10 +26,10 @@ export const NumberInputWithUnit: React.FC<{
       onChangeText={(text) => setValue(Number(text))}
       placeholder={placeholder}
       keyboardType="numeric"
-      style={[fill, text.body]}
+      style={[fill, text.body1]}
       placeholderTextColor={colors.gray97}
       returnKeyType="done"
     />
-    <Text style={[text.body, text.gray97]}>{unit}</Text>
+    <Text style={[text.body1, text.gray97]}>{unit}</Text>
   </View>
 );

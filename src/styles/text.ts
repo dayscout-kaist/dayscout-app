@@ -4,17 +4,19 @@ import { mapColors } from "./color";
 /**
  * Applies typography styles and text color
  * @example
- * text.title1   // Apply title1 typography
+ * text.h1   // Apply h1 typography
  * text.gray300  // Apply gray300 text color
  */
 export const text = {
-  title1: { fontSize: 26, fontFamily: "Pretendard-Bold" },
-  title2: { fontSize: 22, fontFamily: "Pretendard-Bold" },
-  subtitle1: { fontSize: 20, fontFamily: "Pretendard-SemiBold" },
-  body: { fontSize: 18, fontFamily: "Pretendard-Medium" },
-  caption: { fontSize: 16, fontFamily: "Pretendard-Medium" },
-  tag: { fontSize: 16, fontFamily: "Pretendard-SemiBold" },
-  button: { fontSize: 20, fontFamily: "Pretendard-Bold" },
+  h1: { fontSize: 30, fontFamily: "Pretendard-Bold" },
+  h2: { fontSize: 26, fontFamily: "Pretendard-Bold" },
+  h3: { fontSize: 22, fontFamily: "Pretendard-Bold" },
+  sub1: { fontSize: 20, fontFamily: "Pretendard-SemiBold" },
+  sub2: { fontSize: 18, fontFamily: "Pretendard-SemiBold" },
+  body1: { fontSize: 18, fontFamily: "Pretendard-Medium", lineHeight: 26, letterSpacing: -0.15 },
+  body2: { fontSize: 16, fontFamily: "Pretendard-Medium", lineHeight: 22, letterSpacing: -0.1 },
+  btn1: { fontSize: 20, fontFamily: "Pretendard-Bold" },
+  btn2: { fontSize: 16, fontFamily: "Pretendard-SemiBold" },
   bottomNav: {
     fontSize: 12,
     lineHeight: 12,
