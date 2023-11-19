@@ -11,7 +11,7 @@ const Tab = createBottomTabNavigator<HomeTabParamList>();
 
 const TabIcon =
   (
-    name: IconType
+    name: IconType,
   ): React.FC<{ focused: boolean; color: string; size: number }> =>
   ({ color }) => {
     const Ic = Icon[name];

@@ -10,7 +10,7 @@ export const NumberInput: React.FC<{
 }> = ({ value, setValue, placeholder, style }) => (
   <TextInput
     value={value?.toString()}
-    onChangeText={(text) => setValue(Number(text))}
+    onChangeText={text => setValue(Number(text))}
     placeholder={placeholder}
     keyboardType="numeric"
     style={[round.lg, padding(12), bg.grayF2, text.body1, style]}

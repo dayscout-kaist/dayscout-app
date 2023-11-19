@@ -13,8 +13,18 @@ export const text = {
   h3: { fontSize: 22, fontFamily: "Pretendard-Bold" },
   sub1: { fontSize: 20, fontFamily: "Pretendard-SemiBold" },
   sub2: { fontSize: 18, fontFamily: "Pretendard-SemiBold" },
-  body1: { fontSize: 18, fontFamily: "Pretendard-Medium", lineHeight: 26, letterSpacing: -0.15 },
-  body2: { fontSize: 16, fontFamily: "Pretendard-Medium", lineHeight: 22, letterSpacing: -0.1 },
+  body1: {
+    fontSize: 18,
+    fontFamily: "Pretendard-Medium",
+    lineHeight: 26,
+    letterSpacing: -0.15,
+  },
+  body2: {
+    fontSize: 16,
+    fontFamily: "Pretendard-Medium",
+    lineHeight: 22,
+    letterSpacing: -0.1,
+  },
   btn1: { fontSize: 20, fontFamily: "Pretendard-Bold" },
   btn2: { fontSize: 16, fontFamily: "Pretendard-SemiBold" },
   bottomNav: {
@@ -22,5 +32,5 @@ export const text = {
     lineHeight: 12,
     fontFamily: "Pretendard-SemiBold",
   },
-  ...mapColors((color) => ({ color })),
+  ...mapColors(color => ({ color })),
 } as const satisfies Record<string, TextStyle>;

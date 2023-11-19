@@ -15,5 +15,5 @@ export type ColorKeys = keyof typeof colors;
 export type Color = (typeof colors)[ColorKeys];
 export const mapColors = <T>(cb: (color: Color) => T) =>
   Object.fromEntries(
-    Object.entries(colors).map(([key, value]) => [key, cb(value)] as const)
+    Object.entries(colors).map(([key, value]) => [key, cb(value)] as const),
   ) as Record<ColorKeys, T>;
