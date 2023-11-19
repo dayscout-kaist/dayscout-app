@@ -23,7 +23,7 @@ export const NumberInputWithUnit: React.FC<{
   >
     <TextInput
       value={value?.toString()}
-      onChangeText={(text) => setValue(Number(text))}
+      onChangeText={text => setValue(Number(text))}
       placeholder={placeholder}
       keyboardType="numeric"
       style={[fill, text.body1]}
