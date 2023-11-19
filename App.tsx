@@ -19,6 +19,7 @@ const App: React.FC = () => {
     "Pretendard-Medium": require("./assets/fonts/Pretendard-1.3.9/Pretendard-Medium.otf"),
     "Pretendard-SemiBold": require("./assets/fonts/Pretendard-1.3.9/Pretendard-SemiBold.otf"),
     "Pretendard-Bold": require("./assets/fonts/Pretendard-1.3.9/Pretendard-Bold.otf"),
+    "TossFace": require("./assets/fonts/TossFace/TossFaceFontMac.ttf"),
   });
 
   const onLayoutRootView = useCallback(async () => {
