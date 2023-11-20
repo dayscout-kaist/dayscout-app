@@ -1,20 +1,37 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { type ColorValue, Text, TouchableOpacity, View } from "react-native";
 
 import { Tag } from "@/components";
-import { bg, gap, padding, row, safe, text } from "@/styles";
+import { Icon } from "@/icons";
+import {
+  align,
+  bg,
+  colors,
+  gap,
+  padding,
+  round,
+  row,
+  safe,
+  text,
+} from "@/styles";
+import type { Nutrients } from "@/types/food";
 
 import { ActionBox } from "./ActionBox";
 import { NutrientRow } from "./NutrientRow";
 
-export const NutritionFacts: React.FC = () => (
+export const NutritionFacts: React.FC<{
+  tag: { title: string; bg: ColorValue; txt: ColorValue };
+  nutrients: Nutrients;
+  servingSize: string;
+  onServingSizePress: () => void;
+}> = ({ tag, nutrients, servingSize, onServingSizePress }) => (
   <View style={[padding.top(20), bg.white]}>
     <View style={[gap(13), padding.horizontal(safe.horizontal)]}>
       <View style={gap(8)}>
-        <View style={[row, gap(10)]}>
+        <View style={[row, align.center, gap(10)]}>
           <Text style={[text.h3, text.gray600]}>영양성분</Text>
-          <Tag bgClr="#a40fff40" txtClr="#a40fff">
-            유통식품
+          <Tag bgClr={tag.bg} txtClr={tag.txt}>
+            {tag.title}
           </Tag>
         </View>
         <Text style={[text.body2, text.gray300]}>
@@ -22,13 +39,28 @@ export const NutritionFacts: React.FC = () => (
         </Text>
       </View>
       <View style={gap(12)}>
+        <TouchableOpacity
+          style={[
+            row,
+            align.center,
+            round.lg,
+            padding.left(12),
+            padding.right(6),
+            bg.gray100,
+            { alignSelf: "flex-start", height: 37 },
+          ]}
+          onPress={onServingSizePress}
+        >
+          <Text style={[text.btn2, text.gray400]}>{servingSize}</Text>
+          <Icon.down width={28} height={28} fill={colors.gray400} />
+        </TouchableOpacity>
         <View style={gap(12)}>
           <View style={gap(6)}>
-            <NutrientRow name="탄수화물" value="10g" />
-            <NutrientRow name="   당류" value="10g" />
+            <NutrientRow name="탄수화물" value={nutrients.carbohydrate} />
+            <NutrientRow name="   당류" value={nutrients.sugar} />
           </View>
-          <NutrientRow name="단백질" value="10g" />
-          <NutrientRow name="지방" value="10g" />
+          <NutrientRow name="단백질" value={nutrients.protein} />
+          <NutrientRow name="지방" value={nutrients.fat} />
         </View>
       </View>
       <View style={[bg.gray50, { height: 1 }]} />
