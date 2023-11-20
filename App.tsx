@@ -1,9 +1,12 @@
 import React, { useCallback } from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
 import { RootStack } from "@/navigation/RootStack";
+import { fill } from "@/styles";
 
 // Temp fix to suppress Animated warning
 import { Animated } from "react-native";
@@ -19,6 +22,7 @@ const App: React.FC = () => {
     "Pretendard-Medium": require("./assets/fonts/Pretendard-1.3.9/Pretendard-Medium.otf"),
     "Pretendard-SemiBold": require("./assets/fonts/Pretendard-1.3.9/Pretendard-SemiBold.otf"),
     "Pretendard-Bold": require("./assets/fonts/Pretendard-1.3.9/Pretendard-Bold.otf"),
+    "TossFace": require("./assets/fonts/TossFace/TossFaceFontMac.ttf"),
   });
 
   const onLayoutRootView = useCallback(async () => {
@@ -29,7 +33,11 @@ const App: React.FC = () => {
 
   return (
     <SafeAreaProvider onLayout={onLayoutRootView}>
-      <RootStack />
+      <GestureHandlerRootView style={fill}>
+        <BottomSheetModalProvider>
+          <RootStack />
+        </BottomSheetModalProvider>
+      </GestureHandlerRootView>
     </SafeAreaProvider>
   );
 };

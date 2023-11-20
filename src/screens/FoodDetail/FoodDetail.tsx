@@ -1,24 +1,38 @@
-import React, { useCallback, useMemo, useRef, useState } from "react";
-import { Button, ScrollView, TouchableOpacity, View, Text } from "react-native";
+import React, { useRef, useState } from "react";
+import { ScrollView, View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
-import { BottomButton } from "@/components";
-import { align, bg, colors, column, fill, gap, padding, safe, text } from "@/styles";
+import { BottomButton, BottomSheet } from "@/components";
+import { column, fill, gap, text } from "@/styles";
 import type { ProductWithDetails } from "@/types/product";
 
 import { BasicInfo } from "./BasicInfo";
 import { Post } from "./Post";
-import { DetailInfo } from "./DetailInfo";
-import BottomSheet from '@gorhom/bottom-sheet';
+import { NutritionFacts } from "./NutritionFacts";
+import { ServingSizeRow } from "./NutritionFacts/ServingSizeRow";
+
+interface ServingSize {
+  key: number;
+  text: string;
+}
+
+const servingSizes: ServingSize[] = [
+  { key: 0, text: "100g당" },
+  { key: 1, text: "총 내용량당" },
+  { key: 2, text: "1회 제공량당" },
+];
 
 export const FoodDetail: React.FC = () => {
+  const [servingSize, setServingSize] = useState<ServingSize>(servingSizes[0]);
+  const bottomSheetRef = useRef<BottomSheetModal>(null);
+
   const navigation = useNavigation();
 
   const data: ProductWithDetails = {
     id: 100581350,
     name: "데자와 로얄 밀크티 500ml",
     imageSrc:
-      // "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D",
       "https://sparcs-newara-dev.s3.amazonaws.com/files/snowsuno-in-90s.png",
     barcodeNumber: 8801097481206,
     largeCategory: "가공식품",
@@ -35,52 +49,6 @@ export const FoodDetail: React.FC = () => {
     },
     totalWeight: 500,
   };
-
-  const bottomSheetRef = useRef<BottomSheet>(null);
-  const [selectedWeight, setSelectedWeight] = useState<number>(100);
-  const bottomSheetHeight = 150; // Set the absolute height for the bottom sheet
-  const snapPoints = useMemo(() => [bottomSheetHeight], [bottomSheetHeight]);
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-
-  const handlePresentModalPress = useCallback(() => {
-    setIsBottomSheetOpen(true); // BottomSheet 열림 상태로 설정
-    bottomSheetRef.current?.expand();
-  }, []);
-
-  // BottomSheet 닫힘 상태 관리
-  const handleClose = useCallback(() => {
-    setIsBottomSheetOpen(false); // BottomSheet 닫힘 상태로 설정
-  }, []);
-
-  // bottom sheet content
-  const renderBottomSheetContent = useCallback(() => {
-    // Assuming these are the serving sizes you want to display
-    // const servingSizes = [100, '총 내용량', '단위 제공량'];
-    const servingSizes = [100, '총 내용량 당'];
-
-    const handleSelectServingSize = (size: string | number) => {
-      // Here you can handle the logic to update the selected size
-      setSelectedWeight(size === 100? 100: data.totalWeight?data.totalWeight:100); // Update the selected weight state
-      // Trigger some action like an API call here if needed
-      bottomSheetRef.current?.close();
-    };
-
-    return (
-      <View style={[padding.horizontal(safe.horizontal),{borderRadius:100}]}>
-        <Text style={[text.body1]}>영양성분 기준</Text>
-        {servingSizes.map((size, index) => (
-          <TouchableOpacity
-            key={index}
-            style={[padding.vertical(10)]}
-            onPress={() => handleSelectServingSize(size)}
-          >
-            <Text>{size === 100? '100g 당':'총 내용량 당'}</Text>
-          </TouchableOpacity>
-
-        ))}
-      </View>
-    );
-  }, []);
 
   return (
     <View style={fill}>
@@ -102,20 +70,17 @@ export const FoodDetail: React.FC = () => {
             review="맛은 있는데 혈당이 많이 올라요 어쩌구 저쩌구 개발 보름 남았다 파이팅~ 라이라이 차차차 라이 차차차"
             onPress={() => navigation.navigate("FoodReview")}
           />
-          {/* <Button
-            title="AddReview"
-            onPress={() => navigation.navigate("AddReview")}
-          /> */}
-          <DetailInfo
-            largeTag={data.largeCategory}
-            totalWeight={data.totalWeight?data.totalWeight:100}
-            carbohydrate={data.nutrients.carbohydrate?data.nutrients.carbohydrate:null}
-            sugar={data.nutrients.sugar?data.nutrients.sugar:null}
-            protein={data.nutrients.protein?data.nutrients.protein:null}
-            fat={data.nutrients.fat?data.nutrients.fat:null}
-            onServingSizePress={handlePresentModalPress}
-            selectedWeight={selectedWeight}
+          <NutritionFacts
+            tag={{ title: "유통식품", bg: "#a40fff40", txt: "#a40fff" }}
+            nutrients={data.nutrients}
+            servingSize={servingSize.text}
+            onServingSizePress={() => {
+              // TODO: Resolve double tab issue
+              bottomSheetRef.current?.present();
+              bottomSheetRef.current?.expand();
+            }}
           />
+          <View style={{ height: 192 }} />
         </View>
       </ScrollView>
       <BottomButton
@@ -123,26 +88,19 @@ export const FoodDetail: React.FC = () => {
         onPress={() => navigation.navigate("FoodCalculate")}
         style="primary"
       />
-      {isBottomSheetOpen && (
-        <View style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: 'rgba(0, 0, 0, 0.5)'
-        }} />
-      )}
-      <BottomSheet
-        ref={bottomSheetRef}
-        index={-1}
-        snapPoints={snapPoints}
-        backgroundStyle={bg.white}
-        handleIndicatorStyle={bg.gray200}
-        enablePanDownToClose={true}
-        onClose={handleClose}
-      >
-        {renderBottomSheetContent()}
+      <BottomSheet ref={bottomSheetRef}>
+        <Text style={[text.h3, text.gray600]}>영양성분 기준</Text>
+        {servingSizes.map(serve => (
+          <ServingSizeRow
+            key={serve.key}
+            value={serve.text}
+            onPress={() => {
+              setServingSize(serve);
+              bottomSheetRef.current?.close();
+            }}
+            selected={serve.key === servingSize.key}
+          />
+        ))}
       </BottomSheet>
     </View>
   );
