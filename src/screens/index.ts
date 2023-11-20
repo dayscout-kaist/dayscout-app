@@ -4,7 +4,7 @@ export * from "./EditProfile";
 export * from "./FoodCalculate";
 export * from "./FoodDetail";
 export * from "./FoodReview";
-export * from "./Home";
+export * from "./Home/Home";
 export * from "./Review";
 export * from "./Search";
 export * from "./Settings";
