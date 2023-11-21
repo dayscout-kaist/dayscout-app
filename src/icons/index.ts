@@ -9,6 +9,7 @@ import RightIcon from "./right.svg";
 import SearchIcon from "./search.svg";
 import StickerIcon from "./sticker.svg";
 import UserIcon from "./user.svg";
+import CameraIcon from "./camera.svg"
 
 export type IconType =
   | "check"
@@ -18,6 +19,7 @@ export type IconType =
   | "right"
   | "search"
   | "sticker"
+  | "camera"
   | "user";
 
 export const Icon = {
@@ -29,4 +31,6 @@ export const Icon = {
   search: SearchIcon,
   sticker: StickerIcon,
   user: UserIcon,
+  camera: CameraIcon,
+
 } as const satisfies Record<IconType, React.FC<SvgProps>>;
