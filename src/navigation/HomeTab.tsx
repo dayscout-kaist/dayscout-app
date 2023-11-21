@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { Icon, type IconType } from "@/icons";
 import type { HomeTabParamList } from "@/navigation/types";
-import { Home, Review, Search, Settings } from "@/screens";
+import { Home, Posts, Search, Settings } from "@/screens";
 import { colors, text } from "@/styles";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -25,6 +25,9 @@ export const HomeTab: React.FC = () => {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
+        headerStyle: {
+          height: 46,
+        },
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.gray200,
         tabBarStyle: {
@@ -64,10 +67,11 @@ export const HomeTab: React.FC = () => {
         }}
       />
       <Tab.Screen
-        name="Review"
-        component={Review}
+        name="Posts"
+        component={Posts}
         options={{
           title: "포스트",
+          headerShown: true,
           tabBarIcon: TabIcon("sticker"),
         }}
       />

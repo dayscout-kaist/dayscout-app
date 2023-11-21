@@ -1,9 +1,16 @@
-import React from 'react';
-import { ScrollView, Text, TouchableOpacity, View, TextInput, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { bg, padding, gap, row, text, safe, margin, colors } from '@/styles';
+import React from "react";
+import {
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+  TextInput,
+  Image,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { bg, padding, gap, row, text, safe, margin, colors } from "@/styles";
 import { Tag } from "@/components";
-import { HeaderBackImage } from '@/navigation/Header';
+import { HeaderBackImage } from "@/navigation/Header";
 
 // Dummy data for the list items
 const searchResults = [
@@ -63,13 +70,30 @@ export const Search: React.FC = () => {
   const BackButton = HeaderBackImage(colors.gray500);
 
   const Header = () => (
-    <View style={[row, margin.top(48),margin.bottom(15), {alignItems: 'center', justifyContent: 'space-between'}]}>
-      <TouchableOpacity style={[margin.left(3)]} onPress={() => navigation.goBack()}>
+    <View
+      style={[
+        row,
+        margin.top(48),
+        margin.bottom(15),
+        { alignItems: "center", justifyContent: "space-between" },
+      ]}
+    >
+      <TouchableOpacity
+        style={[margin.left(3)]}
+        onPress={() => navigation.goBack()}
+      >
         <BackButton tintColor={colors.gray500} />
       </TouchableOpacity>
       <TextInput
         autoFocus={true}
-        style={[padding.horizontal(16), padding.vertical(15), margin.horizontal(10), margin.right(15), bg.gray100, { flex:1, borderRadius: 20 }]}
+        style={[
+          padding.horizontal(16),
+          padding.vertical(15),
+          margin.horizontal(10),
+          margin.right(15),
+          bg.gray100,
+          { flex: 1, borderRadius: 20 },
+        ]}
         placeholder="Search for food"
       />
     </View>
@@ -77,13 +101,19 @@ export const Search: React.FC = () => {
 
   return (
     <View style={[bg.white, { flex: 1 }]}>
-      <Header/>
+      <Header />
       <ScrollView style={[padding.horizontal(safe.horizontal)]}>
         {searchResults.map((item, index) => (
           <TouchableOpacity
             key={`search-item-${index}`}
-            style={[bg.white, padding.vertical(12), row, gap(8), { alignItems: 'center' }]}
-            onPress={() => navigation.navigate('FoodDetail', { item })}
+            style={[
+              bg.white,
+              padding.vertical(12),
+              row,
+              gap(8),
+              { alignItems: "center" },
+            ]}
+            onPress={() => navigation.navigate("FoodDetail", { item })}
           >
             <Image
               style={{ width: 48, height: 48, borderRadius: 12 }}
@@ -99,9 +129,11 @@ export const Search: React.FC = () => {
                   </Tag>
                 ))}
               </View>
-              <View style={[row,gap(8),{alignItems: 'center'}]}>
+              <View style={[row, gap(8), { alignItems: "center" }]}>
                 <Text style={[text.body1]}>{item.displayName}</Text>
-                <Text style={[text.body2, text.gray400]}>{item.smallCategory}</Text>
+                <Text style={[text.body2, text.gray400]}>
+                  {item.smallCategory}
+                </Text>
               </View>
             </View>
           </TouchableOpacity>

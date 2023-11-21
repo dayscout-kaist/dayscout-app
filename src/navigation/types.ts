@@ -8,7 +8,7 @@ import type { StackScreenProps } from "@react-navigation/stack";
 export type HomeTabParamList = {
   Home: undefined;
   Search: undefined;
-  Review: undefined;
+  Posts: undefined;
   Settings: undefined;
 };
 
