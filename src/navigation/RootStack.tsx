@@ -19,17 +19,7 @@ import {
 import { colors } from "@/styles";
 
 import { HeaderBackImage } from "./Header";
-
-const AppTheme: Theme = {
-  dark: false,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: colors.primary,
-    background: colors.gray50,
-    card: colors.white,
-    border: colors.gray50,
-  },
-};
+import { AppTheme } from "@/theme";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
