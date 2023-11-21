@@ -32,7 +32,7 @@ export const BottomButton: React.FC<{
   return (
     <TouchableOpacity
       style={[
-        round.xl,
+        round.lg,
         padding.horizontal(16),
         padding.vertical(20),
         align.center,

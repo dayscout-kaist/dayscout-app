@@ -43,7 +43,7 @@ export const NutritionFacts: React.FC<{
           style={[
             row,
             align.center,
-            round.lg,
+            round.md,
             padding.left(12),
             padding.right(6),
             bg.gray100,

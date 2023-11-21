@@ -51,7 +51,7 @@ export const ActionBox: React.FC<{
 
   return (
     <Animated.View
-      style={[round.xl, padding.horizontal(12), { backgroundColor: bgClr }]}
+      style={[round.lg, padding.horizontal(12), { backgroundColor: bgClr }]}
     >
       <TouchableWithoutFeedback
         onPress={onPress}

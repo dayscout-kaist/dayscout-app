@@ -11,7 +11,7 @@ export const Tag: React.FC<{
   <View
     style={[
       center,
-      round.md,
+      round.sm,
       padding.horizontal(8),
       { height: 26, backgroundColor: bgClr },
     ]}
