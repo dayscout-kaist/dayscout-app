@@ -19,5 +19,3 @@ cp .env.example .env.local
 ```bash
 yarn start
 ```
-
-

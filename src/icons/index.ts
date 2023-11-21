@@ -1,6 +1,8 @@
 import React from "react";
 import { SvgProps } from "react-native-svg";
 
+import CheckIcon from "./check.svg";
+import DownIcon from "./down.svg";
 import HomeIcon from "./home.svg";
 import LeftIcon from "./left.svg";
 import RightIcon from "./right.svg";
@@ -10,6 +12,8 @@ import UserIcon from "./user.svg";
 import CameraIcon from "./camera.svg"
 
 export type IconType =
+  | "check"
+  | "down"
   | "home"
   | "left"
   | "right"
@@ -19,6 +23,8 @@ export type IconType =
   | "user";
 
 export const Icon = {
+  check: CheckIcon,
+  down: DownIcon,
   home: HomeIcon,
   left: LeftIcon,
   right: RightIcon,
