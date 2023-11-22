@@ -16,7 +16,7 @@ import {
 } from "@/styles";
 import type { Nutrients } from "@/types/food";
 
-import { ActionBox } from "./ActionBox";
+import { ActionBox } from "@/components";
 import { NutrientRow } from "./NutrientRow";
 
 export const NutritionFacts: React.FC<{
