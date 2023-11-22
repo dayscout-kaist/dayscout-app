@@ -3,7 +3,7 @@ import { ScrollView, View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
-import { BottomButton, BottomSheet } from "@/components";
+import { BottomButton, BottomSheet, ScreenBackground } from "@/components";
 import { column, fill, gap, text } from "@/styles";
 import type { ProductWithDetails } from "@/types/product";
 
@@ -51,7 +51,7 @@ export const FoodDetail: React.FC = () => {
   };
 
   return (
-    <View style={fill}>
+    <ScreenBackground>
       <ScrollView>
         <View style={[column, gap(12)]}>
           <BasicInfo
@@ -102,6 +102,6 @@ export const FoodDetail: React.FC = () => {
           />
         ))}
       </BottomSheet>
-    </View>
+    </ScreenBackground>
   );
 };
