@@ -9,6 +9,8 @@ import RightIcon from "./right.svg";
 import SearchIcon from "./search.svg";
 import StickerIcon from "./sticker.svg";
 import UserIcon from "./user.svg";
+import UpWideIcon from "./up_wide.svg";
+import DownWideIcon from "./down_wide.svg";
 
 export type IconType =
   | "check"
@@ -18,7 +20,9 @@ export type IconType =
   | "right"
   | "search"
   | "sticker"
-  | "user";
+  | "user"
+  | "up_wide"
+  | "down_wide";
 
 export const Icon = {
   check: CheckIcon,
@@ -29,4 +33,6 @@ export const Icon = {
   search: SearchIcon,
   sticker: StickerIcon,
   user: UserIcon,
+  up_wide: UpWideIcon,
+  down_wide: DownWideIcon,
 } as const satisfies Record<IconType, React.FC<SvgProps>>;
