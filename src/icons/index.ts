@@ -11,7 +11,7 @@ import StickerIcon from "./sticker.svg";
 import UserIcon from "./user.svg";
 import UpWideIcon from "./up_wide.svg";
 import DownWideIcon from "./down_wide.svg";
-import CameraIcon from "./camera.svg"
+import CameraIcon from "./camera.svg";
 
 export type IconType =
   | "check"
@@ -23,9 +23,8 @@ export type IconType =
   | "sticker"
   | "user"
   | "up_wide"
-  | "down_wide";
-  | "camera"
-  | "user";
+  | "down_wide"
+  | "camera";
 
 export const Icon = {
   check: CheckIcon,
