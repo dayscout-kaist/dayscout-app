@@ -7,11 +7,15 @@ import {
   center,
   colors,
   gap,
+  w,
+  h,
   justify,
   padding,
   round,
   row,
   text,
+  bg,
+  column,
 } from "@/styles";
 import { TossFace } from "@/utils/TossFace";
 import { Clickable } from "@/components/Clickable";
@@ -22,68 +26,32 @@ export const ActionBox: React.FC<{
   desc: string;
   onPress: () => void;
 }> = ({ icon, main, desc, onPress }) => {
-  // const animation = new Animated.Value(0);
-
-  // const scale = animation.interpolate({
-  //   inputRange: [0, 1],
-  //   outputRange: [1, 0.95],
-  // });
-  // const bgClr = animation.interpolate({
-  //   inputRange: [0, 1],
-  //   outputRange: [colors.white, colors.gray50],
-  // });
-  // const iconBgclr = animation.interpolate({
-  //   inputRange: [0, 1],
-  //   outputRange: [colors.gray50, colors.gray100],
-  // });
-
-  // const onPressIn = () =>
-  //   Animated.spring(animation, {
-  //     toValue: 1,
-  //     speed: 20,
-  //     useNativeDriver: true,
-  //   }).start();
-  // const onPressOut = () =>
-  //   Animated.spring(animation, {
-  //     toValue: 0,
-  //     speed: 20,
-  //     useNativeDriver: true,
-  //   }).start();
-
   return (
-    <Clickable onPress={onPress}>
-      <Animated.View
-        style={[
-          row,
-          justify.between,
-          align.center,
-          {
-            height: 74,
-            // transform: [{ scale }]
-          },
-        ]}
-      >
-        <View style={[row, gap(20)]}>
-          <Animated.View
-            style={[
-              center,
-              round.full,
-              {
-                width: 54,
-                height: 54,
-                // backgroundColor: iconBgclr,
-              },
-            ]}
-          >
-            <TossFace icon={icon} style={{ fontSize: 32 }} />
-          </Animated.View>
-          <View>
-            <Text style={[text.body2, text.gray300]}>{main}</Text>
-            <Text style={[text.sub2, text.gray600]}>{desc}</Text>
+    <View style={[padding.vertical(10), padding.horizontal(12)]}>
+      <Clickable onPress={onPress}>
+        <Animated.View
+          style={[
+            row,
+            justify.between,
+            align.center,
+            h(74),
+            padding.horizontal(12),
+          ]}
+        >
+          <View style={[row, align.center, gap(20)]}>
+            <Animated.View
+              style={[center, round.full, w(54), h(54), bg.gray50]}
+            >
+              <TossFace icon={icon} style={{ fontSize: 32 }} />
+            </Animated.View>
+            <View style={[column, gap(2)]}>
+              <Text style={[text.body2, text.gray300]}>{main}</Text>
+              <Text style={[text.sub2, text.gray600]}>{desc}</Text>
+            </View>
           </View>
-        </View>
-        <Icon.right width={30} height={30} fill={colors.gray500} />
-      </Animated.View>
-    </Clickable>
+          <Icon.right width={30} height={30} fill={colors.gray400} />
+        </Animated.View>
+      </Clickable>
+    </View>
   );
 };
