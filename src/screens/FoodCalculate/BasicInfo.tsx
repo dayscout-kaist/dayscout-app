@@ -27,6 +27,7 @@ import { ProductWithDetails } from "@/types/product";
 import { NutrientRow } from "./NutrientRow";
 import { Nutrients } from "@/types/food";
 import { Tag } from "@/components";
+import { ActionBox } from "../FoodDetail/NutritionFacts/ActionBox";
 
 export const BasicInfo: React.FC<{
   initVariant: number;
@@ -56,6 +57,7 @@ export const BasicInfo: React.FC<{
   };
 
   const buttonTitles = ["반의 반", "반", "전체"];
+  const nutrientType = ["탄수화물", "당류", "단백질", "지방"]; // 반복될 항목들
 
   return (
     <View style={[padding.top(20), bg.white]}>
@@ -147,6 +149,104 @@ export const BasicInfo: React.FC<{
           )}
           {variant === 2 && (
             <View style={[gap(12), padding.bottom(12)]}>
+              <View
+                style={[
+                  row,
+                  bg.gray50,
+                  padding.vertical(12),
+                  padding.horizontal(20),
+                  { flex: 1, borderRadius: 10 },
+                ]}
+              >
+                <TextInput placeholder="무슨 음식을 드셨나요?"></TextInput>
+              </View>
+              <View style={[row]}>
+                <View
+                  style={[
+                    {
+                      flex: 0.6,
+                      justifyContent: "center",
+                    },
+                  ]}
+                >
+                  <Text style={text.sub2}>총 내용량</Text>
+                </View>
+                <View
+                  style={[
+                    row,
+                    bg.gray50,
+                    padding.vertical(12),
+                    padding.horizontal(20),
+                    { flex: 1, borderRadius: 10 },
+                  ]}
+                >
+                  <TextInput
+                    placeholder="여기에 섭취량을 입력하세요"
+                    style={[{ flex: 1 }]}
+                  />
+                  <Text style={text.gray400}>g</Text>
+                </View>
+              </View>
+              <TouchableOpacity
+                style={[
+                  row,
+                  align.center,
+                  round.lg,
+                  padding.left(12),
+                  padding.right(6),
+                  bg.gray100,
+                  { alignSelf: "flex-start", height: 37 },
+                ]}
+                onPress={onServingSizePress}
+              >
+                <Text style={[text.btn2, text.gray400]}>{servingSize}</Text>
+                <Icon.down width={28} height={28} fill={colors.gray400} />
+              </TouchableOpacity>
+              <View style={[gap(8)]}>
+                {nutrientType.map((nutrient: any) => (
+                  <View style={[row]}>
+                    <View
+                      style={[
+                        {
+                          flex: 0.6,
+                          justifyContent: "center",
+                        },
+                      ]}
+                    >
+                      <Text style={text.sub2}>{nutrient}</Text>
+                    </View>
+                    <View
+                      style={[
+                        row,
+                        bg.gray50,
+                        padding.vertical(12),
+                        padding.horizontal(20),
+                        { flex: 1, borderRadius: 10 },
+                      ]}
+                    >
+                      <TextInput
+                        placeholder="여기에 섭취량을 입력하세요"
+                        style={[{ flex: 1 }]}
+                      />
+                      <Text style={text.gray400}>g</Text>
+                    </View>
+                  </View>
+                ))}
+              </View>
+              <View
+                style={[
+                  padding.vertical(10),
+                  padding.horizontal(12),
+                  { flex: 1 },
+                ]}
+              >
+                <ActionBox
+                  icon="🍞"
+                  main="정보가 정확하지 않다면"
+                  desc="영양정보 수정 제안하기"
+                  onPress={() => {}}
+                />
+              </View>
               <TouchableOpacity onPress={() => setVariant(1)}>
                 <View
                   style={[
