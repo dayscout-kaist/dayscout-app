@@ -11,6 +11,7 @@ import StickerIcon from "./sticker.svg";
 import UserIcon from "./user.svg";
 import UpWideIcon from "./up_wide.svg";
 import DownWideIcon from "./down_wide.svg";
+import CameraIcon from "./camera.svg"
 
 export type IconType =
   | "check"
@@ -23,6 +24,8 @@ export type IconType =
   | "user"
   | "up_wide"
   | "down_wide";
+  | "camera"
+  | "user";
 
 export const Icon = {
   check: CheckIcon,
@@ -35,4 +38,6 @@ export const Icon = {
   user: UserIcon,
   up_wide: UpWideIcon,
   down_wide: DownWideIcon,
+  camera: CameraIcon,
+
 } as const satisfies Record<IconType, React.FC<SvgProps>>;

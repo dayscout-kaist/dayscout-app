@@ -5,6 +5,6 @@ export * from "./FoodCalculate";
 export * from "./FoodDetail";
 export * from "./FoodReview";
 export * from "./Home";
-export * from "./Review";
+export * from "./Posts";
 export * from "./Search";
 export * from "./Settings";
