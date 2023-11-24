@@ -53,7 +53,7 @@ export const BasicInfo: React.FC<{
   const [variant, setVariant] = useState(initVariant);
 
   const toggleVariant = () => {
-    setVariant(variant > 0 ? 0 : 1);
+    setVariant(variant => variant > 0 ? 0 : 1);
   };
 
   const buttonTitles = ["반의 반", "반", "전체"];
