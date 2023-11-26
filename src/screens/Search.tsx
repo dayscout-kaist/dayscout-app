@@ -1,16 +1,27 @@
 import React from "react";
+import { ScrollView, View, TextInput } from "react-native";
 import {
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-  TextInput,
-  Image,
-} from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { bg, padding, gap, row, text, safe, margin, colors } from "@/styles";
-import { Tag } from "@/components";
+  h,
+  bg,
+  padding,
+  gap,
+  row,
+  text,
+  safe,
+  margin,
+  colors,
+  fill,
+  round,
+  inline,
+  align,
+} from "@/styles";
+import { Tag, TagTitle } from "@/components";
 import { HeaderBackImage } from "@/navigation/Header";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Icon } from "@/icons";
+import { FoodSearchItem } from "@/components/FoodSearchItem";
+import { HomeTabParamList, HomeTabScreenProps } from "@/navigation/types";
+import { useTextInput } from "@/hooks";
 
 // Dummy data for the list items
 const searchResults = [
@@ -59,84 +70,70 @@ const searchResults = [
   // Add more items here...
 ];
 
-const staticTags = [
-  { title: "추정치", bg: "#ffe5c3", txt: "#ff980f" },
-  { title: "1,000회 이상 추가됨", bg: "#fdbec1", txt: "#eb2a2a" },
-];
+const staticTags: TagTitle[] = ["추정치", "혈당 스파이크"];
 
-export const Search: React.FC = () => {
-  const navigation = useNavigation();
+const SearchBarHeader: React.FC<{
+  input: { value: string; onChangeText: (text: string) => void };
+}> = ({ input }) => {
+  const insets = useSafeAreaInsets();
 
-  const BackButton = HeaderBackImage(colors.gray500);
-
-  const Header = () => (
+  return (
     <View
       style={[
         row,
-        margin.top(48),
+        inline,
+        margin.top(insets.top),
         margin.bottom(15),
         { alignItems: "center", justifyContent: "space-between" },
       ]}
     >
-      <TouchableOpacity
-        style={[margin.left(3)]}
-        onPress={() => navigation.goBack()}
-      >
-        <BackButton tintColor={colors.gray500} />
-      </TouchableOpacity>
-      <TextInput
-        autoFocus={true}
+      <View
         style={[
-          padding.horizontal(16),
-          padding.vertical(15),
-          margin.horizontal(10),
-          margin.right(15),
           bg.gray100,
-          { flex: 1, borderRadius: 20 },
+          fill,
+          round.md,
+          row,
+          align.center,
+          h(42),
+          gap(12),
+          padding.horizontal(14),
         ]}
-        placeholder="Search for food"
-      />
+      >
+        <Icon.search fill={colors.gray400} width={20} height={20} />
+        <TextInput
+          autoFocus={true}
+          placeholder="찾고 싶은 음식을 검색하세요"
+          style={[
+            text.body2,
+            text.gray600,
+            fill,
+            { lineHeight: 20 /* temp fix */ },
+          ]}
+          {...input}
+        />
+      </View>
     </View>
   );
+};
+
+export const Search: React.FC<HomeTabScreenProps<"Search">> = ({
+  navigation,
+}) => {
+  const searchQuery = useTextInput();
 
   return (
-    <View style={[bg.white, { flex: 1 }]}>
-      <Header />
+    <View style={[bg.white, fill]}>
+      <SearchBarHeader input={searchQuery} />
       <ScrollView style={[padding.horizontal(safe.horizontal)]}>
         {searchResults.map((item, index) => (
-          <TouchableOpacity
-            key={`search-item-${index}`}
-            style={[
-              bg.white,
-              padding.vertical(12),
-              row,
-              gap(8),
-              { alignItems: "center" },
-            ]}
+          <FoodSearchItem
+            key={item.id}
             onPress={() => navigation.navigate("FoodDetail", { item })}
-          >
-            <Image
-              style={{ width: 48, height: 48, borderRadius: 12 }}
-              source={{
-                uri: item.imageSrc,
-              }}
-            />
-            <View style={[gap(8), { flex: 1 }]}>
-              <View style={[row, gap(8)]}>
-                {staticTags.map(({ title, bg, txt }) => (
-                  <Tag key={title} bgClr={bg} txtClr={txt}>
-                    {title}
-                  </Tag>
-                ))}
-              </View>
-              <View style={[row, gap(8), { alignItems: "center" }]}>
-                <Text style={[text.body1]}>{item.displayName}</Text>
-                <Text style={[text.body2, text.gray400]}>
-                  {item.smallCategory}
-                </Text>
-              </View>
-            </View>
-          </TouchableOpacity>
+            imageSrc={item.imageSrc}
+            tags={staticTags}
+            name={item.name}
+            category={item.smallCategory}
+          />
         ))}
       </ScrollView>
     </View>
