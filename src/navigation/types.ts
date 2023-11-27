@@ -20,6 +20,7 @@ export type RootStackParamList = {
   FoodReview: { foodId: number };
   AddReview: undefined;
   FoodCalculate: undefined;
+  Help: undefined;
 };
 
 export type RootStackScreenProps<T extends keyof RootStackParamList> =
