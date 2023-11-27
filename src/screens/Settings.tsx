@@ -140,6 +140,20 @@ export const Settings: React.FC = () => {
             </View>
           </View>
 
+          <TouchableOpacity
+            style={[
+              bg.white,
+              padding.horizontal(safe.horizontal),
+              padding.vertical(16),
+            ]}
+            onPress={() => navigation.navigate("Help")}
+          >
+            <View style={[row, justify.start, align.center]}>
+              <Text style={[text.h3]}>도움말 모아보기</Text>
+              <View style={[{ flex: 1 }]} />
+              <Icon.right width={30} height={30} fill={colors.gray400} />
+            </View>
+          </TouchableOpacity>
           <View
             style={[
               bg.white,

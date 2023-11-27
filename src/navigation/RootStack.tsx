@@ -15,6 +15,7 @@ import {
   FoodCalculate,
   FoodDetail,
   FoodReview,
+  Help,
 } from "@/screens";
 import { colors } from "@/styles";
 
@@ -51,6 +52,7 @@ export const RootStack: React.FC = () => (
       <Stack.Screen name="FoodReview" component={FoodReview} />
       <Stack.Screen name="AddReview" component={AddReview} />
       <Stack.Screen name="FoodCalculate" component={FoodCalculate} />
+      <Stack.Screen name="Help" component={Help} />
     </Stack.Navigator>
   </NavigationContainer>
 );
