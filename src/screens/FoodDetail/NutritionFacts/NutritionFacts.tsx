@@ -30,9 +30,9 @@ export const NutritionFacts: React.FC<{
       <View style={gap(8)}>
         <View style={[row, align.center, gap(10)]}>
           <Text style={[text.h3, text.gray600]}>영양성분</Text>
-          <Tag bgClr={tag.bg} txtClr={tag.txt}>
-            {tag.title}
-          </Tag>
+          {/*<Tag bgClr={tag.bg} txtClr={tag.txt}>*/}
+          {/*  {tag.title}*/}
+          {/*</Tag>*/}
         </View>
         <Text style={[text.body2, text.gray300]}>
           유저들이 입력한 데이터를 통해 추정된 정보예요

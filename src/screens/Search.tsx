@@ -1,5 +1,5 @@
-import React from "react";
-import { ScrollView, View, TextInput } from "react-native";
+import React, { useEffect } from "react";
+import { ScrollView, View, TextInput, Text } from "react-native";
 import {
   h,
   bg,
@@ -22,6 +22,7 @@ import { Icon } from "@/icons";
 import { FoodSearchItem } from "@/components/FoodSearchItem";
 import { HomeTabParamList, HomeTabScreenProps } from "@/navigation/types";
 import { useTextInput } from "@/hooks";
+import { useFoodSearch } from "@/hooks/useFoodSearch";
 
 // Dummy data for the list items
 const searchResults = [
@@ -121,20 +122,31 @@ export const Search: React.FC<HomeTabScreenProps<"Search">> = ({
 }) => {
   const searchQuery = useTextInput();
 
+  const { data, error, isLoading } = useFoodSearch(searchQuery.value);
+
+  useEffect(() => {
+    console.log(error);
+  }, [error]);
+
   return (
     <View style={[bg.white, fill]}>
       <SearchBarHeader input={searchQuery} />
-      <ScrollView style={[padding.horizontal(safe.horizontal)]}>
-        {searchResults.map((item, index) => (
-          <FoodSearchItem
-            key={item.id}
-            onPress={() => navigation.navigate("FoodDetail", { item })}
-            imageSrc={item.imageSrc}
-            tags={staticTags}
-            name={item.name}
-            category={item.smallCategory}
-          />
-        ))}
+      <ScrollView style={[padding.horizontal(12)]}>
+        {error && <Text>{error.name}</Text>}
+        {isLoading && <Text>Loading</Text>}
+        {data &&
+          data.map(food => (
+            <FoodSearchItem
+              key={food.id}
+              onPress={() =>
+                navigation.navigate("FoodDetail", { foodId: food.id })
+              }
+              imageSrc={food.imageSrc || ""}
+              tags={staticTags}
+              name={food.name}
+              category={food.content?.className || ""}
+            />
+          ))}
       </ScrollView>
     </View>
   );

@@ -70,7 +70,14 @@ export const FoodCalculate: React.FC = () => {
               bottomSheetRef.current?.present();
               bottomSheetRef.current?.expand();
             }}
-            tags={[{ title: "유통식품", bg: "#a40fff40", txt: "#a40fff" }]}
+            tags={[
+              {
+                id: 1,
+                name: "유통 식품",
+                colorBorder: "#a40fff40",
+                colorBackground: "#a40fff",
+              },
+            ]}
           ></BasicInfo>
           <IntakeInput variant={0} />
           <NutritionFacts nutrients={data.nutrients} />

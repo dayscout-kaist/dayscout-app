@@ -38,5 +38,4 @@ export const Icon = {
   up_wide: UpWideIcon,
   down_wide: DownWideIcon,
   camera: CameraIcon,
-
 } as const satisfies Record<IconType, React.FC<SvgProps>>;
