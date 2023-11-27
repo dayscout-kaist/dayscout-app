@@ -10,11 +10,14 @@ import { fill } from "@/styles";
 
 // Temp fix to suppress Animated warning
 import { Animated } from "react-native";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const av = new Animated.Value(0);
 av.addListener(() => {});
 
 SplashScreen.preventAutoHideAsync();
+
+const queryClient = new QueryClient();
 
 const App: React.FC = () => {
   const [fontsLoaded] = useFonts({
@@ -32,13 +35,15 @@ const App: React.FC = () => {
   if (!fontsLoaded) return null;
 
   return (
-    <SafeAreaProvider onLayout={onLayoutRootView}>
-      <GestureHandlerRootView style={fill}>
-        <BottomSheetModalProvider>
-          <RootStack />
-        </BottomSheetModalProvider>
-      </GestureHandlerRootView>
-    </SafeAreaProvider>
+    <QueryClientProvider client={queryClient}>
+      <SafeAreaProvider onLayout={onLayoutRootView}>
+        <GestureHandlerRootView style={fill}>
+          <BottomSheetModalProvider>
+            <RootStack />
+          </BottomSheetModalProvider>
+        </GestureHandlerRootView>
+      </SafeAreaProvider>
+    </QueryClientProvider>
   );
 };
 

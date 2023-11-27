@@ -1,15 +1,17 @@
-import { css } from "@emotion/native";
+import type { FlexStyle } from "react-native";
 
 export type Size = number | "hug" | "fill";
 const calcSize = (size: Size) => {
   if (size === "fill") return "100%";
   if (size === "hug") return "fit-content";
-  return `${size}px`;
+  return size;
 };
 
-const applyAttribute = (attribute: "height" | "width") => (value: Size) => css`
-  ${attribute}: ${calcSize(value)};
-`;
+const applyAttribute =
+  (attribute: "height" | "width") =>
+  (value: Size): FlexStyle => ({
+    [attribute]: calcSize(value),
+  });
 
 /**
  * Applies height

@@ -1,5 +1,6 @@
 /**
  * 100g당
+ * @deprecated
  */
 export interface AbsoluteUnit {
   type: "absolute";
@@ -7,6 +8,7 @@ export interface AbsoluteUnit {
 
 /**
  * 총 내용량 당
+ * @deprecated
  */
 export interface TotalUnit {
   type: "total";
@@ -14,6 +16,7 @@ export interface TotalUnit {
 
 /**
  * 단위 섭취량 당
+ * @deprecated
  */
 export interface SingleUnit {
   type: "single";
@@ -28,4 +31,7 @@ export interface SingleUnit {
   unitWeight: number;
 }
 
+/**
+ * @deprecated
+ */
 export type Unit = AbsoluteUnit | TotalUnit | SingleUnit;

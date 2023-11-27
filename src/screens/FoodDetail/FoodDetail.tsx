@@ -3,14 +3,15 @@ import { ScrollView, View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
-import { BottomButton, BottomSheet } from "@/components";
+import { BottomButton, BottomSheet, ScreenBackground } from "@/components";
 import { column, fill, gap, text } from "@/styles";
-import type { ProductWithDetails } from "@/types/product";
 
 import { BasicInfo } from "./BasicInfo";
 import { Post } from "./Post";
 import { NutritionFacts } from "./NutritionFacts";
 import { ServingSizeRow } from "./NutritionFacts/ServingSizeRow";
+import { RootStackScreenProps } from "@/navigation/types";
+import { useFoodDetail } from "@/hooks/useFoodDetail";
 
 interface ServingSize {
   key: number;
@@ -23,41 +24,28 @@ const servingSizes: ServingSize[] = [
   { key: 2, text: "1회 제공량당" },
 ];
 
-export const FoodDetail: React.FC = () => {
+export const FoodDetail: React.FC<RootStackScreenProps<"FoodDetail">> = ({
+  route: {
+    params: { foodId },
+  },
+}) => {
+  const { data: food, isLoading } = useFoodDetail(foodId);
+
   const [servingSize, setServingSize] = useState<ServingSize>(servingSizes[0]);
   const bottomSheetRef = useRef<BottomSheetModal>(null);
 
   const navigation = useNavigation();
 
-  const data: ProductWithDetails = {
-    id: 100581350,
-    name: "데자와 로얄 밀크티 500ml",
-    imageSrc:
-      "https://sparcs-newara-dev.s3.amazonaws.com/files/snowsuno-in-90s.png",
-    barcodeNumber: 8801097481206,
-    largeCategory: "가공식품",
-    mediumCategory: "차류",
-    smallCategory: "차음료",
-    xSmallCategory: "기타차음료",
-    displayName: "데자와 로얄 밀크티",
-    nutrients: {
-      carbohydrate: 19,
-      protein: 1,
-      fat: 1.5,
-      sugar: 17,
-      energy: 95,
-    },
-    totalWeight: 500,
-  };
+  if (!food) return null;
 
   return (
-    <View style={fill}>
+    <ScreenBackground>
       <ScrollView>
         <View style={[column, gap(12)]}>
           <BasicInfo
-            name={data.displayName}
-            category={data.smallCategory}
-            imgSrc={data.imageSrc}
+            name={food.content.representName || ""}
+            category={food.content.className || ""}
+            imgSrc={food.imageSrc || ""}
             tags={[
               { title: "추정치", bg: "#ffe5c3", txt: "#ff980f" },
               { title: "1,000회 이상 추가됨", bg: "#fdbec1", txt: "#eb2a2a" },
@@ -68,11 +56,11 @@ export const FoodDetail: React.FC = () => {
             count={7}
             avatarSrc="https://sparcs-newara-dev.s3.amazonaws.com/files/NewAra_Channeltalk.jpg"
             review="맛은 있는데 혈당이 많이 올라요 어쩌구 저쩌구 개발 보름 남았다 파이팅~ 라이라이 차차차 라이 차차차"
-            onPress={() => navigation.navigate("FoodReview")}
+            onPress={() => navigation.navigate("FoodReview", { foodId })}
           />
           <NutritionFacts
             tag={{ title: "유통식품", bg: "#a40fff40", txt: "#a40fff" }}
-            nutrients={data.nutrients}
+            nutrients={food.content.nutrients}
             servingSize={servingSize.text}
             onServingSizePress={() => {
               // TODO: Resolve double tab issue
@@ -102,6 +90,6 @@ export const FoodDetail: React.FC = () => {
           />
         ))}
       </BottomSheet>
-    </View>
+    </ScreenBackground>
   );
 };

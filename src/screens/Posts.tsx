@@ -8,7 +8,7 @@ import {
   Dimensions,
 } from "react-native";
 
-import { bg, inline, text } from "@/styles";
+import { bg, fill, inline, text } from "@/styles";
 import { HomeTabScreenProps } from "@/navigation/types";
 
 export const Posts: React.FC<HomeTabScreenProps<"Posts">> = ({
@@ -31,12 +31,8 @@ export const Posts: React.FC<HomeTabScreenProps<"Posts">> = ({
     });
   }, [headerOpacity, navigation]);
 
-  // useEffect(() => {
-  //   console.log(showHeader);
-  // }, [showHeader.show]);
-
   return (
-    <Animated.ScrollView
+    <Animated.ScrollView // TODO: Componentize
       onScroll={Animated.event(
         [
           {
@@ -50,29 +46,27 @@ export const Posts: React.FC<HomeTabScreenProps<"Posts">> = ({
         { useNativeDriver: true },
       )}
       scrollEventThrottle={16}
-      style={{ flex: 1 }}
-      // onScroll={e => console.log(e.nativeEvent.contentOffset.y)}
-      // scrollEventThrottle
+      style={[bg.gray50, fill]}
     >
       <View
         style={[
           {
             height: fullHeight,
             position: "absolute",
-            top: fullHeight,
+            top: -fullHeight,
             left: 0,
             right: 0,
           },
-          bg.gray600,
+          bg.white,
         ]}
       />
-      <View style={[inline]}>
+      <View style={[inline, bg.white]}>
         <Text style={[text.h1, text.gray600]}>포스트</Text>
       </View>
 
       <View
         style={{
-          height: 5000,
+          height: 2000,
           justifyContent: "center",
           alignItems: "center",
         }}

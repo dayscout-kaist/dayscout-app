@@ -25,9 +25,8 @@ import { Icon } from "@/icons";
 import { useNavigation } from "@react-navigation/native";
 import { ProductWithDetails } from "@/types/product";
 import { NutrientRow } from "./NutrientRow";
-import { Nutrients } from "@/types/food";
-import { Tag } from "@/components";
-import { ActionBox } from "../FoodDetail/NutritionFacts/ActionBox";
+import { Nutrients, TagInfo } from "@/types/food";
+import { ActionBox, Tag } from "@/components";
 
 export const BasicInfo: React.FC<{
   initVariant: number;
@@ -38,7 +37,7 @@ export const BasicInfo: React.FC<{
   imageSrc: string;
   servingSize: string;
   onServingSizePress: () => void;
-  tags: { title: string; bg: ColorValue; txt: ColorValue }[];
+  tags: TagInfo[];
 }> = ({
   initVariant,
   displayName,
@@ -53,7 +52,7 @@ export const BasicInfo: React.FC<{
   const [variant, setVariant] = useState(initVariant);
 
   const toggleVariant = () => {
-    setVariant(variant => variant > 0 ? 0 : 1);
+    setVariant(variant => (variant > 0 ? 0 : 1));
   };
 
   const buttonTitles = ["반의 반", "반", "전체"];
@@ -87,10 +86,13 @@ export const BasicInfo: React.FC<{
                 />
                 <View style={[gap(8), { flex: 1 }]}>
                   <View style={[row, gap(6)]}>
-                    {tags.map(({ title, bg, txt }) => (
-                      <Tag key={title} bgClr={bg} txtClr={txt}>
-                        {title}
-                      </Tag>
+                    {tags.map(tag => (
+                      <Tag
+                        key={tag.id}
+                        name={tag.name}
+                        color={tag.colorBorder}
+                        bgColor={tag.colorBackground}
+                      />
                     ))}
                   </View>
                   <View style={[row, gap(6), { alignItems: "center" }]}>
