@@ -1,5 +1,11 @@
 import React, { useEffect } from "react";
 import { ScrollView, View, TextInput, Text } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+import { FoodSearchItem, TagTitle } from "@/components";
+import { useFoodSearch, useTextInput } from "@/hooks";
+import { Icon } from "@/icons";
+import { HomeTabScreenProps } from "@/navigation/types";
 import {
   h,
   bg,
@@ -7,7 +13,6 @@ import {
   gap,
   row,
   text,
-  safe,
   margin,
   colors,
   fill,
@@ -15,14 +20,6 @@ import {
   inline,
   align,
 } from "@/styles";
-import { Tag, TagTitle } from "@/components";
-import { HeaderBackImage } from "@/navigation/Header";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Icon } from "@/icons";
-import { FoodSearchItem } from "@/components/FoodSearchItem";
-import { HomeTabParamList, HomeTabScreenProps } from "@/navigation/types";
-import { useTextInput } from "@/hooks";
-import { useFoodSearch } from "@/hooks/useFoodSearch";
 
 // Dummy data for the list items
 const searchResults = [

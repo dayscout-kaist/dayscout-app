@@ -8,5 +8,6 @@ export * from "./FoodReview";
 export * from "./Help";
 export * from "./Home";
 export * from "./Posts";
+export * from "./Review";
 export * from "./Search";
 export * from "./Settings";

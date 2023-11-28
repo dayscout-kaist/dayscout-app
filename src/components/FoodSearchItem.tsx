@@ -1,4 +1,6 @@
 import React from "react";
+import { ImageBackground, Text, View } from "react-native";
+
 import {
   align,
   bg,
@@ -12,16 +14,10 @@ import {
   text,
   w,
 } from "@/styles";
-import {
-  Image,
-  ImageBackground,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { Tag } from "@/components/Tag";
-import { Clickable } from "@/components/Clickable";
 import type { TagInfo } from "@/types/food";
+
+import { Clickable } from "./Clickable";
+import { Tag } from "./Tag";
 
 interface Props {
   onPress?: () => void;

@@ -1,5 +1,5 @@
 import React from "react";
-import { Animated, Text, TouchableWithoutFeedback, View } from "react-native";
+import { Animated, Text, View } from "react-native";
 
 import { Icon } from "@/icons";
 import {
@@ -18,7 +18,8 @@ import {
   column,
 } from "@/styles";
 import { TossFace } from "@/utils/TossFace";
-import { Clickable } from "@/components/Clickable";
+
+import { Clickable } from "./Clickable";
 
 export const ActionBox: React.FC<{
   icon: string;
