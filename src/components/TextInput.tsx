@@ -17,11 +17,12 @@ import {
   row,
   text,
 } from "@/styles";
+import type { TextInputValidator } from "@/types/input";
 
 export const TextInput: React.FC<{
   value: string;
   setValue: React.Dispatch<React.SetStateAction<string>>;
-  isValid: (value: string) => { valid: true } | { valid: false; msg: string };
+  isValid: TextInputValidator;
   title?: string;
   unit?: string;
   options?: TextInputProps;
