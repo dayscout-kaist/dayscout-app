@@ -3,11 +3,15 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import { HomeTab } from "@/navigation/HomeTab";
-import type { RootStackParamList } from "@/navigation/types";
+import type {
+  AuthStackParamList,
+  RootStackParamList,
+} from "@/navigation/types";
 import {
   AddReview,
   Camera,
   EditProfile,
+  EmailPwd,
   FoodCalculate,
   FoodDetail,
   FoodReview,
@@ -15,10 +19,11 @@ import {
   Help,
 } from "@/screens";
 import { colors } from "@/styles";
-
-import { HeaderBackImage } from "./Header";
 import { AppTheme } from "@/theme";
 
+import { HeaderBackImage } from "./Header";
+
+const AuthStack = createStackNavigator<AuthStackParamList>();
 const Stack = createStackNavigator<RootStackParamList>();
 
 export const RootStack: React.FC = () => {
@@ -28,18 +33,23 @@ export const RootStack: React.FC = () => {
   return (
     <NavigationContainer theme={AppTheme}>
       {authState.userToken === null ? (
-        <Stack.Navigator
+        <AuthStack.Navigator
           screenOptions={{
             headerBackTitleVisible: false,
             headerBackImage: HeaderBackImage(colors.gray500),
           }}
         >
-          <Stack.Screen
+          <AuthStack.Screen
             name="Landing"
             component={Landing}
             options={{ headerShown: false }}
           />
-        </Stack.Navigator>
+          <AuthStack.Screen
+            name="EmailPwd"
+            component={EmailPwd}
+            options={{ title: "" }}
+          />
+        </AuthStack.Navigator>
       ) : (
         <Stack.Navigator
           initialRouteName="HomeTab"
