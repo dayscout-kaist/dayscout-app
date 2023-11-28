@@ -55,13 +55,16 @@ export const Settings: React.FC = () => {
             ]}
           >
             <Text style={[text.h3, margin.bottom(16)]}>계정</Text>
-            <View style={[row, justify.start, align.center]}>
-              <Image
-                style={[round.full, margin.right(16)]}
-                source={{ uri: avatarSrc, width: 40, height: 40 }}
-              />
-              <Text style={[text.sub2, margin.right(16)]}>{nickname}</Text>
-              <View style={[{ flex: 1 }]} />
+            <View style={[row, justify.between, align.center]}>
+              <View style={[row, align.center, gap(14)]}>
+                <Image
+                  style={round.full}
+                  source={{ uri: avatarSrc, width: 40, height: 40 }}
+                />
+                <Text style={[margin.right(16), text.sub2, text.gray600]}>
+                  {nickname}
+                </Text>
+              </View>
               <TouchableOpacity>
                 <Icon.right width={30} height={30} fill={colors.gray400} />
               </TouchableOpacity>
