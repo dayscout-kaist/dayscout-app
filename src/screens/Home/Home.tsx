@@ -142,23 +142,17 @@ export const Home: React.FC = () => {
           <FreqFood
             imageSrc={data.imageSrc}
             name={data.name}
-            carb={data.nutrients.carbohydrate}
-            protein={data.nutrients.protein}
-            fat={data.nutrients.fat}
+            nutrients={data.nutrients}
           />
           <FreqFood
             imageSrc={data.imageSrc}
             name={data.name}
-            carb={data.nutrients.carbohydrate}
-            protein={data.nutrients.protein}
-            fat={data.nutrients.fat}
+            nutrients={data.nutrients}
           />
           <FreqFood
             imageSrc={data.imageSrc}
             name={data.name}
-            carb={data.nutrients.carbohydrate}
-            protein={data.nutrients.protein}
-            fat={data.nutrients.fat}
+            nutrients={data.nutrients}
           />
         </View>
       </ScrollView>
