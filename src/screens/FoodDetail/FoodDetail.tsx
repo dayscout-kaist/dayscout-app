@@ -1,17 +1,16 @@
 import React, { useRef, useState } from "react";
-import { ScrollView, View, Text } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
-import { BottomButton, BottomSheet, ScreenBackground } from "@/components";
-import { column, fill, gap, text } from "@/styles";
+import { BottomSheet, Button, ScreenBackground } from "@/components";
+import { useFoodDetail } from "@/hooks/useFoodDetail";
+import { RootStackScreenProps } from "@/navigation/types";
+import { column, gap, text } from "@/styles";
 
 import { BasicInfo } from "./BasicInfo";
+import { NutritionFacts, ServingSizeRow } from "./NutritionFacts";
 import { Post } from "./Post";
-import { NutritionFacts } from "./NutritionFacts";
-import { ServingSizeRow } from "./NutritionFacts/ServingSizeRow";
-import { RootStackScreenProps } from "@/navigation/types";
-import { useFoodDetail } from "@/hooks/useFoodDetail";
 
 interface ServingSize {
   key: number;
@@ -71,10 +70,11 @@ export const FoodDetail: React.FC<RootStackScreenProps<"FoodDetail">> = ({
           <View style={{ height: 192 }} />
         </View>
       </ScrollView>
-      <BottomButton
+      <Button
         title="영양성분 계산하기"
         onPress={() => navigation.navigate("FoodCalculate")}
         style="primary"
+        stick="bottom"
       />
       <BottomSheet ref={bottomSheetRef}>
         <Text style={[text.h3, text.gray600]}>영양성분 기준</Text>
