@@ -1,7 +1,7 @@
 import React from "react";
 import { type ColorValue, Text, TouchableOpacity, View } from "react-native";
 
-import { Tag } from "@/components";
+import { ActionBox, Tag } from "@/components";
 import { Icon } from "@/icons";
 import {
   align,
@@ -16,7 +16,6 @@ import {
 } from "@/styles";
 import type { Nutrients } from "@/types/food";
 
-import { ActionBox } from "@/components";
 import { NutrientRow } from "./NutrientRow";
 
 export const NutritionFacts: React.FC<{

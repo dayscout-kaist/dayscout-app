@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Button,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -8,6 +7,7 @@ import {
   View,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+
 import { Icon } from "@/icons";
 import {
   bg,
@@ -22,11 +22,11 @@ import {
   align,
   justify,
   round,
-  fill,
 } from "@/styles";
-import { ProductWithDetails } from "@/types/product";
-import { LatestFood } from "./LatestFood";
+import type { ProductWithDetails } from "@/types/product";
+
 import { FreqFood } from "./FreqFood";
+import { LatestFood } from "./LatestFood";
 
 export const Home: React.FC = () => {
   const navigation = useNavigation();

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  Button,
   Text,
   View,
   Image,
@@ -12,13 +11,13 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
+import { Icon } from "@/icons";
 import {
   bg,
   text,
   padding,
   gap,
   margin,
-  border,
   row,
   justify,
   align,
@@ -28,8 +27,6 @@ import {
   round,
   colors,
 } from "@/styles";
-import { Icon } from "@/icons";
-import { color } from "react-native-elements/dist/helpers";
 
 export const Settings: React.FC = () => {
   const navigation = useNavigation();

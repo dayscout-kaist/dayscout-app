@@ -1,30 +1,7 @@
 import React from "react";
-import {
-  Button,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  View,
-  Image,
-} from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { Icon } from "@/icons";
-import {
-  bg,
-  colors,
-  column,
-  margin,
-  padding,
-  row,
-  safe,
-  text,
-  gap,
-  align,
-  justify,
-  round,
-} from "@/styles";
-import { ProductWithDetails } from "@/types/product";
+import { Text, View, Image } from "react-native";
+
+import { bg, margin, padding, row, text, gap, align, round } from "@/styles";
 
 export const FreqFood: React.FC<{
   imageSrc: string;

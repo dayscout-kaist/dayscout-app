@@ -1,4 +1,5 @@
 export * from "./AddReview";
+export * from "./Auth";
 export * from "./Camera";
 export * from "./EditProfile";
 export * from "./FoodCalculate";
@@ -7,5 +8,6 @@ export * from "./FoodReview";
 export * from "./Help";
 export * from "./Home";
 export * from "./Posts";
+export * from "./Review";
 export * from "./Search";
 export * from "./Settings";

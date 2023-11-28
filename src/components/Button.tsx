@@ -3,10 +3,12 @@ import {
   type GestureResponderEvent,
   TouchableOpacity,
   Text,
+  ViewStyle,
 } from "react-native";
 import { align, bg, padding, round, safe, text } from "@/styles";
 
 type Style = "primary" | "secondary";
+type Stick = "bottom" | "keyboard";
 
 const getTheme = (style: Style, disabled: boolean | undefined) => {
   switch (style) {
@@ -21,13 +23,30 @@ const getTheme = (style: Style, disabled: boolean | undefined) => {
   }
 };
 
-export const BottomButton: React.FC<{
+export const Button: React.FC<{
   title: string;
   onPress: (event: GestureResponderEvent) => void;
   style: Style;
   disabled?: boolean;
-}> = ({ title, onPress, style, disabled }) => {
+  stick?: Stick;
+}> = ({ title, onPress, style, disabled, stick }) => {
   const theme = getTheme(style, disabled);
+
+  const stickStyle = {
+    bottom: {
+      position: "absolute",
+      bottom: safe.bottom,
+      left: safe.horizontal,
+      right: safe.horizontal,
+    },
+    keyboard: {
+      position: "absolute",
+      bottom: 0,
+      left: 0,
+      right: 0,
+      borderRadius: 0,
+    },
+  } as const satisfies Record<Stick, ViewStyle>;
 
   return (
     <TouchableOpacity
@@ -37,12 +56,7 @@ export const BottomButton: React.FC<{
         padding.vertical(20),
         align.center,
         theme.bg,
-        {
-          position: "absolute",
-          bottom: safe.bottom,
-          left: safe.horizontal,
-          right: safe.horizontal,
-        },
+        stick ? stickStyle[stick] : {},
       ]}
       onPress={onPress}
       disabled={disabled}

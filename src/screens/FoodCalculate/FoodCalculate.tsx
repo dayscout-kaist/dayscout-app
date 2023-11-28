@@ -3,7 +3,7 @@ import { ScrollView, View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
-import { BottomButton, BottomSheet } from "@/components";
+import { BottomSheet, Button } from "@/components";
 import { column, fill, gap, text } from "@/styles";
 import type { ProductWithDetails } from "@/types/product";
 
@@ -84,10 +84,11 @@ export const FoodCalculate: React.FC = () => {
           <View style={{ height: 192 }} />
         </View>
       </ScrollView>
-      <BottomButton
+      <Button
         title="나의 기록에 추가하기"
         onPress={() => navigation.navigate("FoodCalculate")}
         style="primary"
+        stick="bottom"
       />
       <BottomSheet ref={bottomSheetRef}>
         <Text style={[text.h3, text.gray600]}>영양성분 기준</Text>
