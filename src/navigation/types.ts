@@ -11,6 +11,7 @@ export type AuthStackParamList = {
   Landing: undefined;
   EmailPwd: RegisterInfo;
   Nickname: RegisterInfo;
+  Inbody: RegisterInfo;
 };
 
 export type HomeTabParamList = {

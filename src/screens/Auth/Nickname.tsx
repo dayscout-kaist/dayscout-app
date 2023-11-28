@@ -29,7 +29,7 @@ export const Nickname: React.FC<AuthStackScreenProps<"Nickname">> = ({
   return (
     <FormLayout
       title="사용하실 별명을 입력하세요"
-      onSubmit={() => {}}
+      onSubmit={() => navigation.navigate("Inbody", { ...navParam, nickname })}
       isValid={isFormValid}
     >
       <TextInput

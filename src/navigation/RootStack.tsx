@@ -15,8 +15,9 @@ import {
   FoodCalculate,
   FoodDetail,
   FoodReview,
-  Landing,
   Help,
+  Inbody,
+  Landing,
   Nickname,
 } from "@/screens";
 import { colors } from "@/styles";
@@ -53,6 +54,11 @@ export const RootStack: React.FC = () => {
           <AuthStack.Screen
             name="Nickname"
             component={Nickname}
+            options={{ title: "" }}
+          />
+          <AuthStack.Screen
+            name="Inbody"
+            component={Inbody}
             options={{ title: "" }}
           />
         </AuthStack.Navigator>
