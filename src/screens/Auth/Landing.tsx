@@ -31,13 +31,7 @@ export const Landing: React.FC = () => {
           }}
           style="primary"
         />
-        <Button
-          title="회원가입"
-          onPress={() => {
-            navigation.navigate("EmailPwd");
-          }}
-          style="secondary"
-        />
+        <Button title="회원가입" onPress={() => {}} style="secondary" />
       </View>
     </View>
   );

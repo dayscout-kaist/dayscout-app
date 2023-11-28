@@ -104,7 +104,7 @@ export const Home: React.FC = () => {
             </View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback
-            onPress={() => navigation.navigate("FoodReview")}
+            onPress={() => navigation.navigate("HomeTab", { screen: "Posts" })}
           >
             <View
               style={[
