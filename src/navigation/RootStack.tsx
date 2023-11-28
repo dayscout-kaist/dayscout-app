@@ -17,6 +17,7 @@ import {
   FoodReview,
   Landing,
   Help,
+  Nickname,
 } from "@/screens";
 import { colors } from "@/styles";
 import { AppTheme } from "@/theme";
@@ -47,6 +48,11 @@ export const RootStack: React.FC = () => {
           <AuthStack.Screen
             name="EmailPwd"
             component={EmailPwd}
+            options={{ title: "" }}
+          />
+          <AuthStack.Screen
+            name="Nickname"
+            component={Nickname}
             options={{ title: "" }}
           />
         </AuthStack.Navigator>
