@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { ScrollView, View, TextInput, Text } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { FoodSearchItem, TagTitle } from "@/components";
+import { FoodSearchItem } from "@/components";
 import { useFoodSearch, useTextInput } from "@/hooks";
 import { Icon } from "@/icons";
 import { HomeTabScreenProps } from "@/navigation/types";
@@ -27,7 +27,6 @@ const searchResults = [
     id: 100581350,
     name: "데자와 로얄 밀크티 500ml",
     imageSrc:
-      // "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D",
       "https://sparcs-newara-dev.s3.amazonaws.com/files/snowsuno-in-90s.png",
     barcodeNumber: 8801097481206,
     largeCategory: "가공식품",
@@ -48,7 +47,6 @@ const searchResults = [
     id: 100581350,
     name: "데자와 로얄 밀크티 500ml",
     imageSrc:
-      // "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D",
       "https://sparcs-newara-dev.s3.amazonaws.com/files/snowsuno-in-90s.png",
     barcodeNumber: 8801097481206,
     largeCategory: "가공식품",
@@ -67,8 +65,6 @@ const searchResults = [
   },
   // Add more items here...
 ];
-
-const staticTags: TagTitle[] = ["추정치", "혈당 스파이크"];
 
 const SearchBarHeader: React.FC<{
   input: { value: string; onChangeText: (text: string) => void };
@@ -139,7 +135,7 @@ export const Search: React.FC<HomeTabScreenProps<"Search">> = ({
                 navigation.navigate("FoodDetail", { foodId: food.id })
               }
               imageSrc={food.imageSrc || ""}
-              tags={staticTags}
+              tags={[]}
               name={food.name}
               category={food.content?.className || ""}
             />
