@@ -1,4 +1,5 @@
 export * from "./AddReview";
+export * from "./Auth";
 export * from "./Camera";
 export * from "./EditProfile";
 export * from "./FoodCalculate";

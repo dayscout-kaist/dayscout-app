@@ -13,6 +13,7 @@ export type HomeTabParamList = {
 };
 
 export type RootStackParamList = {
+  Landing: undefined;
   HomeTab: NavigatorScreenParams<HomeTabParamList>;
   Camera: undefined;
   FoodDetail: { foodId: number };
