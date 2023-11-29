@@ -34,7 +34,7 @@ export const FoodSearchItem: React.FC<Props> = ({
   name,
   category,
 }) => (
-  <Clickable onPress={onPress}>
+  <Clickable onPress={onPress} viewStyle={round.lg}>
     <View style={[row, gap(12), align.center, padding(12)]}>
       <View
         style={[

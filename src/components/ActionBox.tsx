@@ -29,7 +29,7 @@ export const ActionBox: React.FC<{
 }> = ({ icon, main, desc, onPress }) => {
   return (
     <View style={[padding.vertical(10), padding.horizontal(12)]}>
-      <Clickable onPress={onPress}>
+      <Clickable onPress={onPress} viewStyle={round.md}>
         <Animated.View
           style={[
             row,
