@@ -44,7 +44,13 @@ export const Personal: React.FC<AuthStackScreenProps<"Personal">> = ({
     <>
       <FormLayout
         title="생일과 성별을 입력하세요"
-        onSubmit={() => {}}
+        onSubmit={() =>
+          navigation.navigate("Greet", {
+            ...navParam,
+            birth,
+            gender,
+          })
+        }
         isValid={isFormValid}
       >
         <TextInput

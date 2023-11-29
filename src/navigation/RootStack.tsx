@@ -15,6 +15,7 @@ import {
   FoodCalculate,
   FoodDetail,
   FoodReview,
+  Greet,
   Help,
   Inbody,
   Landing,
@@ -66,6 +67,11 @@ export const RootStack: React.FC = () => {
             name="Personal"
             component={Personal}
             options={{ title: "" }}
+          />
+          <AuthStack.Screen
+            name="Greet"
+            component={Greet}
+            options={{ headerShown: false }}
           />
         </AuthStack.Navigator>
       ) : (
