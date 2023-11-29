@@ -2,6 +2,7 @@ import React, { useCallback } from "react";
 import { Animated, KeyboardAvoidingView, Platform } from "react-native"; // Temp fix to suppress Animated warning
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { RecoilRoot } from "recoil";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
@@ -33,20 +34,22 @@ const App: React.FC = () => {
   if (!fontsLoaded) return null;
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <KeyboardAvoidingView
-        style={fill}
-        behavior={Platform.select({ ios: "padding", android: "height" })}
-      >
-        <GestureHandlerRootView style={fill}>
-          <BottomSheetModalProvider>
-            <SafeAreaProvider onLayout={onLayoutRootView}>
-              <RootStack />
-            </SafeAreaProvider>
-          </BottomSheetModalProvider>
-        </GestureHandlerRootView>
-      </KeyboardAvoidingView>
-    </QueryClientProvider>
+    <RecoilRoot>
+      <QueryClientProvider client={queryClient}>
+        <KeyboardAvoidingView
+          style={fill}
+          behavior={Platform.select({ ios: "padding", android: "height" })}
+        >
+          <GestureHandlerRootView style={fill}>
+            <BottomSheetModalProvider>
+              <SafeAreaProvider onLayout={onLayoutRootView}>
+                <RootStack />
+              </SafeAreaProvider>
+            </BottomSheetModalProvider>
+          </GestureHandlerRootView>
+        </KeyboardAvoidingView>
+      </QueryClientProvider>
+    </RecoilRoot>
   );
 };
 
