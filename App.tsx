@@ -9,6 +9,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { RootStack } from "@/navigation/RootStack";
 import { fill } from "@/styles";
+import { OverlayProvider } from "@toss/use-overlay";
 
 const av = new Animated.Value(0);
 av.addListener(() => {});
@@ -40,9 +41,11 @@ const App: React.FC = () => {
       >
         <GestureHandlerRootView style={fill}>
           <BottomSheetModalProvider>
-            <SafeAreaProvider onLayout={onLayoutRootView}>
-              <RootStack />
-            </SafeAreaProvider>
+            <OverlayProvider>
+              <SafeAreaProvider onLayout={onLayoutRootView}>
+                <RootStack />
+              </SafeAreaProvider>
+            </OverlayProvider>
           </BottomSheetModalProvider>
         </GestureHandlerRootView>
       </KeyboardAvoidingView>

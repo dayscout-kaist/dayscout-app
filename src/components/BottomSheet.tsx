@@ -1,51 +1,68 @@
-import React, { forwardRef } from "react";
+import React, { PropsWithChildren, useEffect, useRef } from "react";
 import {
   BottomSheetBackdrop,
   BottomSheetModal,
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
-import type { BottomSheetModalMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
+import { bg } from "@/styles";
+import type { FlexStyle, StyleProp } from "react-native";
 
-import { bg, padding, safe } from "@/styles";
+interface SheetProps extends PropsWithChildren {
+  backdrop?: boolean;
+  open: boolean;
+  onClose?: () => void;
+  delayClose?: boolean;
+  viewStyle?: StyleProp<FlexStyle>;
+}
 
-export const BottomSheet = forwardRef<
-  BottomSheetModalMethods,
-  { children: React.ReactNode }
->(({ children }, ref) => (
-  <BottomSheetModal
-    ref={ref}
-    index={-1}
-    enablePanDownToClose
-    enableDynamicSizing
-    animateOnMount
-    backgroundStyle={[
-      bg.white,
-      { borderTopLeftRadius: 24, borderTopRightRadius: 24 },
-    ]}
-    handleStyle={[padding.top(15), padding.bottom(16)]}
-    handleIndicatorStyle={[bg.gray300, { width: 80, height: 6 }]}
-    backdropComponent={props => (
-      <BottomSheetBackdrop
-        {...props}
-        disappearsOnIndex={-1}
-        appearsOnIndex={0}
-        enableTouchThrough={false}
-        pressBehavior="close"
-        style={{
-          position: "absolute",
-          top: 0,
-          bottom: 0,
-          left: 0,
-          right: 0,
-          backgroundColor: "rgba(0, 0, 0, 0.3)",
-        }}
-      />
-    )}
-  >
-    <BottomSheetView
-      style={[padding.horizontal(safe.horizontal), padding.bottom(safe.bottom)]}
+export const BottomSheet: React.FC<SheetProps> = ({
+  open,
+  onClose,
+  backdrop,
+  children,
+  delayClose,
+  viewStyle,
+}) => {
+  const ref = useRef<BottomSheetModal>(null);
+
+  useEffect(() => {
+    if (!ref.current) return;
+    if (open) return ref.current.present();
+    delayClose ? setTimeout(ref.current?.close, 100) : ref.current.close();
+  }, [open]);
+
+  return (
+    <BottomSheetModal
+      ref={ref}
+      enableDynamicSizing
+      backgroundStyle={[
+        bg.white,
+        {
+          borderTopLeftRadius: 24,
+          borderTopRightRadius: 24,
+          shadowColor: "#000",
+          shadowRadius: 24,
+          shadowOffset: { width: 0, height: 0 },
+          shadowOpacity: 0.1,
+          elevation: 50,
+        },
+      ]}
+      handleIndicatorStyle={[bg.gray300, { width: 80, height: 6 }]}
+      backdropComponent={props =>
+        backdrop && (
+          <BottomSheetBackdrop
+            appearsOnIndex={0}
+            disappearsOnIndex={-1}
+            opacity={0.3}
+            enableTouchThrough={false}
+            pressBehavior="close"
+            {...props}
+          />
+        )
+      }
+      onDismiss={onClose}
     >
-      {children}
-    </BottomSheetView>
-  </BottomSheetModal>
-));
+      <BottomSheetView style={viewStyle}>{children}</BottomSheetView>
+    </BottomSheetModal>
+  );
+};
