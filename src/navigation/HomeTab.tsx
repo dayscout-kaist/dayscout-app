@@ -48,6 +48,7 @@ export const HomeTab: React.FC = () => {
           marginBottom: 8,
           paddingTop: 2,
         },
+        tabBarHideOnKeyboard: true,
       }}
     >
       <Tab.Screen
@@ -64,6 +65,7 @@ export const HomeTab: React.FC = () => {
         options={{
           title: "검색",
           tabBarIcon: TabIcon("search"),
+          unmountOnBlur: true,
         }}
       />
       <Tab.Screen
