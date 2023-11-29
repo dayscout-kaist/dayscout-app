@@ -3,10 +3,12 @@ import { Image, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 import { Button } from "@/components";
+import { useAuthToken } from "@/hooks";
 import { center, fill, gap, safe, text } from "@/styles";
 
 export const Landing: React.FC = () => {
   const navigation = useNavigation();
+  const { saveToken } = useAuthToken();
 
   return (
     <View style={[fill, center]}>
@@ -27,15 +29,14 @@ export const Landing: React.FC = () => {
         <Button
           title="로그인"
           onPress={() => {
-            navigation.navigate("Landing");
+            // TODO: Call API to login
+            saveToken("TmpToken");
           }}
           style="primary"
         />
         <Button
           title="회원가입"
-          onPress={() => {
-            navigation.navigate("EmailPwd", {});
-          }}
+          onPress={() => navigation.navigate("EmailPwd", {})}
           style="secondary"
         />
       </View>

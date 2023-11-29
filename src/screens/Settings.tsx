@@ -8,9 +8,11 @@ import {
   Keyboard,
   ScrollView,
   TouchableOpacity,
+  Button,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
+import { useAuthToken } from "@/hooks";
 import { Icon } from "@/icons";
 import {
   bg,
@@ -30,6 +32,7 @@ import {
 
 export const Settings: React.FC = () => {
   const navigation = useNavigation();
+  const { clearToken } = useAuthToken();
 
   const [isSwitch1On, setSwitch1On] = useState(false);
   const [isSwitch2On, setSwitch2On] = useState(false);
@@ -193,6 +196,7 @@ export const Settings: React.FC = () => {
               />
             </View>
           </View>
+          <Button title="로그아웃" onPress={() => clearToken()} />
         </View>
       </ScrollView>
     </View>
