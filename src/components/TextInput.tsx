@@ -9,6 +9,7 @@ import {
 import {
   align,
   bg,
+  colors,
   fill,
   gap,
   margin,
@@ -47,6 +48,7 @@ export const TextInput: React.FC<{
       >
         <TxtInput
           style={[fill, text.btn1, text.gray600]}
+          placeholderTextColor={colors.gray300}
           value={value}
           onChangeText={text => {
             const check = isValid(text);
