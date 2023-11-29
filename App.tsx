@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { Animated } from "react-native"; // Temp fix to suppress Animated warning
+import { Animated, KeyboardAvoidingView, Platform } from "react-native"; // Temp fix to suppress Animated warning
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useFonts } from "expo-font";
@@ -34,13 +34,18 @@ const App: React.FC = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <SafeAreaProvider onLayout={onLayoutRootView}>
+      <KeyboardAvoidingView
+        style={fill}
+        behavior={Platform.select({ ios: "padding", android: "height" })}
+      >
         <GestureHandlerRootView style={fill}>
           <BottomSheetModalProvider>
-            <RootStack />
+            <SafeAreaProvider onLayout={onLayoutRootView}>
+              <RootStack />
+            </SafeAreaProvider>
           </BottomSheetModalProvider>
         </GestureHandlerRootView>
-      </SafeAreaProvider>
+      </KeyboardAvoidingView>
     </QueryClientProvider>
   );
 };
