@@ -26,7 +26,7 @@ export const searchByBarcode = async (code: number) => {
 
 export const getFoodDetail = async (foodId: number) => {
   const res = await apiClient.get<FoodDetail>("/food/detail", {
-    params: { food_id: foodId },
+    params: { id: foodId },
   });
 
   return res.data;
