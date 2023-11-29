@@ -43,7 +43,7 @@ export const ActionBox: React.FC<{
             <Animated.View
               style={[center, round.full, w(54), h(54), bg.gray50]}
             >
-              <TossFace icon={icon} style={{ fontSize: 32 }} />
+              <TossFace icon={icon} size={36} />
             </Animated.View>
             <View style={[column, gap(2)]}>
               <Text style={[text.body2, text.gray300]}>{main}</Text>
