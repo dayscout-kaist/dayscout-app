@@ -32,6 +32,7 @@ export const RootStack: React.FC = () => {
           screenOptions={{
             headerBackTitleVisible: false,
             headerBackImage: HeaderBackImage(colors.gray500),
+            headerTitleAlign: "center",
           }}
         >
           <Stack.Screen
@@ -66,7 +67,11 @@ export const RootStack: React.FC = () => {
           <Stack.Screen name="EditProfile" component={EditProfile} />
           <Stack.Screen name="FoodReview" component={FoodReview} />
           <Stack.Screen name="AddReview" component={AddReview} />
-          <Stack.Screen name="FoodCalculate" component={FoodCalculate} />
+          <Stack.Screen
+            name="FoodCalculate"
+            component={FoodCalculate}
+            options={{ title: "섭취량 계산하기" }}
+          />
           <Stack.Screen name="Help" component={Help} />
         </Stack.Navigator>
       )}
