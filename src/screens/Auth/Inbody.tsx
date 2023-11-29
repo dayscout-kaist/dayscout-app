@@ -31,7 +31,13 @@ export const Inbody: React.FC<AuthStackScreenProps<"Inbody">> = ({
   return (
     <FormLayout
       title="신체 정보를 입력하세요"
-      onSubmit={() => {}}
+      onSubmit={() =>
+        navigation.navigate("Personal", {
+          ...navParam,
+          height: parseFloat(height),
+          weight: parseFloat(weight),
+        })
+      }
       isValid={isFormValid}
     >
       <TextInput

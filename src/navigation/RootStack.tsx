@@ -19,6 +19,7 @@ import {
   Inbody,
   Landing,
   Nickname,
+  Personal,
 } from "@/screens";
 import { colors } from "@/styles";
 import { AppTheme } from "@/theme";
@@ -59,6 +60,11 @@ export const RootStack: React.FC = () => {
           <AuthStack.Screen
             name="Inbody"
             component={Inbody}
+            options={{ title: "" }}
+          />
+          <AuthStack.Screen
+            name="Personal"
+            component={Personal}
             options={{ title: "" }}
           />
         </AuthStack.Navigator>

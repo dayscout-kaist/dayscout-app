@@ -12,6 +12,7 @@ export type AuthStackParamList = {
   EmailPwd: RegisterInfo;
   Nickname: RegisterInfo;
   Inbody: RegisterInfo;
+  Personal: RegisterInfo;
 };
 
 export type HomeTabParamList = {

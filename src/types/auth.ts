@@ -1,3 +1,5 @@
+export type Gender = "M" | "F";
+
 export interface RegisterInfo {
   email?: string;
   password?: string;
@@ -5,5 +7,5 @@ export interface RegisterInfo {
   height?: number;
   weight?: number;
   birth?: string;
-  gender?: "M" | "F";
+  gender?: Gender;
 }
