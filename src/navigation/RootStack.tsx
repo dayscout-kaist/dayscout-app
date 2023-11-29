@@ -41,6 +41,7 @@ export const RootStack: React.FC = () => {
           screenOptions={{
             headerBackTitleVisible: false,
             headerBackImage: HeaderBackImage(colors.gray500),
+            title: "",
           }}
         >
           <AuthStack.Screen
@@ -48,26 +49,10 @@ export const RootStack: React.FC = () => {
             component={Landing}
             options={{ headerShown: false }}
           />
-          <AuthStack.Screen
-            name="EmailPwd"
-            component={EmailPwd}
-            options={{ title: "" }}
-          />
-          <AuthStack.Screen
-            name="Nickname"
-            component={Nickname}
-            options={{ title: "" }}
-          />
-          <AuthStack.Screen
-            name="Inbody"
-            component={Inbody}
-            options={{ title: "" }}
-          />
-          <AuthStack.Screen
-            name="Personal"
-            component={Personal}
-            options={{ title: "" }}
-          />
+          <AuthStack.Screen name="EmailPwd" component={EmailPwd} />
+          <AuthStack.Screen name="Nickname" component={Nickname} />
+          <AuthStack.Screen name="Inbody" component={Inbody} />
+          <AuthStack.Screen name="Personal" component={Personal} />
           <AuthStack.Screen
             name="Greet"
             component={Greet}
