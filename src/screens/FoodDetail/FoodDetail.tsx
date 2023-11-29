@@ -3,13 +3,13 @@ import { ScrollView, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
-import { BottomSheet, Button, ScreenBackground } from "@/components";
+import { BottomSheet, Button, OptionRow, ScreenBackground } from "@/components";
 import { useFoodDetail } from "@/hooks/useFoodDetail";
 import { RootStackScreenProps } from "@/navigation/types";
 import { column, gap, text } from "@/styles";
 
 import { BasicInfo } from "./BasicInfo";
-import { NutritionFacts, ServingSizeRow } from "./NutritionFacts";
+import { NutritionFacts } from "./NutritionFacts";
 import { Post } from "./Post";
 
 interface ServingSize {
@@ -79,7 +79,7 @@ export const FoodDetail: React.FC<RootStackScreenProps<"FoodDetail">> = ({
       <BottomSheet ref={bottomSheetRef}>
         <Text style={[text.h3, text.gray600]}>영양성분 기준</Text>
         {servingSizes.map(serve => (
-          <ServingSizeRow
+          <OptionRow
             key={serve.key}
             value={serve.text}
             onPress={() => {
