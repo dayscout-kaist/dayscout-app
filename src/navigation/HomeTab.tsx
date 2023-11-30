@@ -1,12 +1,13 @@
 import React from "react";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
+import { IconButton } from "@/components";
 import { Icon, type IconType } from "@/icons";
 import type { HomeTabParamList } from "@/navigation/types";
 import { Home, Posts, Search, Settings } from "@/screens";
 import { bg, colors, padding, text } from "@/styles";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { IconButton } from "@/components";
 
 const Tab = createBottomTabNavigator<HomeTabParamList>();
 
@@ -83,6 +84,7 @@ export const HomeTab: React.FC = () => {
           headerShown: true,
           headerStyle: [{ opacity: 1, borderBottomWidth: 0 }],
           tabBarIcon: TabIcon("sticker"),
+          headerTitle: "",
           headerRight: () => (
             <IconButton
               onPress={navigation => navigation.navigate("AddReview")}
