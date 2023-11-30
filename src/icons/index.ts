@@ -1,6 +1,7 @@
 import React from "react";
 import { SvgProps } from "react-native-svg";
 
+import AddIcon from "./add.svg";
 import CheckIcon from "./check.svg";
 import DownIcon from "./down.svg";
 import HomeIcon from "./home.svg";
@@ -15,6 +16,7 @@ import CameraIcon from "./camera.svg";
 import Logo from "./logo.svg";
 
 export const Icon = {
+  add: AddIcon,
   check: CheckIcon,
   down: DownIcon,
   home: HomeIcon,

@@ -13,7 +13,7 @@ export const useScrollHeader = () => {
 
   useEffect(() => {
     navigation.setOptions({
-      headerStyle: {
+      headerTitleStyle: {
         opacity: headerOpacity,
       },
     });

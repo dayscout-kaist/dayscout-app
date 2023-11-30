@@ -23,6 +23,7 @@ import { HomeTabScreenProps } from "@/navigation/types";
 import { Tag } from "@/components";
 import { ActionBox } from "@/components";
 import { useScrollHeader } from "@/hooks/useScrollHeader";
+import { useCurrentWeek } from "@/hooks";
 
 // 예시로 사용할 임시 데이터
 const postsData = [
@@ -53,7 +54,7 @@ export const Posts: React.FC<HomeTabScreenProps<"Posts">> = ({
   const scroll = useScrollHeader();
   const { height: fullHeight } = Dimensions.get("window");
 
-  const dates = ["12", "13", "14", "15", "16", "17", "18"];
+  const { today, weekdays } = useCurrentWeek();
 
   return (
     <Animated.ScrollView style={[bg.gray50, fill]} {...scroll}>
@@ -69,10 +70,7 @@ export const Posts: React.FC<HomeTabScreenProps<"Posts">> = ({
           bg.white,
         ]}
       />
-      <View style={[inline]}>
-        <View>
-          <Text>대충 플러스 버튼</Text>
-        </View>
+      <View style={[inline, bg.white]}>
         <Text style={[text.h1, text.gray600]}>포스트</Text>
       </View>
       <View style={bg.gray50}>
@@ -85,15 +83,15 @@ export const Posts: React.FC<HomeTabScreenProps<"Posts">> = ({
             padding.vertical(12),
           ]}
         >
-          {dates.map(date => (
+          {weekdays.map(date => (
             <View
               key={date}
               style={[
-                bg.primary,
+                date === today ? bg.primary : bg.gray50,
+                fill,
                 {
                   alignItems: "center",
                   justifyContent: "center",
-                  width: 40,
                   height: 40,
                   borderRadius: 11,
                 },
