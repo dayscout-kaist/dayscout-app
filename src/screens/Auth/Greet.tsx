@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View } from "react-native";
 
+import { register } from "@/api/auth";
 import { Button } from "@/components";
 import { useAuthToken } from "@/hooks";
 import type { AuthStackScreenProps } from "@/navigation/types";
@@ -16,9 +17,9 @@ export const Greet: React.FC<AuthStackScreenProps<"Greet">> = ({
       <Text style={[text.h1, text.gray600]}>환영합니다!</Text>
       <Button
         title="시작하기"
-        onPress={() => {
-          // TODO: Call API to get token
-          saveToken("TmpToken");
+        onPress={async () => {
+          const user = await register(navParam);
+          saveToken(user.token);
         }}
         variant="primary"
         stick="bottom"
