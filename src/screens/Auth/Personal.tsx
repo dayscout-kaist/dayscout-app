@@ -61,7 +61,7 @@ export const Personal: React.FC<AuthStackScreenProps<"Personal">> = ({
           value={gender}
           title="성별"
           placeholder="성별을 선택하세요"
-          onPress={open}
+          onPress={() => open().then(setGender)}
         />
       </FormLayout>
     </>

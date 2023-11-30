@@ -37,7 +37,7 @@ export const OptionSelect: React.FC<{
       ]}
       onPress={onPress}
     >
-      <Text style={[fill, text.btn1, !!value ? text.gray300 : text.gray600]}>
+      <Text style={[fill, text.btn1, !value ? text.gray300 : text.gray600]}>
         {value ?? placeholder}
       </Text>
       <Icon.down_wide width={26} height={26} fill={colors.gray500} />

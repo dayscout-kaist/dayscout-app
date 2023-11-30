@@ -27,6 +27,7 @@ export const useSelectBottomSheet = <T extends string>({
             open={isOpen}
             onClose={close}
             viewStyle={[
+              padding.top(12),
               padding.horizontal(safe.horizontal),
               padding.bottom(safe.bottom),
             ]}
