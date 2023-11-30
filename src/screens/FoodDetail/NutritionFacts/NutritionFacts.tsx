@@ -24,7 +24,15 @@ export const NutritionFacts: React.FC<{
   suggestions?: Nutrients;
   servingSize: string;
   onServingSizePress: () => void;
-}> = ({ tag, nutrients, suggestions, servingSize, onServingSizePress }) => (
+  suggestionFeedback: () => void;
+}> = ({
+  tag,
+  nutrients,
+  suggestions,
+  servingSize,
+  onServingSizePress,
+  suggestionFeedback,
+}) => (
   <View style={[padding.top(20), bg.white]}>
     <View style={[gap(13), padding.horizontal(safe.horizontal)]}>
       <View style={gap(8)}>
@@ -80,11 +88,20 @@ export const NutritionFacts: React.FC<{
       </View>
       <View style={[bg.gray50, { height: 1 }]} />
     </View>
-    <ActionBox
-      icon="🔢"
-      main="정보가 정확하지 않다면"
-      desc="영양정보 수정 제안하기"
-      onPress={() => {}}
-    />
+    {!suggestions ? (
+      <ActionBox
+        icon="🔢"
+        main="정보가 정확하지 않다면"
+        desc="영양정보 수정 제안하기"
+        onPress={() => {}}
+      />
+    ) : (
+      <ActionBox
+        icon="📬"
+        main="바뀐 정보가 정확한가요?"
+        desc="영양정보 피드백 남기기"
+        onPress={suggestionFeedback}
+      />
+    )}
   </View>
 );

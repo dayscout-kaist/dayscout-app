@@ -1,7 +1,7 @@
 import { type ReactNode } from "react";
 import { useBottomSheet } from "./useBottomSheet";
 import { View } from "react-native";
-import { gap, row } from "@/styles";
+import { fill, gap, row } from "@/styles";
 import { Button } from "@/components/Button";
 
 interface Props {
@@ -20,15 +20,21 @@ export const useDialog = ({
   useBottomSheet<boolean>(title, resolve => (
     <View>
       {contents}
-      <View style={[row, gap(8)]}>
+      <View style={[row, gap(12)]}>
         {cancel && (
           <Button
             title={cancel}
             onPress={() => resolve(false)}
-            style="secondary"
+            variant="secondary"
+            style={fill}
           />
         )}
-        <Button title={confirm} onPress={() => resolve(true)} style="primary" />
+        <Button
+          title={confirm}
+          onPress={() => resolve(true)}
+          variant="primary"
+          style={fill}
+        />
       </View>
     </View>
   ));

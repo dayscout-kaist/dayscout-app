@@ -20,7 +20,8 @@ export const NutrientRow: React.FC<{
   value: number | undefined;
   suggestion?: number;
   sub?: boolean;
-}> = ({ name, value, suggestion, sub }) => (
+  hideInfo?: boolean;
+}> = ({ name, value, suggestion, sub, hideInfo }) => (
   <View>
     <View style={[row, justify.between, sub && margin.top(-6)]}>
       <Text style={[text.body1, text.gray400]}>
@@ -33,7 +34,7 @@ export const NutrientRow: React.FC<{
         {suggestion && <Text style={text.warning}>{suggestion}g</Text>}
       </Text>
     </View>
-    {suggestion && (
+    {!hideInfo && suggestion && (
       <View
         style={[
           row,
