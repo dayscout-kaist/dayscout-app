@@ -19,3 +19,9 @@ export const register = async (info: RegisterInfo) => {
 
   return res.data;
 };
+
+export const getUserInfo = async (token: string) => {
+  const res = await apiClient.post<User>("/auth/", { token });
+
+  return res.data;
+};
