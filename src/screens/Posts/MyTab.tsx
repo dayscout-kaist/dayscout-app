@@ -86,26 +86,26 @@ export const MyTab: React.FC = () => {
       >
         {weekdays.map(date => (
           <View
-            key={date}
+            key={date.getTime()}
             style={[
               fill,
               center,
               round.md,
               h(40),
-              date === today ? bg.primary : bg.gray50,
+              date.getTime() === today.getTime() ? bg.primary : bg.gray50,
             ]}
           >
             <Text
               style={[
                 text.sub2,
-                date === today
-                  ? text.white
-                  : date < today
-                    ? text.gray500
-                    : text.gray300,
+                date < today
+                  ? text.gray500
+                  : date > today
+                    ? text.gray300
+                    : text.white,
               ]}
             >
-              {date}
+              {date.getDate()}
             </Text>
           </View>
         ))}
