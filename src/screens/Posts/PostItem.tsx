@@ -40,9 +40,10 @@ export const PostItem: React.FC<{
           </Text>
         </View>
         <Clickable
-          viewStyle={[round.md]}
-          initialBg={msg === null ? bg.primaryTransLight : bg.gray100}
-          whileTapBg={msg === null ? bg.primaryTrans : bg.gray200}
+          viewStyle={[
+            round.md,
+            msg === null ? bg.primaryTransLight : bg.gray100,
+          ]}
           onPress={onPress}
         >
           <View
