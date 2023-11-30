@@ -5,7 +5,7 @@ import type { AuthStackScreenProps } from "@/navigation/types";
 import type { Gender } from "@/types/auth";
 import type { TextInputValidator } from "@/types/input";
 import { validateBirth } from "@/utils/validators";
-import { useSelect } from "@/utils/useSelect";
+import { useSelect } from "@/hooks";
 
 export const Personal: React.FC<AuthStackScreenProps<"Personal">> = ({
   navigation,

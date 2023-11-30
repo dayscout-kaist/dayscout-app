@@ -10,7 +10,7 @@ import { column, gap, text } from "@/styles";
 import { BasicInfo } from "./BasicInfo";
 import { NutritionFacts } from "./NutritionFacts";
 import { Post } from "./Post";
-import { useSelect } from "@/utils/useSelect";
+import { useSelect } from "@/hooks";
 
 interface ServingSize {
   key: number;
