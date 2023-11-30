@@ -90,16 +90,21 @@ export const Search: React.FC<HomeTabScreenProps<"Search">> = ({
     <View style={[bg.white, fill]}>
       <SearchBarHeader input={searchQuery} />
       {!isLoading && !data && !error && (
-        <ActionBox
-          main="바코드가 있는 식품이라면"
-          desc="카메라로 스캔하기"
-          icon="📷"
-          onPress={() => {}}
-        />
+        <View style={inline}>
+          <ActionBox
+            main="바코드가 있는 식품이라면"
+            desc="카메라로 스캔하기"
+            icon="📷"
+            onPress={() => {}}
+          />
+        </View>
       )}
       <ScrollView
-        contentContainerStyle={[fill, padding.bottom(60 + insets.bottom)]}
-        style={[padding.horizontal(12), margin.top(15)]}
+        contentContainerStyle={[
+          { flexGrow: 1 },
+          padding.bottom(60 + insets.bottom),
+        ]}
+        style={[margin.top(15), inline]}
       >
         {error && <Notice icon="🔍" msg="음식을 찾을 수 없어요" />}
         {isLoading && <FoodSearchItem.Skeleton />}
@@ -111,9 +116,10 @@ export const Search: React.FC<HomeTabScreenProps<"Search">> = ({
                 navigation.navigate("FoodDetail", { foodId: food.id })
               }
               imageSrc={food.imageSrc}
-              tags={staticTags}
+              tags={food.tag}
               name={food.name}
-              category={food.content?.className || ""}
+              category={food.className || ""}
+              type={food.type}
             />
           ))}
       </ScrollView>
