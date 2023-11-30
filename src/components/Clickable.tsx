@@ -16,10 +16,12 @@ export const Clickable: React.FC<Props> = ({
   ...props
 }) => (
   <Motion.Pressable {...props}>
-    <Motion.View style={[{ overflow: "hidden" }, viewStyle]} {...springMotion}>
-      <Motion.View whileTap={{ scale: 0.95 }} {...springMotion}>
-        {children}
-      </Motion.View>
+    <Motion.View
+      style={[{ overflow: "hidden" }, viewStyle]}
+      whileTap={{ scale: 0.95 }}
+      {...springMotion}
+    >
+      {children}
       <Motion.View
         style={{
           position: "absolute",
