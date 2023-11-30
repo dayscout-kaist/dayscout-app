@@ -1,9 +1,11 @@
-import React from "react";
-import { ImageBackground, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { ImageBackground, Text, View, Animated } from "react-native";
+import { Motion } from "@legendapp/motion";
 
 import {
   align,
   bg,
+  colors,
   column,
   fill,
   gap,
@@ -27,13 +29,7 @@ interface Props {
   category: string;
 }
 
-export const FoodSearchItem: React.FC<Props> = ({
-  onPress,
-  imageSrc,
-  tags,
-  name,
-  category,
-}) => (
+const Item: React.FC<Props> = ({ onPress, imageSrc, tags, name, category }) => (
   <Clickable onPress={onPress} viewStyle={round.lg}>
     <View style={[row, gap(12), align.center, padding(12)]}>
       <View
@@ -81,3 +77,51 @@ export const FoodSearchItem: React.FC<Props> = ({
     </View>
   </Clickable>
 );
+
+const Skeleton: React.FC = React.memo(() => {
+  const blink = useBlink();
+
+  return randomArray(5, { min: 100, max: 200 }).map((value, index) => (
+    <Motion.View
+      key={index}
+      style={[row, gap(12), align.center, padding(12)]}
+      {...blink}
+    >
+      <Motion.View style={[h(56), w(56), round.md, bg.gray100]} />
+      <View style={[column, gap(6), fill]}>
+        <View style={[row, gap(8)]}>
+          {randomArray(2, { min: 30, max: 60 }).map((value, index) => (
+            <View key={index} style={[h(26), w(value), bg.gray100, round.sm]} />
+          ))}
+        </View>
+        <View style={[row, gap(8), { alignItems: "center" }]}>
+          <View style={[h(24), w(value), bg.gray100, round.sm]} />
+        </View>
+      </View>
+    </Motion.View>
+  ));
+});
+
+const randomArray = (length: number, scope: { min: number; max: number }) =>
+  Array.from(
+    { length },
+    () => scope.min + (scope.max - scope.min) * Math.random(),
+  );
+
+const useBlink = (period = 1000) => {
+  const [opaque, setOpaque] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setOpaque(opaque => !opaque);
+    }, period);
+    return () => clearInterval(interval);
+  }, [setOpaque]);
+
+  return {
+    animate: { opacity: opaque ? 0.2 : 1 },
+    transition: { duration: period },
+  };
+};
+
+export const FoodSearchItem = Object.assign(Item, { Skeleton });
