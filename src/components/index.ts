@@ -6,6 +6,7 @@ export * from "./Clickable";
 export * from "./FoodSearchItem";
 export * from "./FormLayout";
 export * from "./IconButton";
+export * from "./Notice";
 export * from "./OptionSelect";
 export * from "./NutrientInput";
 export * from "./ScreenBackground";
