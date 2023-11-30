@@ -23,7 +23,7 @@ import { Tag } from "./Tag";
 
 interface Props {
   onPress?: () => void;
-  imageSrc: string;
+  imageSrc?: string;
   tags: TagInfo[];
   name: string;
   category: string;
@@ -42,7 +42,14 @@ const Item: React.FC<Props> = ({ onPress, imageSrc, tags, name, category }) => (
           { overflow: "hidden" },
         ]}
       >
-        <ImageBackground source={{ uri: imageSrc }} style={bg.white}>
+        <ImageBackground
+          source={{
+            uri:
+              imageSrc ??
+              "https://sparcs-newara-dev.s3.amazonaws.com/files/placeholder.png",
+          }}
+          style={bg.white}
+        >
           <View
             style={[h("fill"), { backgroundColor: "rgba(0, 0, 0, 0.04)" }]}
           ></View>
