@@ -16,9 +16,9 @@ export const searchByText = async (query: string) => {
   }
 };
 
-export const searchByBarcode = async (code: number) => {
+export const searchByBarcode = async (barcode: number) => {
   const res = await apiClient.get<FoodDetail>("/food/search/byBarcode", {
-    params: { barcode_number: code },
+    params: { barcode },
   });
 
   return res.data;

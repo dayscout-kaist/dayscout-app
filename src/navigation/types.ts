@@ -26,6 +26,7 @@ export type HomeTabParamList = {
 export type RootStackParamList = {
   HomeTab: NavigatorScreenParams<HomeTabParamList>;
   Camera: undefined;
+  BarcodeSearch: undefined;
   FoodDetail: { foodId: number };
   EditProfile: undefined;
   FoodReview: { foodId: number };

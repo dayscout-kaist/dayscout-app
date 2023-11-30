@@ -11,6 +11,7 @@ import type {
 } from "@/navigation/types";
 import {
   AddReview,
+  BarcodeSearch,
   Camera,
   EditProfile,
   EmailPwd,
@@ -81,6 +82,13 @@ export const RootStack: React.FC = () => {
               name="HomeTab"
               component={HomeTab}
               options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="BarcodeSearch"
+              component={BarcodeSearch}
+              options={{
+                title: "",
+              }}
             />
             <Stack.Screen name="Camera" component={Camera} />
             <Stack.Screen

@@ -47,9 +47,12 @@ export const FoodDetail: React.FC<RootStackScreenProps<"FoodDetail">> = ({
       <ScrollView>
         <View style={[column, gap(12)]}>
           <BasicInfo
-            name={food.content.representName || ""}
+            name={food.name || ""}
             category={food.content.className || ""}
-            imgSrc={food.imageSrc || ""}
+            imgSrc={
+              food.imageSrc ||
+              "https://sparcs-newara-dev.s3.amazonaws.com/files/placeholder.png"
+            }
             tags={[
               { title: "추정치", bg: "#ffe5c3", txt: "#ff980f" },
               { title: "1,000회 이상 추가됨", bg: "#fdbec1", txt: "#eb2a2a" },

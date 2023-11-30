@@ -12,7 +12,7 @@ interface Props {
 }
 export const ActionCard: React.FC<Props> = ({ sub, title, onPress, icon }) => {
   return (
-    <Clickable style={[fill, round.lg]} viewStyle={round.lg}>
+    <Clickable style={[fill, round.lg]} viewStyle={round.lg} onPress={onPress}>
       <View style={[padding(18), align.stretch]}>
         <Text style={[text.body2, text.gray400]}>{sub}</Text>
         <Text style={[text.sub1, text.gray600]}>{title}</Text>

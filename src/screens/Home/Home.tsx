@@ -89,7 +89,12 @@ export const Home: React.FC<HomeTabScreenProps<"Home">> = ({ navigation }) => {
       </TouchableOpacity>
 
       <View style={[row, gap(18), padding.top(16)]}>
-        <ActionCard sub="유통 식품" title={"바코드로\n찾아보기"} icon="📷" />
+        <ActionCard
+          sub="유통 식품"
+          title={"바코드로\n찾아보기"}
+          icon="📷"
+          onPress={() => navigation.navigate("BarcodeSearch")}
+        />
         <ActionCard sub="먹은 음식" title={"직접\n입력하기"} icon="🍔" />
       </View>
       {/*<View>*/}
