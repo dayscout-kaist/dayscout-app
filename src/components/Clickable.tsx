@@ -1,15 +1,21 @@
 import React from "react";
 import { Motion } from "@legendapp/motion";
-import { bg, round, springMotion } from "@/styles";
+import { bg, springMotion } from "@/styles";
+import type { ViewStyle } from "react-native";
 
 interface Props extends React.ComponentProps<typeof Motion.Pressable> {
   children: React.ReactNode;
+  viewStyle?: ViewStyle;
 }
 
-export const Clickable: React.FC<Props> = ({ children, ...props }) => (
+export const Clickable: React.FC<Props> = ({
+  children,
+  viewStyle,
+  ...props
+}) => (
   <Motion.Pressable {...props}>
     <Motion.View
-      style={[round.md]}
+      style={viewStyle}
       initial={bg.white}
       whileTap={bg.gray50}
       {...springMotion}

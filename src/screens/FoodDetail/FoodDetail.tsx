@@ -1,9 +1,8 @@
-import React, { useRef, useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import React, { useState } from "react";
+import { ScrollView, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
-import { BottomSheet, Button, OptionRow, ScreenBackground } from "@/components";
+import { Button, ScreenBackground } from "@/components";
 import { useFoodDetail } from "@/hooks/useFoodDetail";
 import { RootStackScreenProps } from "@/navigation/types";
 import { column, gap, text } from "@/styles";
@@ -11,6 +10,7 @@ import { column, gap, text } from "@/styles";
 import { BasicInfo } from "./BasicInfo";
 import { NutritionFacts } from "./NutritionFacts";
 import { Post } from "./Post";
+import { useSelectBottomSheet } from "@/utils/useSelectBottomSheet";
 
 interface ServingSize {
   key: number;
@@ -30,10 +30,15 @@ export const FoodDetail: React.FC<RootStackScreenProps<"FoodDetail">> = ({
 }) => {
   const { data: food, isLoading } = useFoodDetail(foodId);
 
-  const [servingSize, setServingSize] = useState<ServingSize>(servingSizes[0]);
-  const bottomSheetRef = useRef<BottomSheetModal>(null);
-
   const navigation = useNavigation();
+
+  const [selectedServingSize, setSelectedServingSize] = useState("100g당");
+
+  const { open } = useSelectBottomSheet({
+    title: "영양성분 기준",
+    options: ["100g당", "총 내용량당", "1회 제공량당"],
+    selected: selectedServingSize,
+  });
 
   if (!food) return null;
 
@@ -60,11 +65,9 @@ export const FoodDetail: React.FC<RootStackScreenProps<"FoodDetail">> = ({
           <NutritionFacts
             tag={{ title: "유통식품", bg: "#a40fff40", txt: "#a40fff" }}
             nutrients={food.content.nutrients}
-            servingSize={servingSize.text}
+            servingSize={selectedServingSize}
             onServingSizePress={() => {
-              // TODO: Resolve double tab issue
-              bottomSheetRef.current?.present();
-              bottomSheetRef.current?.expand();
+              open().then(setSelectedServingSize);
             }}
           />
           <View style={{ height: 192 }} />
@@ -76,20 +79,6 @@ export const FoodDetail: React.FC<RootStackScreenProps<"FoodDetail">> = ({
         style="primary"
         stick="bottom"
       />
-      <BottomSheet ref={bottomSheetRef}>
-        <Text style={[text.h3, text.gray600]}>영양성분 기준</Text>
-        {servingSizes.map(serve => (
-          <OptionRow
-            key={serve.key}
-            value={serve.text}
-            onPress={() => {
-              setServingSize(serve);
-              bottomSheetRef.current?.close();
-            }}
-            selected={serve.key === servingSize.key}
-          />
-        ))}
-      </BottomSheet>
     </ScreenBackground>
   );
 };

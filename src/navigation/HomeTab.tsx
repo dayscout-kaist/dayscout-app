@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Icon, type IconType } from "@/icons";
 import type { HomeTabParamList } from "@/navigation/types";
 import { Home, Posts, Search, Settings } from "@/screens";
-import { colors, text } from "@/styles";
+import { bg, colors, padding, text } from "@/styles";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const Tab = createBottomTabNavigator<HomeTabParamList>();
@@ -48,6 +48,8 @@ export const HomeTab: React.FC = () => {
           marginBottom: 8,
           paddingTop: 2,
         },
+        tabBarHideOnKeyboard: true,
+        headerTitleAlign: "center",
       }}
     >
       <Tab.Screen
@@ -56,6 +58,11 @@ export const HomeTab: React.FC = () => {
         options={{
           title: "홈",
           tabBarIcon: TabIcon("home"),
+          headerTitle: () => <Icon.logo height={36} width={163} />,
+          headerTitleAlign: "left",
+          headerTitleContainerStyle: padding.horizontal(8),
+          headerShown: true,
+          headerStyle: bg.gray50,
         }}
       />
       <Tab.Screen
@@ -64,6 +71,7 @@ export const HomeTab: React.FC = () => {
         options={{
           title: "검색",
           tabBarIcon: TabIcon("search"),
+          unmountOnBlur: true,
         }}
       />
       <Tab.Screen
