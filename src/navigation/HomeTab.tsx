@@ -84,7 +84,6 @@ export const HomeTab: React.FC = () => {
           headerShown: true,
           headerStyle: [{ opacity: 1, borderBottomWidth: 0 }],
           tabBarIcon: TabIcon("sticker"),
-          headerTitle: "",
           headerRight: () => (
             <IconButton
               onPress={navigation => navigation.navigate("AddReview")}

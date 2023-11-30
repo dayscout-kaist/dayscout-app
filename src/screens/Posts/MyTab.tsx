@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useNavigation } from "@react-navigation/native";
@@ -73,7 +73,7 @@ export const MyTab: React.FC = () => {
   const { today, weekdays } = useCurrentWeek();
 
   return (
-    <View style={[fill]}>
+    <View style={fill}>
       <View
         style={[
           row,
@@ -110,31 +110,29 @@ export const MyTab: React.FC = () => {
           </View>
         ))}
       </View>
-      <View style={[fill, margin.bottom(60 + insets.bottom)]}>
-        <ScrollView>
-          <View style={gap(16)}>
-            <View style={bg.white}>
-              <ActionBox
-                icon="🍞"
-                main="더 먹은 음식이 있나요?"
-                desc="먹은 음식 추가하기"
-                onPress={() => navigation.navigate("AddReview")}
-              />
-            </View>
-            <View
-              style={[
-                gap(16),
-                padding.vertical(16),
-                padding.horizontal(safe.horizontal),
-                bg.white,
-              ]}
-            >
-              {data.map((el, idx) => (
-                <PostItem key={idx} idx={idx + 1} {...el} onPress={() => {}} />
-              ))}
-            </View>
+      <View style={margin.bottom(60 + insets.bottom)}>
+        <View style={gap(16)}>
+          <View style={bg.white}>
+            <ActionBox
+              icon="🍞"
+              main="더 먹은 음식이 있나요?"
+              desc="먹은 음식 추가하기"
+              onPress={() => navigation.navigate("AddReview")}
+            />
           </View>
-        </ScrollView>
+          <View
+            style={[
+              gap(16),
+              padding.vertical(16),
+              padding.horizontal(safe.horizontal),
+              bg.white,
+            ]}
+          >
+            {data.map((el, idx) => (
+              <PostItem key={idx} idx={idx + 1} {...el} onPress={() => {}} />
+            ))}
+          </View>
+        </View>
       </View>
     </View>
   );
