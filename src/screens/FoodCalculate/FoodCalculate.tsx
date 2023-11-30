@@ -3,7 +3,7 @@ import { ScrollView, View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
-import { BottomSheet, Button } from "@/components";
+import { BottomSheet, Button, OptionRow } from "@/components";
 import { column, fill, gap, text } from "@/styles";
 import type { ProductWithDetails } from "@/types/product";
 
@@ -12,8 +12,6 @@ import type { ProductWithDetails } from "@/types/product";
 import { NutritionFacts } from "./NutritionFacts";
 import { IntakeInput } from "./IntakeInput";
 import { BasicInfo } from "./BasicInfo";
-import { ServingSizeRow } from "../FoodDetail/NutritionFacts/ServingSizeRow";
-// import { ServingSizeRow } from "./NutritionFacts/ServingSizeRow";
 
 interface ServingSize {
   key: number;
@@ -93,7 +91,7 @@ export const FoodCalculate: React.FC = () => {
       <BottomSheet ref={bottomSheetRef}>
         <Text style={[text.h3, text.gray600]}>영양성분 기준</Text>
         {servingSizes.map(serve => (
-          <ServingSizeRow
+          <OptionRow
             key={serve.key}
             value={serve.text}
             onPress={() => {

@@ -9,6 +9,7 @@ import {
 import {
   align,
   bg,
+  colors,
   fill,
   gap,
   margin,
@@ -17,11 +18,12 @@ import {
   row,
   text,
 } from "@/styles";
+import type { TextInputValidator } from "@/types/input";
 
 export const TextInput: React.FC<{
   value: string;
   setValue: React.Dispatch<React.SetStateAction<string>>;
-  isValid: (value: string) => { valid: true } | { valid: false; msg: string };
+  isValid: TextInputValidator;
   title?: string;
   unit?: string;
   options?: TextInputProps;
@@ -46,6 +48,7 @@ export const TextInput: React.FC<{
       >
         <TxtInput
           style={[fill, text.btn1, text.gray600]}
+          placeholderTextColor={colors.gray300}
           value={value}
           onChangeText={text => {
             const check = isValid(text);

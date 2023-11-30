@@ -8,7 +8,7 @@ import {
 import { Icon } from "@/icons";
 import { align, colors, fill, row, text } from "@/styles";
 
-export const ServingSizeRow: React.FC<{
+export const OptionRow: React.FC<{
   value: string;
   onPress: (event: GestureResponderEvent) => void;
   selected?: boolean;
