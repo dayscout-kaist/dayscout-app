@@ -30,6 +30,7 @@ export const HomeTab: React.FC = () => {
         headerStyle: {
           height: 46,
         },
+        headerTitleStyle: [text.sub2, text.gray600],
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.gray200,
         tabBarStyle: {
@@ -81,14 +82,16 @@ export const HomeTab: React.FC = () => {
         component={Posts}
         options={{
           title: "포스트",
+          tabBarIcon: TabIcon("sticker"),
           headerShown: true,
           headerStyle: [{ opacity: 1, borderBottomWidth: 0 }],
-          tabBarIcon: TabIcon("sticker"),
+
           headerRight: () => (
             <IconButton
               onPress={navigation => navigation.navigate("AddReview")}
             />
           ),
+          headerLeftContainerStyle: padding.left(16),
           headerRightContainerStyle: padding.right(16),
         }}
       />
