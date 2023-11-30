@@ -13,6 +13,7 @@ import {
   round,
   inline,
   align,
+  safe,
 } from "@/styles";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Icon } from "@/icons";
@@ -21,7 +22,7 @@ import { HomeTabScreenProps } from "@/navigation/types";
 import { useTextInput } from "@/hooks";
 import { useFoodSearch } from "@/hooks/useFoodSearch";
 import { TagInfo } from "@/types/food";
-import { ActionBox } from "@/components";
+import { ActionBox, Notice } from "@/components";
 
 const staticTags: TagInfo[] = [
   { id: 0, name: "추정치" },
@@ -75,6 +76,7 @@ export const Search: React.FC<HomeTabScreenProps<"Search">> = ({
   navigation,
 }) => {
   const searchQuery = useTextInput();
+  const insets = useSafeAreaInsets();
 
   const { data, error, isLoading, isFetching } = useFoodSearch(
     searchQuery.value,
@@ -95,8 +97,11 @@ export const Search: React.FC<HomeTabScreenProps<"Search">> = ({
           onPress={() => {}}
         />
       )}
-      <ScrollView style={[padding.horizontal(12), margin.top(15)]}>
-        {error && <Text>음식을 찾을 수 없어요</Text>}
+      <ScrollView
+        contentContainerStyle={[fill, padding.bottom(60 + insets.bottom)]}
+        style={[padding.horizontal(12), margin.top(15)]}
+      >
+        {error && <Notice icon="🔍" msg="음식을 찾을 수 없어요" />}
         {isLoading && <FoodSearchItem.Skeleton />}
         {data &&
           data.map(food => (
