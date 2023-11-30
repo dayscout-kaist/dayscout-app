@@ -4,7 +4,7 @@ import { searchByText } from "@/api";
 import { useEffect } from "react";
 
 export const useFoodSearch = (query: string) => {
-  const [debouncedQuery] = useDebounce(query, 500);
+  const [debouncedQuery] = useDebounce(query, 500, { leading: true });
 
   return useQuery({
     queryKey: ["foods", debouncedQuery],

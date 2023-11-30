@@ -65,7 +65,7 @@ export const NutritionFacts: React.FC<{
       <View style={[bg.gray50, { height: 1 }]} />
     </View>
     <ActionBox
-      icon="🍞"
+      icon="🔢"
       main="정보가 정확하지 않다면"
       desc="영양정보 수정 제안하기"
       onPress={() => {}}

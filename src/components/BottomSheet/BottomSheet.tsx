@@ -28,7 +28,7 @@ export const BottomSheet: React.FC<SheetProps> = ({
   useEffect(() => {
     if (!ref.current) return;
     if (open) return ref.current.present();
-    delayClose ? setTimeout(ref.current?.close, 100) : ref.current.close();
+    delayClose ? setTimeout(ref.current?.close, 180) : ref.current.close();
   }, [open]);
 
   return (
@@ -48,18 +48,16 @@ export const BottomSheet: React.FC<SheetProps> = ({
         },
       ]}
       handleIndicatorStyle={[bg.gray300, { width: 80, height: 6 }]}
-      backdropComponent={props =>
-        backdrop && (
-          <BottomSheetBackdrop
-            appearsOnIndex={0}
-            disappearsOnIndex={-1}
-            opacity={0.3}
-            enableTouchThrough={false}
-            pressBehavior="close"
-            {...props}
-          />
-        )
-      }
+      backdropComponent={props => (
+        <BottomSheetBackdrop
+          appearsOnIndex={0}
+          disappearsOnIndex={-1}
+          opacity={backdrop ? 0.3 : 0}
+          enableTouchThrough={false}
+          pressBehavior="close"
+          {...props}
+        />
+      )}
       onDismiss={onClose}
     >
       <BottomSheetView style={viewStyle}>{children}</BottomSheetView>

@@ -1,11 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { ScrollView, View, TextInput, Text } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-
-import { FoodSearchItem } from "@/components";
-import { useFoodSearch, useTextInput } from "@/hooks";
-import { Icon } from "@/icons";
-import { HomeTabScreenProps } from "@/navigation/types";
 import {
   h,
   bg,
@@ -13,6 +7,7 @@ import {
   gap,
   row,
   text,
+  safe,
   margin,
   colors,
   fill,
@@ -20,50 +15,18 @@ import {
   inline,
   align,
 } from "@/styles";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Icon } from "@/icons";
+import { FoodSearchItem } from "@/components/FoodSearchItem";
+import { HomeTabScreenProps } from "@/navigation/types";
+import { useTextInput } from "@/hooks";
+import { useFoodSearch } from "@/hooks/useFoodSearch";
+import { TagInfo } from "@/types/food";
+import { ActionBox } from "@/components";
 
-// Dummy data for the list items
-const searchResults = [
-  {
-    id: 100581350,
-    name: "데자와 로얄 밀크티 500ml",
-    imageSrc:
-      "https://sparcs-newara-dev.s3.amazonaws.com/files/snowsuno-in-90s.png",
-    barcodeNumber: 8801097481206,
-    largeCategory: "가공식품",
-    mediumCategory: "차류",
-    smallCategory: "차음료",
-    xSmallCategory: "기타차음료",
-    displayName: "데자와 로얄 밀크티",
-    nutrients: {
-      carbohydrate: 19,
-      protein: 1,
-      fat: 1.5,
-      sugar: 17,
-      energy: 95,
-    },
-    totalWeight: 500,
-  },
-  {
-    id: 100581350,
-    name: "데자와 로얄 밀크티 500ml",
-    imageSrc:
-      "https://sparcs-newara-dev.s3.amazonaws.com/files/snowsuno-in-90s.png",
-    barcodeNumber: 8801097481206,
-    largeCategory: "가공식품",
-    mediumCategory: "차류",
-    smallCategory: "차음료",
-    xSmallCategory: "기타차음료",
-    displayName: "데자와 로얄 밀크티",
-    nutrients: {
-      carbohydrate: 19,
-      protein: 1,
-      fat: 1.5,
-      sugar: 17,
-      energy: 95,
-    },
-    totalWeight: 500,
-  },
-  // Add more items here...
+const staticTags: TagInfo[] = [
+  { id: 0, name: "추정치" },
+  { id: 1, name: "1,000회 이상 추가됨" },
 ];
 
 const SearchBarHeader: React.FC<{
@@ -77,7 +40,6 @@ const SearchBarHeader: React.FC<{
         row,
         inline,
         margin.top(insets.top),
-        margin.bottom(15),
         { alignItems: "center", justifyContent: "space-between" },
       ]}
     >
@@ -115,7 +77,9 @@ export const Search: React.FC<HomeTabScreenProps<"Search">> = ({
 }) => {
   const searchQuery = useTextInput();
 
-  const { data, error, isLoading } = useFoodSearch(searchQuery.value);
+  const { data, error, isLoading, isFetching } = useFoodSearch(
+    searchQuery.value,
+  );
 
   useEffect(() => {
     console.log(error);
@@ -124,21 +88,33 @@ export const Search: React.FC<HomeTabScreenProps<"Search">> = ({
   return (
     <View style={[bg.white, fill]}>
       <SearchBarHeader input={searchQuery} />
-      <ScrollView style={[padding.horizontal(12)]}>
+      {!searchQuery.value && (
+        <ActionBox
+          main="바코드가 있는 식품이라면"
+          desc="카메라로 스캔하기"
+          icon="📷"
+          onPress={() => {}}
+        />
+      )}
+      <ScrollView style={[padding.horizontal(12), margin.top(15)]}>
         {error && <Text>{error.name}</Text>}
-        {isLoading && <Text>Loading</Text>}
+        {searchQuery.value && !data && <FoodSearchItem.Skeleton />}
         {data &&
-          data.map(food => (
-            <FoodSearchItem
-              key={food.id}
-              onPress={() =>
-                navigation.navigate("FoodDetail", { foodId: food.id })
-              }
-              imageSrc={food.imageSrc || ""}
-              tags={[]}
-              name={food.name}
-              category={food.content?.className || ""}
-            />
+          (data.length > 0 ? (
+            data.map(food => (
+              <FoodSearchItem
+                key={food.id}
+                onPress={() =>
+                  navigation.navigate("FoodDetail", { foodId: food.id })
+                }
+                imageSrc={food.imageSrc || ""}
+                tags={staticTags}
+                name={food.name}
+                category={food.content?.className || ""}
+              />
+            ))
+          ) : (
+            <Text>검색 결과가 없습니다.</Text>
           ))}
       </ScrollView>
     </View>

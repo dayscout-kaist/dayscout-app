@@ -8,7 +8,7 @@ import {
   Platform,
 } from "react-native";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import { BottomSheet } from "@/components";
+import { DeprecatedBottomSheet, NutrientInput } from "@/components";
 import { TextInput } from "react-native-gesture-handler";
 
 import {
@@ -18,6 +18,7 @@ import {
   gap,
   margin,
   padding,
+  round,
   row,
   safe,
   text,
@@ -61,79 +62,59 @@ export const IntakeInput: React.FC<{ variant: number }> = ({ variant }) => {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={{ flex: 1, justifyContent: "flex-end" }}
-    >
-      <View style={[padding.top(20), bg.white]}>
-        <View style={[gap(13), padding.horizontal(safe.horizontal)]}>
-          <View style={[gap(8), { flex: 1 }]}>
-            <TouchableOpacity onPress={toggleVariant}>
-              <View style={[row, gap(8)]}>
-                <Text style={[text.h3, text.gray600, { flex: 1 }]}>
-                  섭취량 입력하기
-                </Text>
-                {isVariant1 && (
-                  <Icon.up_wide width={30} height={30} fill={colors.gray500} />
-                )}
-                {!isVariant1 && (
-                  <Icon.down_wide
-                    width={30}
-                    height={30}
-                    fill={colors.gray500}
-                  />
-                )}
-              </View>
-            </TouchableOpacity>
-            {!isVariant1 && (
-              <View style={[gap(18)]}>
-                <View
-                  style={[
-                    row,
-                    bg.gray50,
-                    padding.vertical(12),
-                    padding.horizontal(20),
-                    { flex: 1, borderRadius: 10 },
-                  ]}
-                >
-                  <TextInput
-                    placeholder="여기에 섭취량을 입력하세요"
-                    style={[{ flex: 1 }]}
-                    value={inputValue}
-                    onPressIn={handleTextInputPress}
-                    onChangeText={setInputValue}
-                  />
-                  <Text style={text.gray400}>g</Text>
-                </View>
-                <View style={[row, gap(12), margin.bottom(10)]}>
-                  {buttonTitles.map((title, index) => (
-                    <TouchableOpacity
-                      key={index}
-                      style={{ flex: 1 }}
-                      onPress={() => handleButtonPress(title)}
+    // <KeyboardAvoidingView
+    //   behavior={Platform.OS === "ios" ? "padding" : "height"}
+    //   style={{ flex: 1, justifyContent: "flex-end" }}
+    // >
+    <View style={[padding.top(20), bg.white]}>
+      <View style={[gap(13), padding.horizontal(safe.horizontal)]}>
+        <View style={[gap(8), { flex: 1 }]}>
+          <TouchableOpacity onPress={toggleVariant}>
+            <View style={[row, gap(8)]}>
+              <Text style={[text.h3, text.gray600, { flex: 1 }]}>
+                섭취량 입력하기
+              </Text>
+              {isVariant1 && (
+                <Icon.up_wide width={30} height={30} fill={colors.gray500} />
+              )}
+              {!isVariant1 && (
+                <Icon.down_wide width={30} height={30} fill={colors.gray500} />
+              )}
+            </View>
+          </TouchableOpacity>
+          {!isVariant1 && (
+            <View style={[gap(18)]}>
+              <NutrientInput placeholder="섭취량을 입력하세요" />
+
+              <View style={[row, gap(12), margin.bottom(10)]}>
+                {buttonTitles.map((title, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    style={{ flex: 1 }}
+                    onPress={() => handleButtonPress(title)}
+                  >
+                    <View
+                      style={[
+                        { backgroundColor: "rgba(235, 161, 42, 0.20)" },
+                        padding.vertical(12),
+                        align.center,
+                        round.md,
+                      ]}
                     >
-                      <View
-                        style={[
-                          bg.primaryTrans,
-                          padding.vertical(12),
-                          align.center,
-                          { borderRadius: 8 },
-                        ]}
-                      >
-                        <Text style={[text.primary]}>{title}</Text>
-                      </View>
-                    </TouchableOpacity>
-                  ))}
-                </View>
+                      <Text style={[text.primary, text.btn2]}>{title}</Text>
+                    </View>
+                  </TouchableOpacity>
+                ))}
               </View>
-            )}
-          </View>
-          <View style={[bg.gray50, { height: 1 }]} />
+            </View>
+          )}
         </View>
-        <BottomSheet ref={bottomSheetRef}>
-          <Text style={[text.h3, text.gray600]}>영양성분 기준</Text>
-        </BottomSheet>
+        <View style={[bg.gray50, { height: 1 }]} />
       </View>
-    </KeyboardAvoidingView>
+      <DeprecatedBottomSheet ref={bottomSheetRef}>
+        <Text style={[text.h3, text.gray600]}>영양성분 기준</Text>
+      </DeprecatedBottomSheet>
+    </View>
+    // </KeyboardAvoidingView>
   );
 };

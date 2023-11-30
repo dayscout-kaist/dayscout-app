@@ -3,8 +3,8 @@ import { ScrollView, View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
-import { BottomSheet, Button, OptionRow } from "@/components";
-import { column, fill, gap, text } from "@/styles";
+import { DeprecatedBottomSheet, Button, OptionRow } from "@/components";
+import { bg, column, fill, gap, text } from "@/styles";
 import type { ProductWithDetails } from "@/types/product";
 
 // import { BasicInfo } from "./BasicInfo";
@@ -53,7 +53,7 @@ export const FoodCalculate: React.FC = () => {
 
   return (
     <View style={fill}>
-      <ScrollView>
+      <ScrollView style={bg.gray50}>
         <View style={[column, gap(12)]}>
           <BasicInfo
             initVariant={0}
@@ -88,7 +88,7 @@ export const FoodCalculate: React.FC = () => {
         style="primary"
         stick="bottom"
       />
-      <BottomSheet ref={bottomSheetRef}>
+      <DeprecatedBottomSheet ref={bottomSheetRef}>
         <Text style={[text.h3, text.gray600]}>영양성분 기준</Text>
         {servingSizes.map(serve => (
           <OptionRow
@@ -101,7 +101,7 @@ export const FoodCalculate: React.FC = () => {
             selected={serve.key === servingSize.key}
           />
         ))}
-      </BottomSheet>
+      </DeprecatedBottomSheet>
     </View>
   );
 };
