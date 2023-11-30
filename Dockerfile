@@ -9,4 +9,4 @@ RUN yarn install --frozen-lockfile
 COPY . .
 
 EXPOSE 8081
-CMD ["yarn", "start"]
+CMD ["yarn", "start", "--port=80"]
