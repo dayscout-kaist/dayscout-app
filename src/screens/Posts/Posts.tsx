@@ -1,150 +1,32 @@
-import React, { useEffect, useRef } from "react";
-import {
-  Text,
-  View,
-  Animated,
-  Dimensions,
-  Image,
-  ScrollView,
-} from "react-native";
+import React, { useState } from "react";
+import { Text, View } from "react-native";
 
-import {
-  bg,
-  fill,
-  gap,
-  inline,
-  margin,
-  padding,
-  row,
-  safe,
-  text,
-} from "@/styles";
+import { ScreenBackground, Tabs } from "@/components";
 import { HomeTabScreenProps } from "@/navigation/types";
-import { Tag } from "@/components";
-import { ActionBox } from "@/components";
-import { useScrollHeader } from "@/hooks/useScrollHeader";
-import { useCurrentWeek } from "@/hooks";
+import { bg, padding, safe, text } from "@/styles";
 
-// 예시로 사용할 임시 데이터
-const postsData = [
-  {
-    id: 1,
-    time: "20:00",
-    displayName: "식품 이름이 상당히 긴게 많군요",
-    imageSrc:
-      "https://sparcs-newara-dev.s3.amazonaws.com/files/snowsuno-in-90s.png",
-    smallCategory: "분류",
-  },
-  {
-    id: 2,
-    time: "20:00",
-    displayName: "식품 이름이 상당히 긴게 많군요",
-    imageSrc:
-      "https://sparcs-newara-dev.s3.amazonaws.com/files/snowsuno-in-90s.png",
-    smallCategory: "분류",
-  },
-  // ... 더 많은 포스트 데이터
-];
+import { MyTab } from "./MyTab";
 
-const staticTags = [{ title: "추정치", bg: "#ffe5c3", txt: "#ff980f" }];
+const tabs = ["나의 기록", "커뮤니티"] as const;
 
 export const Posts: React.FC<HomeTabScreenProps<"Posts">> = ({
   navigation,
 }) => {
-  const scroll = useScrollHeader();
-  const { height: fullHeight } = Dimensions.get("window");
-
-  const { today, weekdays } = useCurrentWeek();
+  const [tab, setTab] = useState<(typeof tabs)[number]>(tabs[0]);
 
   return (
-    <Animated.ScrollView style={[bg.gray50, fill]} {...scroll}>
+    <ScreenBackground>
       <View
         style={[
-          {
-            height: fullHeight,
-            position: "absolute",
-            top: -fullHeight,
-            left: 0,
-            right: 0,
-          },
+          padding.bottom(10),
+          padding.horizontal(safe.horizontal),
           bg.white,
         ]}
-      />
-      <View style={[inline, bg.white]}>
+      >
         <Text style={[text.h1, text.gray600]}>포스트</Text>
       </View>
-      <View style={bg.gray50}>
-        <View
-          style={[
-            row,
-            bg.white,
-            gap(8),
-            padding.horizontal(safe.horizontal),
-            padding.vertical(12),
-          ]}
-        >
-          {weekdays.map(date => (
-            <View
-              key={date}
-              style={[
-                date === today ? bg.primary : bg.gray50,
-                fill,
-                {
-                  alignItems: "center",
-                  justifyContent: "center",
-                  height: 40,
-                  borderRadius: 11,
-                },
-              ]}
-            >
-              <Text style={[text.body2, { color: "white" }]}>{date}</Text>
-            </View>
-          ))}
-        </View>
-        <ActionBox
-          icon="🍞"
-          main="더 먹은 음식이 있나요?"
-          desc="먹은 음식 추가하기"
-          onPress={() => {}}
-        />
-        <ScrollView
-          style={[
-            margin.top(18),
-            bg.white,
-            padding.horizontal(safe.horizontal),
-          ]}
-        >
-          {postsData.map((item, index) => (
-            <View style={[gap(4), padding.vertical(6)]}>
-              <Text style={[text.body2]}>{item.time}</Text>
-              <View
-                key={`search-item-${index}`}
-                style={[row, gap(8), { alignItems: "center" }]}
-              >
-                <Image
-                  style={{ width: 56, height: 56, borderRadius: 12 }}
-                  source={{
-                    uri: item.imageSrc,
-                  }}
-                />
-                <View style={[gap(6), { flex: 1 }]}>
-                  <View style={[row, gap(8)]}>
-                    {staticTags.map(({ title, bg, txt }) => (
-                      <Tag key={title} name={title} bgColor={bg} color={txt} />
-                    ))}
-                  </View>
-                  <View style={[row, gap(8), { alignItems: "center" }]}>
-                    <Text style={[text.body1]}>{item.displayName}</Text>
-                    <Text style={[text.body2, text.gray400]}>
-                      {item.smallCategory}
-                    </Text>
-                  </View>
-                </View>
-              </View>
-            </View>
-          ))}
-        </ScrollView>
-      </View>
-    </Animated.ScrollView>
+      <Tabs tabs={tabs} selected={tab} setSelected={setTab} />
+      {tab === "나의 기록" ? <MyTab /> : <View></View>}
+    </ScreenBackground>
   );
 };
