@@ -7,16 +7,11 @@ import type { TextInputValidator } from "@/types/input";
 import { validateDecimalString } from "@/utils/validators";
 
 export const Inbody: React.FC<AuthStackScreenProps<"Inbody">> = ({
-  route: { params: navParam },
+  navigation,
+  route: { params: prevParams },
 }) => {
-  const navigation = useNavigation();
-
-  const [height, setHeight] = useState<string>(
-    navParam.height?.toString() ?? "",
-  );
-  const [weight, setWeight] = useState<string>(
-    navParam.weight?.toString() ?? "",
-  );
+  const [height, setHeight] = useState<string>("");
+  const [weight, setWeight] = useState<string>("");
 
   const checkInbody: TextInputValidator = val => {
     const regValid = validateDecimalString(val);
@@ -33,7 +28,7 @@ export const Inbody: React.FC<AuthStackScreenProps<"Inbody">> = ({
       title="신체 정보를 입력하세요"
       onSubmit={() =>
         navigation.navigate("Personal", {
-          ...navParam,
+          ...prevParams,
           height: parseFloat(height),
           weight: parseFloat(weight),
         })

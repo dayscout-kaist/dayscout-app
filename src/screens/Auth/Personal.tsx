@@ -1,34 +1,25 @@
-import React, { useRef, useState } from "react";
-import { Text } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import type { BottomSheetModal } from "@gorhom/bottom-sheet";
+import React, { useState } from "react";
 
-import {
-  BottomSheet,
-  FormLayout,
-  OptionRow,
-  OptionSelect,
-  TextInput,
-} from "@/components";
+import { FormLayout, OptionSelect, TextInput } from "@/components";
 import type { AuthStackScreenProps } from "@/navigation/types";
-import { text } from "@/styles";
 import type { Gender } from "@/types/auth";
 import type { TextInputValidator } from "@/types/input";
 import { validateBirth } from "@/utils/validators";
-
-const genders = { M: "남자", F: "여자" } as const satisfies Record<
-  Gender,
-  string
->;
+import { useSelectBottomSheet } from "@/utils/useSelectBottomSheet";
 
 export const Personal: React.FC<AuthStackScreenProps<"Personal">> = ({
-  route: { params: navParam },
+  navigation,
+  route: { params: prevParams },
 }) => {
-  const navigation = useNavigation();
-  const bottomSheetRef = useRef<BottomSheetModal>(null);
+  const [birth, setBirth] = useState<string>("");
 
-  const [birth, setBirth] = useState<string>(navParam.birth ?? "");
-  const [gender, setGender] = useState<"M" | "F" | undefined>(navParam.gender);
+  const [gender, setGender] = useState<Gender | null>(null);
+
+  const { open } = useSelectBottomSheet<Gender>({
+    title: "성별을 선택하세요",
+    options: ["남자", "여자", "기타"],
+    selected: gender,
+  });
 
   const checkBirth: TextInputValidator = val => {
     if (val.length !== 8)
@@ -38,15 +29,16 @@ export const Personal: React.FC<AuthStackScreenProps<"Personal">> = ({
     return { valid, msg: "올바르지 않은 날짜예요!" };
   };
 
-  const isFormValid = checkBirth(birth).valid && gender !== undefined;
+  const isFormValid = checkBirth(birth).valid && !!gender;
 
   return (
     <>
       <FormLayout
         title="생일과 성별을 입력하세요"
         onSubmit={() =>
+          isFormValid &&
           navigation.navigate("Greet", {
-            ...navParam,
+            ...prevParams,
             birth,
             gender,
           })
@@ -66,29 +58,12 @@ export const Personal: React.FC<AuthStackScreenProps<"Personal">> = ({
           }}
         />
         <OptionSelect
-          value={gender && genders[gender]}
+          value={gender}
           title="성별"
           placeholder="성별을 선택하세요"
-          onPress={() => {
-            bottomSheetRef.current?.present();
-            bottomSheetRef.current?.expand();
-          }}
+          onPress={() => open().then(setGender)}
         />
       </FormLayout>
-      <BottomSheet ref={bottomSheetRef}>
-        <Text style={[text.h3, text.gray600]}>성별을 선택하세요</Text>
-        {Object.entries(genders).map(([key, txt]) => (
-          <OptionRow
-            key={key}
-            value={txt}
-            onPress={() => {
-              setGender(key as keyof typeof genders);
-              bottomSheetRef.current?.close();
-            }}
-            selected={key === gender}
-          />
-        ))}
-      </BottomSheet>
     </>
   );
 };

@@ -1,13 +1,14 @@
 import React from "react";
 import { Image, Text, View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 
 import { Button } from "@/components";
 import { useAuthToken } from "@/hooks";
 import { center, fill, gap, safe, text } from "@/styles";
+import { AuthStackScreenProps, RootStackScreenProps } from "@/navigation/types";
 
-export const Landing: React.FC = () => {
-  const navigation = useNavigation();
+export const Landing: React.FC<AuthStackScreenProps<"Landing">> = ({
+  navigation,
+}) => {
   const { saveToken } = useAuthToken();
 
   return (
@@ -36,7 +37,7 @@ export const Landing: React.FC = () => {
         />
         <Button
           title="회원가입"
-          onPress={() => navigation.navigate("EmailPwd", {})}
+          onPress={() => navigation.navigate("EmailPwd")}
           style="secondary"
         />
       </View>

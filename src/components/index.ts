@@ -1,4 +1,5 @@
 export * from "./ActionBox";
+export * from "./BottomSheet";
 export * from "./DeprecatedBottomSheet";
 export * from "./Button";
 export * from "./Clickable";

@@ -11,7 +11,7 @@ import {
 import { bg, gap, inline, margin, padding, row, safe, text } from "@/styles";
 import { HomeTabScreenProps } from "@/navigation/types";
 import { Tag } from "@/components";
-import { ActionBox } from "../FoodDetail/NutritionFacts/ActionBox";
+import { ActionBox } from "@/components";
 
 // 예시로 사용할 임시 데이터
 const postsData = [
@@ -154,9 +154,12 @@ export const Posts: React.FC<HomeTabScreenProps<"Posts">> = ({
                   <View style={[gap(6), { flex: 1 }]}>
                     <View style={[row, gap(8)]}>
                       {staticTags.map(({ title, bg, txt }) => (
-                        <Tag key={title} bgClr={bg} txtClr={txt}>
-                          {title}
-                        </Tag>
+                        <Tag
+                          key={title}
+                          name={title}
+                          bgColor={bg}
+                          color={txt}
+                        />
                       ))}
                     </View>
                     <View style={[row, gap(8), { alignItems: "center" }]}>
