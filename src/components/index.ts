@@ -9,5 +9,6 @@ export * from "./IconButton";
 export * from "./OptionSelect";
 export * from "./NutrientInput";
 export * from "./ScreenBackground";
+export * from "./Tabs";
 export * from "./Tag";
 export * from "./TextInput";
