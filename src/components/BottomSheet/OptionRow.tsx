@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  type GestureResponderEvent,
-  Text,
-  TouchableOpacity,
-} from "react-native";
+import { type GestureResponderEvent, Text } from "react-native";
 
 import { Icon } from "@/icons";
 import {
@@ -16,7 +12,8 @@ import {
   row,
   text,
 } from "@/styles";
-import { Clickable } from "@/components";
+
+import { Clickable } from "../Clickable";
 
 export const OptionRow: React.FC<{
   value: string;

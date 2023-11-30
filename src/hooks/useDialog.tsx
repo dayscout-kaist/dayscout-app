@@ -1,8 +1,10 @@
 import { type ReactNode } from "react";
-import { useBottomSheet } from "./useBottomSheet";
 import { View } from "react-native";
-import { fill, gap, row } from "@/styles";
+
 import { Button } from "@/components/Button";
+import { fill, gap, row } from "@/styles";
+
+import { useBottomSheet } from "./useBottomSheet";
 
 interface Props {
   title: string;

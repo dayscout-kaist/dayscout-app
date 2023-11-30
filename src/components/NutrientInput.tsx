@@ -7,6 +7,8 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
+
+import { useTextInput } from "@/hooks";
 import {
   align,
   bg,
@@ -20,8 +22,8 @@ import {
   text,
   w,
 } from "@/styles";
-import { BottomSheet } from "@/components/BottomSheet";
-import { useTextInput } from "@/hooks";
+
+import { BottomSheet } from "./BottomSheet";
 
 const unitRatios = {
   g: 1,
