@@ -16,7 +16,7 @@ const clearToken = async (): Promise<void> => {
   await SecureStore.deleteItemAsync(USER_TOKEN_KEY);
 };
 
-const tokenState: RecoilState<string | null> = atom({
+export const tokenState: RecoilState<string | null> = atom({
   key: "UserToken",
   default: retrieveToken(),
 });

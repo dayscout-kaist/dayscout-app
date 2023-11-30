@@ -5,7 +5,7 @@ import type {
 } from "@react-navigation/native";
 import type { StackScreenProps } from "@react-navigation/stack";
 
-import type { Gender } from "@/types/auth";
+import type { GenderTxt } from "@/types/auth";
 
 export type AuthStackParamList = {
   Landing: undefined;
@@ -13,7 +13,7 @@ export type AuthStackParamList = {
   Nickname: { email: string; password: string };
   Inbody: AuthStackParamList["Nickname"] & { nickname: string };
   Personal: AuthStackParamList["Inbody"] & { height: number; weight: number };
-  Greet: AuthStackParamList["Personal"] & { birth: string; gender: Gender };
+  Greet: AuthStackParamList["Personal"] & { birth: string; gender: GenderTxt };
 };
 
 export type HomeTabParamList = {

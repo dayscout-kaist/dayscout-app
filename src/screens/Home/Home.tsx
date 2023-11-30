@@ -31,6 +31,7 @@ import { HomeTabScreenProps } from "@/navigation/types";
 import { ActionCard } from "@/screens/Home/ActionCard";
 import { StatusBar } from "expo-status-bar";
 import { Clickable } from "@/components";
+import { useUserInfo } from "@/hooks/useUserInfo";
 
 export const Home: React.FC<HomeTabScreenProps<"Home">> = ({ navigation }) => {
   const data: ProductWithDetails = {
@@ -38,7 +39,6 @@ export const Home: React.FC<HomeTabScreenProps<"Home">> = ({ navigation }) => {
     name: "데자와",
     imageSrc:
       "https://sparcs-newara-dev.s3.amazonaws.com/files/NewAra_Channeltalk.jpg",
-    // "https://sparcs-newara-dev.s3.amazonaws.com/files/snowsuno-in-90s.png",
     barcodeNumber: 8801097481206,
     largeCategory: "가공식품",
     mediumCategory: "차류",
@@ -55,6 +55,8 @@ export const Home: React.FC<HomeTabScreenProps<"Home">> = ({ navigation }) => {
     totalWeight: 500,
   };
 
+  const { data: userInfo } = useUserInfo();
+
   return (
     <ScrollView
       style={[column, bg.gray50, padding.horizontal(safe.horizontal), gap(16)]}
@@ -62,8 +64,9 @@ export const Home: React.FC<HomeTabScreenProps<"Home">> = ({ navigation }) => {
       <StatusBar />
       <View style={[padding.vertical(36)]}>
         <Text style={[text.gray600, text.h2, { lineHeight: 26 * 1.4 }]}>
-          <Text style={text.primary}>권순호</Text>님 안녕하세요 👋{"\n"}오늘은
-          어떤 음식을 드셨나요?
+          <Text style={text.primary}>{userInfo?.username}</Text> 님 안녕하세요
+          👋
+          {"\n"}오늘은 어떤 음식을 드셨나요?
         </Text>
       </View>
 

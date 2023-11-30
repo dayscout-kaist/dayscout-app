@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { FormLayout, OptionSelect, TextInput } from "@/components";
 import type { AuthStackScreenProps } from "@/navigation/types";
-import type { Gender } from "@/types/auth";
+import type { GenderTxt } from "@/types/auth";
 import type { TextInputValidator } from "@/types/input";
 import { validateBirth } from "@/utils/validators";
 import { useSelect } from "@/hooks";
@@ -13,7 +13,7 @@ export const Personal: React.FC<AuthStackScreenProps<"Personal">> = ({
 }) => {
   const [birth, setBirth] = useState<string>("");
 
-  const { open, selected: gender } = useSelect<Gender>({
+  const { open, selected: gender } = useSelect<GenderTxt>({
     title: "성별을 선택하세요",
     options: ["남자", "여자", "기타"],
     initial: null,
