@@ -1,5 +1,6 @@
 export * from "./AddReview";
 export * from "./Auth";
+export * from "./BarcodeSearch";
 export * from "./Camera";
 export * from "./EditProfile";
 export * from "./FoodCalculate";

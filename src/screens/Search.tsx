@@ -7,7 +7,6 @@ import {
   gap,
   row,
   text,
-  safe,
   margin,
   colors,
   fill,
@@ -107,7 +106,7 @@ export const Search: React.FC<HomeTabScreenProps<"Search">> = ({
                 onPress={() =>
                   navigation.navigate("FoodDetail", { foodId: food.id })
                 }
-                imageSrc={food.imageSrc || ""}
+                imageSrc={food.imageSrc}
                 tags={staticTags}
                 name={food.name}
                 category={food.content?.className || ""}
