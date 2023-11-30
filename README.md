@@ -54,6 +54,12 @@
 
 ## **설치 및 실행 방법**
 
+### Clone Repositories
+
+```bash
+git clone [https://github.com/sparcs-kaist/taxi-front](https://github.com/dayscout-kaist/dayscout-app)
+```
+
 ### Quick Start
 
 Install dependencies.
