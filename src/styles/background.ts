@@ -1,13 +1,10 @@
+import type { ViewStyle } from "react-native";
+
 import { mapColors } from "./color";
-import { css } from "@emotion/native";
 
 /**
  * Applies background-color
  * @example
  * bg.gray100  // Apply gray100 background-color
  */
-export const bg = mapColors(
-  color => css`
-    background-color: ${color};
-  `,
-);
+export const bg = mapColors<ViewStyle>(color => ({ backgroundColor: color }));

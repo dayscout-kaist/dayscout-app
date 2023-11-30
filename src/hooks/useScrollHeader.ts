@@ -1,6 +1,9 @@
 import { useEffect, useRef } from "react";
 import { Animated } from "react-native";
+
 import { useNavigation } from "@react-navigation/native";
+
+import { text } from "@/styles";
 
 export const useScrollHeader = () => {
   const yOffset = useRef(new Animated.Value(0)).current;
@@ -13,9 +16,13 @@ export const useScrollHeader = () => {
 
   useEffect(() => {
     navigation.setOptions({
-      headerTitleStyle: {
-        opacity: headerOpacity,
-      },
+      headerTitleStyle: [
+        text.sub2,
+        text.gray600,
+        {
+          opacity: headerOpacity,
+        },
+      ],
     });
   }, [headerOpacity, navigation]);
 

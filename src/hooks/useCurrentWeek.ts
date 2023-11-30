@@ -4,12 +4,14 @@ export const useCurrentWeek = () => {
   const today = new Date();
 
   return {
-    today: today.getDate(),
+    today,
     weekdays: useMemo(
       () =>
-        Array.from({ length: 7 }).map(
-          (_, i) => today.getDate() - today.getDay() + i,
-        ),
+        Array.from({ length: 7 }).map((_, i) => {
+          const time =
+            today.getTime() + (i - today.getDay()) * 24 * 60 * 60 * 1000;
+          return new Date(time);
+        }),
       [today],
     ),
   };

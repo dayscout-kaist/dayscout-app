@@ -3,7 +3,7 @@ import type { StyleProp, ViewStyle } from "react-native";
 
 import { Motion } from "@legendapp/motion";
 
-import { bg, springMotion } from "@/styles";
+import { springMotion } from "@/styles";
 
 interface Props extends React.ComponentProps<typeof Motion.Pressable> {
   children: React.ReactNode;

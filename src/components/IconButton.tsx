@@ -1,7 +1,9 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { Clickable } from "@/components/Clickable";
+
 import { Icon } from "@/icons";
-import { padding, round } from "@/styles";
+import { colors, padding, round } from "@/styles";
+
+import { Clickable } from "./Clickable";
 
 interface Props {
   onPress?: (navigation: NavigationProp<ReactNavigation.RootParamList>) => void;
@@ -12,10 +14,10 @@ export const IconButton: React.FC<Props> = ({ onPress }) => {
 
   return (
     <Clickable
-      viewStyle={[padding(8), round.md]}
+      viewStyle={[round.md, padding(8)]}
       onPress={() => onPress?.(navigation)}
     >
-      <Icon.add width={26} height={26} />
+      <Icon.add width={24} height={24} fill={colors.gray300} />
     </Clickable>
   );
 };

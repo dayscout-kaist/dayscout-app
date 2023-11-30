@@ -1,12 +1,13 @@
 import React from "react";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
+import { IconButton } from "@/components";
 import { Icon, type IconType } from "@/icons";
 import type { HomeTabParamList } from "@/navigation/types";
 import { Home, Posts, Search, Settings } from "@/screens";
 import { bg, colors, padding, text } from "@/styles";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { IconButton } from "@/components";
 
 const Tab = createBottomTabNavigator<HomeTabParamList>();
 
@@ -29,6 +30,7 @@ export const HomeTab: React.FC = () => {
         headerStyle: {
           height: 46,
         },
+        headerTitleStyle: [text.sub2, text.gray600],
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.gray200,
         tabBarStyle: {
@@ -80,14 +82,16 @@ export const HomeTab: React.FC = () => {
         component={Posts}
         options={{
           title: "포스트",
+          tabBarIcon: TabIcon("sticker"),
           headerShown: true,
           headerStyle: [{ opacity: 1, borderBottomWidth: 0 }],
-          tabBarIcon: TabIcon("sticker"),
+
           headerRight: () => (
             <IconButton
               onPress={navigation => navigation.navigate("AddReview")}
             />
           ),
+          headerLeftContainerStyle: padding.left(16),
           headerRightContainerStyle: padding.right(16),
         }}
       />
