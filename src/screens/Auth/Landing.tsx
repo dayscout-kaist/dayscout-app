@@ -33,12 +33,12 @@ export const Landing: React.FC<AuthStackScreenProps<"Landing">> = ({
             // TODO: Call API to login
             saveToken("TmpToken");
           }}
-          style="primary"
+          variant="primary"
         />
         <Button
           title="회원가입"
           onPress={() => navigation.navigate("EmailPwd")}
-          style="secondary"
+          variant="secondary"
         />
       </View>
     </View>

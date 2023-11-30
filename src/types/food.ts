@@ -52,6 +52,7 @@ export interface BaseFoodContent {
   className?: string;
   primaryUnit: "g" | "ml";
   nutrients: Nutrients;
+  suggestedNutrients?: Nutrients;
 }
 
 export interface GeneralFoodContent extends BaseFoodContent {

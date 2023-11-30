@@ -30,6 +30,7 @@ import type { ProductWithDetails } from "@/types/product";
 import { HomeTabScreenProps } from "@/navigation/types";
 import { ActionCard } from "@/screens/Home/ActionCard";
 import { StatusBar } from "expo-status-bar";
+import { Clickable } from "@/components";
 
 export const Home: React.FC<HomeTabScreenProps<"Home">> = ({ navigation }) => {
   const data: ProductWithDetails = {
@@ -66,8 +67,10 @@ export const Home: React.FC<HomeTabScreenProps<"Home">> = ({ navigation }) => {
         </Text>
       </View>
 
-      <TouchableOpacity
+      <Clickable
+        viewStyle={round.lg}
         onPress={() => navigation.navigate("HomeTab", { screen: "Search" })}
+        noShrink
       >
         <View
           style={[
@@ -76,7 +79,6 @@ export const Home: React.FC<HomeTabScreenProps<"Home">> = ({ navigation }) => {
             h(46),
             row,
             align.center,
-            round.lg,
             padding.horizontal(12),
             gap(12),
           ]}
@@ -86,7 +88,7 @@ export const Home: React.FC<HomeTabScreenProps<"Home">> = ({ navigation }) => {
             음식 영양성분을 검색해보세요
           </Text>
         </View>
-      </TouchableOpacity>
+      </Clickable>
 
       <View style={[row, gap(18), padding.top(16)]}>
         <ActionCard

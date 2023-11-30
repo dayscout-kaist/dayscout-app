@@ -13,6 +13,7 @@ import UserIcon from "./user.svg";
 import UpWideIcon from "./up_wide.svg";
 import DownWideIcon from "./down_wide.svg";
 import CameraIcon from "./camera.svg";
+import WarningIcon from "./warning.svg";
 import Logo from "./logo.svg";
 
 export const Icon = {
@@ -28,6 +29,7 @@ export const Icon = {
   up_wide: UpWideIcon,
   down_wide: DownWideIcon,
   camera: CameraIcon,
+  warning: WarningIcon,
   logo: Logo,
 } as const satisfies Record<string, React.FC<SvgProps>>;
 
