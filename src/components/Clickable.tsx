@@ -8,17 +8,19 @@ import { bg, springMotion } from "@/styles";
 interface Props extends React.ComponentProps<typeof Motion.Pressable> {
   children: React.ReactNode;
   viewStyle?: StyleProp<ViewStyle>;
+  noShrink?: boolean;
 }
 
 export const Clickable: React.FC<Props> = ({
   children,
   viewStyle,
+  noShrink,
   ...props
 }) => (
   <Motion.Pressable {...props}>
     <Motion.View
       style={[{ overflow: "hidden" }, viewStyle]}
-      whileTap={{ scale: 0.95 }}
+      whileTap={{ scale: noShrink ? 1 : 0.95 }}
       {...springMotion}
     >
       {children}

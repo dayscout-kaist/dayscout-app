@@ -20,7 +20,7 @@ export const Greet: React.FC<AuthStackScreenProps<"Greet">> = ({
           // TODO: Call API to get token
           saveToken("TmpToken");
         }}
-        style="primary"
+        variant="primary"
         stick="bottom"
       />
     </View>

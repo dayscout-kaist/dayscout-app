@@ -77,6 +77,7 @@ export const FoodDetail: React.FC<RootStackScreenProps<"FoodDetail">> = ({
         title="영양성분 계산하기"
         onPress={() => navigation.navigate("FoodCalculate")}
         style="primary"
+        variant="primary"
         stick="bottom"
       />
     </ScreenBackground>

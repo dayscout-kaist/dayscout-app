@@ -42,9 +42,9 @@ export const FormLayout: React.FC<{
       <Button
         title="다음"
         onPress={onSubmit}
-        style="primary"
+        variant="primary"
         stick={isKeyboardVisible ? "keyboard" : "bottom"}
-        disabled={isValid === false}
+        disabled={!isValid}
       />
     </View>
   );
