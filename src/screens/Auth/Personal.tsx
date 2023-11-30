@@ -5,7 +5,7 @@ import type { AuthStackScreenProps } from "@/navigation/types";
 import type { Gender } from "@/types/auth";
 import type { TextInputValidator } from "@/types/input";
 import { validateBirth } from "@/utils/validators";
-import { useSelectBottomSheet } from "@/utils/useSelectBottomSheet";
+import { useSelect } from "@/hooks";
 
 export const Personal: React.FC<AuthStackScreenProps<"Personal">> = ({
   navigation,
@@ -13,12 +13,10 @@ export const Personal: React.FC<AuthStackScreenProps<"Personal">> = ({
 }) => {
   const [birth, setBirth] = useState<string>("");
 
-  const [gender, setGender] = useState<Gender | null>(null);
-
-  const { open } = useSelectBottomSheet<Gender>({
+  const { open, selected: gender } = useSelect<Gender>({
     title: "성별을 선택하세요",
     options: ["남자", "여자", "기타"],
-    selected: gender,
+    initial: null,
   });
 
   const checkBirth: TextInputValidator = val => {
@@ -61,7 +59,7 @@ export const Personal: React.FC<AuthStackScreenProps<"Personal">> = ({
           value={gender}
           title="성별"
           placeholder="성별을 선택하세요"
-          onPress={() => open().then(setGender)}
+          onPress={open}
         />
       </FormLayout>
     </>

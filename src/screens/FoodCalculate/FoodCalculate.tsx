@@ -85,7 +85,7 @@ export const FoodCalculate: React.FC = () => {
       <Button
         title="나의 기록에 추가하기"
         onPress={() => navigation.navigate("FoodCalculate")}
-        style="primary"
+        variant="primary"
         stick="bottom"
       />
       <DeprecatedBottomSheet ref={bottomSheetRef}>

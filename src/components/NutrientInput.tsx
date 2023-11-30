@@ -1,12 +1,5 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
-  Button,
   Keyboard,
   Text,
   TextInput,
@@ -17,7 +10,6 @@ import {
 import {
   align,
   bg,
-  fill,
   gap,
   h,
   justify,
@@ -28,11 +20,8 @@ import {
   text,
   w,
 } from "@/styles";
-import { DeprecatedBottomSheet } from "@/components/DeprecatedBottomSheet";
-import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { BottomSheet } from "@/components/BottomSheet";
 import { useTextInput } from "@/hooks";
-import { parse } from "react-native-svg";
 
 const unitRatios = {
   g: 1,

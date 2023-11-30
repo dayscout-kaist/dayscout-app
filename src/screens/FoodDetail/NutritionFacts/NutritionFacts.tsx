@@ -1,7 +1,7 @@
 import React from "react";
-import { type ColorValue, Text, TouchableOpacity, View } from "react-native";
+import { type ColorValue, Text, View } from "react-native";
 
-import { ActionBox, Tag } from "@/components";
+import { ActionBox, Clickable, Tag } from "@/components";
 import { Icon } from "@/icons";
 import {
   align,
@@ -21,9 +21,18 @@ import { NutrientRow } from "./NutrientRow";
 export const NutritionFacts: React.FC<{
   tag: { title: string; bg: ColorValue; txt: ColorValue };
   nutrients: Nutrients;
+  suggestions?: Nutrients;
   servingSize: string;
   onServingSizePress: () => void;
-}> = ({ tag, nutrients, servingSize, onServingSizePress }) => (
+  suggestionFeedback: () => void;
+}> = ({
+  tag,
+  nutrients,
+  suggestions,
+  servingSize,
+  onServingSizePress,
+  suggestionFeedback,
+}) => (
   <View style={[padding.top(20), bg.white]}>
     <View style={[gap(13), padding.horizontal(safe.horizontal)]}>
       <View style={gap(8)}>
@@ -38,8 +47,8 @@ export const NutritionFacts: React.FC<{
         </Text>
       </View>
       <View style={gap(12)}>
-        <TouchableOpacity
-          style={[
+        <Clickable
+          viewStyle={[
             row,
             align.center,
             round.md,
@@ -52,23 +61,47 @@ export const NutritionFacts: React.FC<{
         >
           <Text style={[text.btn2, text.gray400]}>{servingSize}</Text>
           <Icon.down width={28} height={28} fill={colors.gray400} />
-        </TouchableOpacity>
+        </Clickable>
         <View style={gap(12)}>
-          <View style={gap(6)}>
-            <NutrientRow name="탄수화물" value={nutrients.carbohydrate} />
-            <NutrientRow name="   당류" value={nutrients.sugar} />
-          </View>
-          <NutrientRow name="단백질" value={nutrients.protein} />
-          <NutrientRow name="지방" value={nutrients.fat} />
+          <NutrientRow
+            name="탄수화물"
+            value={nutrients.carbohydrate}
+            suggestion={suggestions?.carbohydrate}
+          />
+          <NutrientRow
+            sub
+            name="당류"
+            value={nutrients.sugar}
+            suggestion={suggestions?.sugar}
+          />
+          <NutrientRow
+            name="단백질"
+            value={nutrients.protein}
+            suggestion={suggestions?.protein}
+          />
+          <NutrientRow
+            name="지방"
+            value={nutrients.fat}
+            suggestion={suggestions?.fat}
+          />
         </View>
       </View>
       <View style={[bg.gray50, { height: 1 }]} />
     </View>
-    <ActionBox
-      icon="🔢"
-      main="정보가 정확하지 않다면"
-      desc="영양정보 수정 제안하기"
-      onPress={() => {}}
-    />
+    {!suggestions ? (
+      <ActionBox
+        icon="🔢"
+        main="정보가 정확하지 않다면"
+        desc="영양정보 수정 제안하기"
+        onPress={() => {}}
+      />
+    ) : (
+      <ActionBox
+        icon="📬"
+        main="바뀐 정보가 정확한가요?"
+        desc="영양정보 피드백 남기기"
+        onPress={suggestionFeedback}
+      />
+    )}
   </View>
 );

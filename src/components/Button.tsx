@@ -4,13 +4,16 @@ import {
   TouchableOpacity,
   Text,
   ViewStyle,
+  View,
+  type StyleProp,
 } from "react-native";
 import { align, bg, padding, round, safe, text } from "@/styles";
+import { Clickable } from "@/components/Clickable";
 
-type Style = "primary" | "secondary";
+type Variant = "primary" | "secondary";
 type Stick = "bottom" | "keyboard";
 
-const getTheme = (style: Style, disabled: boolean | undefined) => {
+const getTheme = (style: Variant, disabled: boolean | undefined) => {
   switch (style) {
     case "primary":
       return disabled
@@ -26,11 +29,12 @@ const getTheme = (style: Style, disabled: boolean | undefined) => {
 export const Button: React.FC<{
   title: string;
   onPress: (event: GestureResponderEvent) => void;
-  style: Style;
+  variant: Variant;
   disabled?: boolean;
   stick?: Stick;
-}> = ({ title, onPress, style, disabled, stick }) => {
-  const theme = getTheme(style, disabled);
+  style?: StyleProp<ViewStyle>;
+}> = ({ title, onPress, variant, disabled, stick, style }) => {
+  const theme = getTheme(variant, disabled);
 
   const stickStyle = {
     bottom: {
@@ -49,19 +53,23 @@ export const Button: React.FC<{
   } as const satisfies Record<Stick, ViewStyle>;
 
   return (
-    <TouchableOpacity
-      style={[
-        round.lg,
-        padding.horizontal(16),
-        padding.vertical(20),
-        align.center,
-        theme.bg,
-        stick ? stickStyle[stick] : {},
-      ]}
+    <Clickable
+      style={[stick && stickStyle[stick], style]}
+      viewStyle={stick !== "keyboard" && round.lg}
+      noShrink={stick === "keyboard"}
       onPress={onPress}
       disabled={disabled}
     >
-      <Text style={[text.btn1, theme.txt]}>{title}</Text>
-    </TouchableOpacity>
+      <View
+        style={[
+          padding.horizontal(16),
+          padding.vertical(20),
+          theme.bg,
+          align.center,
+        ]}
+      >
+        <Text style={[text.btn1, theme.txt]}>{title}</Text>
+      </View>
+    </Clickable>
   );
 };
