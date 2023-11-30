@@ -87,7 +87,7 @@ export const Search: React.FC<HomeTabScreenProps<"Search">> = ({
   return (
     <View style={[bg.white, fill]}>
       <SearchBarHeader input={searchQuery} />
-      {!searchQuery.value && (
+      {!isLoading && !data && !error && (
         <ActionBox
           main="바코드가 있는 식품이라면"
           desc="카메라로 스캔하기"
@@ -96,24 +96,20 @@ export const Search: React.FC<HomeTabScreenProps<"Search">> = ({
         />
       )}
       <ScrollView style={[padding.horizontal(12), margin.top(15)]}>
-        {error && <Text>{error.name}</Text>}
-        {searchQuery.value && !data && <FoodSearchItem.Skeleton />}
+        {error && <Text>음식을 찾을 수 없어요</Text>}
+        {isLoading && <FoodSearchItem.Skeleton />}
         {data &&
-          (data.length > 0 ? (
-            data.map(food => (
-              <FoodSearchItem
-                key={food.id}
-                onPress={() =>
-                  navigation.navigate("FoodDetail", { foodId: food.id })
-                }
-                imageSrc={food.imageSrc}
-                tags={staticTags}
-                name={food.name}
-                category={food.content?.className || ""}
-              />
-            ))
-          ) : (
-            <Text>검색 결과가 없습니다.</Text>
+          data.map(food => (
+            <FoodSearchItem
+              key={food.id}
+              onPress={() =>
+                navigation.navigate("FoodDetail", { foodId: food.id })
+              }
+              imageSrc={food.imageSrc}
+              tags={staticTags}
+              name={food.name}
+              category={food.content?.className || ""}
+            />
           ))}
       </ScrollView>
     </View>

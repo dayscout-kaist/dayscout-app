@@ -8,6 +8,7 @@ import {
   bg,
   colors,
   gap,
+  justify,
   padding,
   round,
   row,
@@ -20,6 +21,7 @@ import { NutrientRow } from "./NutrientRow";
 
 export const NutritionFacts: React.FC<{
   tag: { title: string; bg: ColorValue; txt: ColorValue };
+  totalWeight: number;
   nutrients: Nutrients;
   suggestions?: Nutrients;
   servingSize: string;
@@ -27,6 +29,7 @@ export const NutritionFacts: React.FC<{
   suggestionFeedback: () => void;
 }> = ({
   tag,
+  totalWeight,
   nutrients,
   suggestions,
   servingSize,
@@ -46,22 +49,26 @@ export const NutritionFacts: React.FC<{
           유저들이 입력한 데이터를 통해 추정된 정보예요
         </Text>
       </View>
+
       <View style={gap(12)}>
-        <Clickable
-          viewStyle={[
-            row,
-            align.center,
-            round.md,
-            padding.left(12),
-            padding.right(6),
-            bg.gray100,
-            { alignSelf: "flex-start", height: 37 },
-          ]}
-          onPress={onServingSizePress}
-        >
-          <Text style={[text.btn2, text.gray400]}>{servingSize}</Text>
-          <Icon.down width={28} height={28} fill={colors.gray400} />
-        </Clickable>
+        <View style={[row, justify.between, align.center]}>
+          <Clickable
+            viewStyle={[
+              row,
+              align.center,
+              round.md,
+              padding.left(12),
+              padding.right(6),
+              bg.gray100,
+              { alignSelf: "flex-start", height: 37 },
+            ]}
+            onPress={onServingSizePress}
+          >
+            <Text style={[text.btn2, text.gray400]}>{servingSize}</Text>
+            <Icon.down width={28} height={28} fill={colors.gray400} />
+          </Clickable>
+          <Text style={[text.sub2, text.gray500]}>총 {totalWeight}g</Text>
+        </View>
         <View style={gap(12)}>
           <NutrientRow
             name="탄수화물"

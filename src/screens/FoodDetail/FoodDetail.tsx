@@ -118,6 +118,7 @@ export const FoodDetail: React.FC<RootStackScreenProps<"FoodDetail">> = ({
           />
           <NutritionFacts
             tag={{ title: "유통식품", bg: "#a40fff40", txt: "#a40fff" }}
+            totalWeight={food.content.totalWeight}
             nutrients={food.content.nutrients}
             suggestions={food.content.suggestedNutrients}
             servingSize={selected || "100g당"}
