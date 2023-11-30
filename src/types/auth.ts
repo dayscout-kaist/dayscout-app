@@ -1,4 +1,4 @@
-export type Gender = "M" | "F";
+export type Gender = "남자" | "여자" | "기타";
 
 export interface RegisterInfo {
   email?: string;

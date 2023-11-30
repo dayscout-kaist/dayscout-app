@@ -5,15 +5,15 @@ import type {
 } from "@react-navigation/native";
 import type { StackScreenProps } from "@react-navigation/stack";
 
-import type { RegisterInfo } from "@/types/auth";
+import type { Gender } from "@/types/auth";
 
 export type AuthStackParamList = {
   Landing: undefined;
-  EmailPwd: RegisterInfo;
-  Nickname: RegisterInfo;
-  Inbody: RegisterInfo;
-  Personal: RegisterInfo;
-  Greet: RegisterInfo;
+  EmailPwd: undefined;
+  Nickname: { email: string; password: string };
+  Inbody: AuthStackParamList["Nickname"] & { nickname: string };
+  Personal: AuthStackParamList["Inbody"] & { height: number; weight: number };
+  Greet: AuthStackParamList["Personal"] & { birth: string; gender: Gender };
 };
 
 export type HomeTabParamList = {

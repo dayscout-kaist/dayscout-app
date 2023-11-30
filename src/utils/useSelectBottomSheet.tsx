@@ -2,13 +2,13 @@ import { useOverlay } from "@toss/use-overlay";
 import { BottomSheet } from "@/components/BottomSheet";
 import { Text } from "react-native";
 import { padding, safe, text } from "@/styles";
-import { ServingSizeRow } from "@/screens/FoodDetail/NutritionFacts";
 import React, { useCallback } from "react";
+import { OptionRow } from "@/components/BottomSheet";
 
 interface Props<T extends string> {
   title: string;
   options: T[];
-  selected: T;
+  selected: T | null;
 }
 
 export const useSelectBottomSheet = <T extends string>({
@@ -33,7 +33,7 @@ export const useSelectBottomSheet = <T extends string>({
           >
             <Text style={[text.h3, text.gray600]}>{title}</Text>
             {options.map(option => (
-              <ServingSizeRow
+              <OptionRow
                 key={option}
                 value={option}
                 onPress={() => {

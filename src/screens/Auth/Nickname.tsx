@@ -7,11 +7,10 @@ import type { TextInputValidator } from "@/types/input";
 import { validateNickname } from "@/utils/validators";
 
 export const Nickname: React.FC<AuthStackScreenProps<"Nickname">> = ({
+  navigation,
   route: { params: navParam },
 }) => {
-  const navigation = useNavigation();
-
-  const [nickname, setNickname] = useState<string>(navParam.nickname ?? "");
+  const [nickname, setNickname] = useState<string>("");
 
   const checkNickname: TextInputValidator = val => {
     const regValid = validateNickname(val);

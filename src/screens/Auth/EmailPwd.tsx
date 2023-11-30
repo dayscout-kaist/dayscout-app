@@ -7,15 +7,11 @@ import type { TextInputValidator } from "@/types/input";
 import { validateEmail } from "@/utils/validators";
 
 export const EmailPwd: React.FC<AuthStackScreenProps<"EmailPwd">> = ({
-  route: { params: navParam },
+  navigation,
 }) => {
-  const navigation = useNavigation();
-
-  const [email, setEmail] = useState<string>(navParam.email ?? "");
-  const [password, setPassword] = useState<string>(navParam.password ?? "");
-  const [password2nd, setPassword2nd] = useState<string>(
-    navParam.password ?? "",
-  );
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [password2nd, setPassword2nd] = useState<string>("");
 
   const checkEmail: TextInputValidator = val => {
     const valid = validateEmail(val);
@@ -42,9 +38,7 @@ export const EmailPwd: React.FC<AuthStackScreenProps<"EmailPwd">> = ({
   return (
     <FormLayout
       title="회원 정보를 입력하세요"
-      onSubmit={() =>
-        navigation.navigate("Nickname", { ...navParam, email, password })
-      }
+      onSubmit={() => navigation.navigate("Nickname", { email, password })}
       isValid={isFormValid}
     >
       <TextInput
