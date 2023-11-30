@@ -1,4 +1,5 @@
 export * from "./useAuthToken";
+export * from "./useDialog";
 export * from "./useFoodDetail";
 export * from "./useFoodSearch";
 export * from "./useKeyboardVisible";
