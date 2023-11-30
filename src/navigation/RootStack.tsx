@@ -89,7 +89,6 @@ export const RootStack: React.FC = () => {
               options={{
                 title: "",
                 headerTransparent: true,
-                headerBackImage: HeaderBackImage(colors.white),
               }}
             />
             <Stack.Screen name="EditProfile" component={EditProfile} />

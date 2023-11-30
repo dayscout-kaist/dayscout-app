@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { Animated, KeyboardAvoidingView, Platform } from "react-native"; // Temp fix to suppress Animated warning
+import { Animated, KeyboardAvoidingView, LogBox, Platform } from "react-native"; // Temp fix to suppress Animated warning
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { RecoilRoot } from "recoil";
@@ -18,6 +18,8 @@ av.addListener(() => {});
 SplashScreen.preventAutoHideAsync();
 
 const queryClient = new QueryClient();
+
+if (!__DEV__) LogBox.ignoreAllLogs();
 
 const App: React.FC = () => {
   const [fontsLoaded] = useFonts({
