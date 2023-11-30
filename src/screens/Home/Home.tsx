@@ -27,10 +27,9 @@ import {
 } from "@/styles";
 import type { ProductWithDetails } from "@/types/product";
 
-import { FreqFood } from "./FreqFood";
 import { HomeTabScreenProps } from "@/navigation/types";
-import { Clickable } from "@/components";
 import { ActionCard } from "@/screens/Home/ActionCard";
+import { StatusBar } from "expo-status-bar";
 
 export const Home: React.FC<HomeTabScreenProps<"Home">> = ({ navigation }) => {
   const data: ProductWithDetails = {
@@ -59,6 +58,7 @@ export const Home: React.FC<HomeTabScreenProps<"Home">> = ({ navigation }) => {
     <ScrollView
       style={[column, bg.gray50, padding.horizontal(safe.horizontal), gap(16)]}
     >
+      <StatusBar />
       <View style={[padding.vertical(36)]}>
         <Text style={[text.gray600, text.h2, { lineHeight: 26 * 1.4 }]}>
           <Text style={text.primary}>권순호</Text>님 안녕하세요 👋{"\n"}오늘은
