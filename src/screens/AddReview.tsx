@@ -10,7 +10,7 @@ export const AddReview: React.FC = () => {
       <Text>AddReview Page</Text>
       <Button
         title="Review"
-        onPress={() => navigation.navigate("HomeTab", { screen: "Review" })}
+        onPress={() => navigation.navigate("HomeTab", { screen: "Posts" })}
       />
     </View>
   );

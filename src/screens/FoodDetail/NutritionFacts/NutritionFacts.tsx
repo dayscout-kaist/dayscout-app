@@ -1,7 +1,7 @@
 import React from "react";
 import { type ColorValue, Text, TouchableOpacity, View } from "react-native";
 
-import { Tag } from "@/components";
+import { ActionBox, Tag } from "@/components";
 import { Icon } from "@/icons";
 import {
   align,
@@ -16,7 +16,6 @@ import {
 } from "@/styles";
 import type { Nutrients } from "@/types/food";
 
-import { ActionBox } from "./ActionBox";
 import { NutrientRow } from "./NutrientRow";
 
 export const NutritionFacts: React.FC<{
@@ -30,9 +29,9 @@ export const NutritionFacts: React.FC<{
       <View style={gap(8)}>
         <View style={[row, align.center, gap(10)]}>
           <Text style={[text.h3, text.gray600]}>영양성분</Text>
-          <Tag bgClr={tag.bg} txtClr={tag.txt}>
-            {tag.title}
-          </Tag>
+          {/*<Tag bgClr={tag.bg} txtClr={tag.txt}>*/}
+          {/*  {tag.title}*/}
+          {/*</Tag>*/}
         </View>
         <Text style={[text.body2, text.gray300]}>
           유저들이 입력한 데이터를 통해 추정된 정보예요
@@ -43,7 +42,7 @@ export const NutritionFacts: React.FC<{
           style={[
             row,
             align.center,
-            round.lg,
+            round.md,
             padding.left(12),
             padding.right(6),
             bg.gray100,
@@ -65,13 +64,11 @@ export const NutritionFacts: React.FC<{
       </View>
       <View style={[bg.gray50, { height: 1 }]} />
     </View>
-    <View style={[padding.vertical(10), padding.horizontal(12)]}>
-      <ActionBox
-        icon="🍞"
-        main="정보가 정확하지 않다면"
-        desc="영양정보 수정 제안하기"
-        onPress={() => {}}
-      />
-    </View>
+    <ActionBox
+      icon="🍞"
+      main="정보가 정확하지 않다면"
+      desc="영양정보 수정 제안하기"
+      onPress={() => {}}
+    />
   </View>
 );

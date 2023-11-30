@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  Button,
   Text,
   View,
   Image,
@@ -9,16 +8,18 @@ import {
   Keyboard,
   ScrollView,
   TouchableOpacity,
+  Button,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
+import { useAuthToken } from "@/hooks";
+import { Icon } from "@/icons";
 import {
   bg,
   text,
   padding,
   gap,
   margin,
-  border,
   row,
   justify,
   align,
@@ -28,11 +29,10 @@ import {
   round,
   colors,
 } from "@/styles";
-import { Icon } from "@/icons";
-import { color } from "react-native-elements/dist/helpers";
 
 export const Settings: React.FC = () => {
   const navigation = useNavigation();
+  const { clearToken } = useAuthToken();
 
   const [isSwitch1On, setSwitch1On] = useState(false);
   const [isSwitch2On, setSwitch2On] = useState(false);
@@ -58,13 +58,16 @@ export const Settings: React.FC = () => {
             ]}
           >
             <Text style={[text.h3, margin.bottom(16)]}>계정</Text>
-            <View style={[row, justify.start, align.center]}>
-              <Image
-                style={[round.full, margin.right(16)]}
-                source={{ uri: avatarSrc, width: 40, height: 40 }}
-              />
-              <Text style={[text.sub2, margin.right(16)]}>{nickname}</Text>
-              <View style={[{ flex: 1 }]} />
+            <View style={[row, justify.between, align.center]}>
+              <View style={[row, align.center, gap(14)]}>
+                <Image
+                  style={round.full}
+                  source={{ uri: avatarSrc, width: 40, height: 40 }}
+                />
+                <Text style={[margin.right(16), text.sub2, text.gray600]}>
+                  {nickname}
+                </Text>
+              </View>
               <TouchableOpacity>
                 <Icon.right width={30} height={30} fill={colors.gray400} />
               </TouchableOpacity>
@@ -140,6 +143,20 @@ export const Settings: React.FC = () => {
             </View>
           </View>
 
+          <TouchableOpacity
+            style={[
+              bg.white,
+              padding.horizontal(safe.horizontal),
+              padding.vertical(16),
+            ]}
+            onPress={() => navigation.navigate("Help")}
+          >
+            <View style={[row, justify.start, align.center]}>
+              <Text style={[text.h3]}>도움말 모아보기</Text>
+              <View style={[{ flex: 1 }]} />
+              <Icon.right width={30} height={30} fill={colors.gray400} />
+            </View>
+          </TouchableOpacity>
           <View
             style={[
               bg.white,
@@ -179,6 +196,7 @@ export const Settings: React.FC = () => {
               />
             </View>
           </View>
+          <Button title="로그아웃" onPress={() => clearToken()} />
         </View>
       </ScrollView>
     </View>

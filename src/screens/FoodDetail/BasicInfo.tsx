@@ -1,8 +1,14 @@
 import React from "react";
-import { type ColorValue, Image, Text, View } from "react-native";
+import {
+  type ColorValue,
+  Image,
+  ImageBackground,
+  Text,
+  View,
+} from "react-native";
 
 import { Tag } from "@/components";
-import { align, bg, gap, padding, row, safe, text } from "@/styles";
+import { align, bg, gap, h, padding, row, safe, text } from "@/styles";
 
 export const BasicInfo: React.FC<{
   name: string;
@@ -13,12 +19,15 @@ export const BasicInfo: React.FC<{
 }> = ({ name, category, imgSrc, tags, description }) => {
   return (
     <View style={[bg.white]}>
-      <Image
-        source={{
-          uri: imgSrc,
-          height: 240,
-        }}
-      />
+      <ImageBackground
+        source={{ uri: imgSrc }}
+        resizeMode="cover"
+        style={h(240)}
+      >
+        <View
+          style={[h("fill"), { backgroundColor: "rgba(0, 0, 0, 0.04)" }]}
+        ></View>
+      </ImageBackground>
       <View
         style={[
           padding.horizontal(safe.horizontal),
@@ -28,11 +37,11 @@ export const BasicInfo: React.FC<{
       >
         <View style={[gap(8)]}>
           <View style={[row, gap(8)]}>
-            {tags.map(({ title, bg, txt }) => (
-              <Tag key={title} bgClr={bg} txtClr={txt}>
-                {title}
-              </Tag>
-            ))}
+            {/*{tags.map(({ title, bg, txt }) => (*/}
+            {/*  <Tag key={title} bgClr={bg} txtClr={txt}>*/}
+            {/*    {title}*/}
+            {/*  </Tag>*/}
+            {/*))}*/}
           </View>
           <View style={[row, align.baseline, gap(8)]}>
             <Text style={[text.h2, text.gray600]}>{name}</Text>

@@ -3,7 +3,7 @@ import { ScrollView, View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
-import { BottomButton, BottomSheet } from "@/components";
+import { BottomSheet, Button, OptionRow } from "@/components";
 import { column, fill, gap, text } from "@/styles";
 import type { ProductWithDetails } from "@/types/product";
 
@@ -12,8 +12,6 @@ import type { ProductWithDetails } from "@/types/product";
 import { NutritionFacts } from "./NutritionFacts";
 import { IntakeInput } from "./IntakeInput";
 import { BasicInfo } from "./BasicInfo";
-import { ServingSizeRow } from "../FoodDetail/NutritionFacts/ServingSizeRow";
-// import { ServingSizeRow } from "./NutritionFacts/ServingSizeRow";
 
 interface ServingSize {
   key: number;
@@ -70,22 +68,30 @@ export const FoodCalculate: React.FC = () => {
               bottomSheetRef.current?.present();
               bottomSheetRef.current?.expand();
             }}
-            tags={[{ title: "유통식품", bg: "#a40fff40", txt: "#a40fff" }]}
+            tags={[
+              {
+                id: 1,
+                name: "유통 식품",
+                colorBorder: "#a40fff40",
+                colorBackground: "#a40fff",
+              },
+            ]}
           ></BasicInfo>
           <IntakeInput variant={0} />
           <NutritionFacts nutrients={data.nutrients} />
           <View style={{ height: 192 }} />
         </View>
       </ScrollView>
-      <BottomButton
+      <Button
         title="나의 기록에 추가하기"
         onPress={() => navigation.navigate("FoodCalculate")}
         style="primary"
+        stick="bottom"
       />
       <BottomSheet ref={bottomSheetRef}>
         <Text style={[text.h3, text.gray600]}>영양성분 기준</Text>
         {servingSizes.map(serve => (
-          <ServingSizeRow
+          <OptionRow
             key={serve.key}
             value={serve.text}
             onPress={() => {

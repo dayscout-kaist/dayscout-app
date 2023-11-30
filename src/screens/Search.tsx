@@ -1,16 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { ScrollView, View, TextInput, Text } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+import { FoodSearchItem } from "@/components";
+import { useFoodSearch, useTextInput } from "@/hooks";
+import { Icon } from "@/icons";
+import { HomeTabScreenProps } from "@/navigation/types";
 import {
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-  TextInput,
-  Image,
-} from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { bg, padding, gap, row, text, safe, margin, colors } from "@/styles";
-import { Tag } from "@/components";
-import { HeaderBackImage } from "@/navigation/Header";
+  h,
+  bg,
+  padding,
+  gap,
+  row,
+  text,
+  margin,
+  colors,
+  fill,
+  round,
+  inline,
+  align,
+} from "@/styles";
 
 // Dummy data for the list items
 const searchResults = [
@@ -18,7 +27,6 @@ const searchResults = [
     id: 100581350,
     name: "데자와 로얄 밀크티 500ml",
     imageSrc:
-      // "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D",
       "https://sparcs-newara-dev.s3.amazonaws.com/files/snowsuno-in-90s.png",
     barcodeNumber: 8801097481206,
     largeCategory: "가공식품",
@@ -39,7 +47,6 @@ const searchResults = [
     id: 100581350,
     name: "데자와 로얄 밀크티 500ml",
     imageSrc:
-      // "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D",
       "https://sparcs-newara-dev.s3.amazonaws.com/files/snowsuno-in-90s.png",
     barcodeNumber: 8801097481206,
     largeCategory: "가공식품",
@@ -59,85 +66,80 @@ const searchResults = [
   // Add more items here...
 ];
 
-const staticTags = [
-  { title: "추정치", bg: "#ffe5c3", txt: "#ff980f" },
-  { title: "1,000회 이상 추가됨", bg: "#fdbec1", txt: "#eb2a2a" },
-];
+const SearchBarHeader: React.FC<{
+  input: { value: string; onChangeText: (text: string) => void };
+}> = ({ input }) => {
+  const insets = useSafeAreaInsets();
 
-export const Search: React.FC = () => {
-  const navigation = useNavigation();
-
-  const BackButton = HeaderBackImage(colors.gray500);
-
-  const Header = () => (
+  return (
     <View
       style={[
         row,
-        margin.top(48),
+        inline,
+        margin.top(insets.top),
         margin.bottom(15),
         { alignItems: "center", justifyContent: "space-between" },
       ]}
     >
-      <TouchableOpacity
-        style={[margin.left(3)]}
-        onPress={() => navigation.goBack()}
-      >
-        <BackButton tintColor={colors.gray500} />
-      </TouchableOpacity>
-      <TextInput
-        autoFocus={true}
+      <View
         style={[
-          padding.horizontal(16),
-          padding.vertical(15),
-          margin.horizontal(10),
-          margin.right(15),
           bg.gray100,
-          { flex: 1, borderRadius: 20 },
+          fill,
+          round.md,
+          row,
+          align.center,
+          h(42),
+          gap(12),
+          padding.horizontal(14),
         ]}
-        placeholder="Search for food"
-      />
+      >
+        <Icon.search fill={colors.gray400} width={20} height={20} />
+        <TextInput
+          autoFocus={true}
+          placeholder="찾고 싶은 음식을 검색하세요"
+          style={[
+            text.body2,
+            text.gray600,
+            fill,
+            { lineHeight: 20 /* temp fix */ },
+          ]}
+          {...input}
+        />
+      </View>
     </View>
   );
+};
+
+export const Search: React.FC<HomeTabScreenProps<"Search">> = ({
+  navigation,
+}) => {
+  const searchQuery = useTextInput();
+
+  const { data, error, isLoading } = useFoodSearch(searchQuery.value);
+
+  useEffect(() => {
+    console.log(error);
+  }, [error]);
 
   return (
-    <View style={[bg.white, { flex: 1 }]}>
-      <Header />
-      <ScrollView style={[padding.horizontal(safe.horizontal)]}>
-        {searchResults.map((item, index) => (
-          <TouchableOpacity
-            key={`search-item-${index}`}
-            style={[
-              bg.white,
-              padding.vertical(12),
-              row,
-              gap(8),
-              { alignItems: "center" },
-            ]}
-            onPress={() => navigation.navigate("FoodDetail", { item })}
-          >
-            <Image
-              style={{ width: 48, height: 48, borderRadius: 12 }}
-              source={{
-                uri: item.imageSrc,
-              }}
+    <View style={[bg.white, fill]}>
+      <SearchBarHeader input={searchQuery} />
+      <ScrollView style={[padding.horizontal(12)]}>
+        {error && <Text>{error.name}</Text>}
+        {isLoading && <Text>Loading</Text>}
+        {data &&
+          data.map(food => (
+            <FoodSearchItem
+              key={food.id}
+              onPress={() =>
+                navigation.navigate("FoodDetail", { foodId: food.id })
+              }
+              imageSrc={food.imageSrc || ""}
+              tags={[]}
+              name={food.name}
+              category={food.content?.className || ""}
             />
-            <View style={[gap(8), { flex: 1 }]}>
-              <View style={[row, gap(8)]}>
-                {staticTags.map(({ title, bg, txt }) => (
-                  <Tag key={title} bgClr={bg} txtClr={txt}>
-                    {title}
-                  </Tag>
-                ))}
-              </View>
-              <View style={[row, gap(8), { alignItems: "center" }]}>
-                <Text style={[text.body1]}>{item.displayName}</Text>
-                <Text style={[text.body2, text.gray400]}>
-                  {item.smallCategory}
-                </Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-        ))}
+          ))}
       </ScrollView>
     </View>
   );

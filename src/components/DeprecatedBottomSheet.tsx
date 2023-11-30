@@ -8,11 +8,15 @@ import type { BottomSheetModalMethods } from "@gorhom/bottom-sheet/lib/typescrip
 
 import { bg, padding, safe } from "@/styles";
 
-export const BottomSheet = forwardRef<
+/**
+ * @deprecated
+ */
+export const DeprecatedBottomSheet = forwardRef<
   BottomSheetModalMethods,
   { children: React.ReactNode }
 >(({ children }, ref) => (
   <BottomSheetModal
+    keyboardBehavior="interactive"
     ref={ref}
     index={-1}
     enablePanDownToClose

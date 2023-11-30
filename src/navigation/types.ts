@@ -5,6 +5,17 @@ import type {
 } from "@react-navigation/native";
 import type { StackScreenProps } from "@react-navigation/stack";
 
+import type { RegisterInfo } from "@/types/auth";
+
+export type AuthStackParamList = {
+  Landing: undefined;
+  EmailPwd: RegisterInfo;
+  Nickname: RegisterInfo;
+  Inbody: RegisterInfo;
+  Personal: RegisterInfo;
+  Greet: RegisterInfo;
+};
+
 export type HomeTabParamList = {
   Home: undefined;
   Search: undefined;
@@ -15,12 +26,16 @@ export type HomeTabParamList = {
 export type RootStackParamList = {
   HomeTab: NavigatorScreenParams<HomeTabParamList>;
   Camera: undefined;
-  FoodDetail: undefined;
+  FoodDetail: { foodId: number };
   EditProfile: undefined;
-  FoodReview: undefined;
+  FoodReview: { foodId: number };
   AddReview: undefined;
   FoodCalculate: undefined;
+  Help: undefined;
 };
+
+export type AuthStackScreenProps<T extends keyof AuthStackParamList> =
+  StackScreenProps<AuthStackParamList, T>;
 
 export type RootStackScreenProps<T extends keyof RootStackParamList> =
   StackScreenProps<RootStackParamList, T>;
@@ -33,6 +48,6 @@ export type HomeTabScreenProps<T extends keyof HomeTabParamList> =
 
 declare global {
   namespace ReactNavigation {
-    interface RootParamList extends RootStackParamList {}
+    interface RootParamList extends AuthStackParamList, RootStackParamList {}
   }
 }

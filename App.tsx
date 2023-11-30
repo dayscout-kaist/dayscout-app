@@ -1,20 +1,23 @@
 import React, { useCallback } from "react";
+import { Animated, KeyboardAvoidingView, Platform } from "react-native"; // Temp fix to suppress Animated warning
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { RecoilRoot } from "recoil";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { RootStack } from "@/navigation/RootStack";
 import { fill } from "@/styles";
-
-// Temp fix to suppress Animated warning
-import { Animated } from "react-native";
+import { OverlayProvider } from "@toss/use-overlay";
 
 const av = new Animated.Value(0);
 av.addListener(() => {});
 
 SplashScreen.preventAutoHideAsync();
+
+const queryClient = new QueryClient();
 
 const App: React.FC = () => {
   const [fontsLoaded] = useFonts({
@@ -32,13 +35,24 @@ const App: React.FC = () => {
   if (!fontsLoaded) return null;
 
   return (
-    <SafeAreaProvider onLayout={onLayoutRootView}>
-      <GestureHandlerRootView style={fill}>
-        <BottomSheetModalProvider>
-          <RootStack />
-        </BottomSheetModalProvider>
-      </GestureHandlerRootView>
-    </SafeAreaProvider>
+    <RecoilRoot>
+      <QueryClientProvider client={queryClient}>
+        <KeyboardAvoidingView
+          style={fill}
+          behavior={Platform.select({ ios: "padding", android: "height" })}
+        >
+          <GestureHandlerRootView style={fill}>
+            <BottomSheetModalProvider>
+              <OverlayProvider>
+                <SafeAreaProvider onLayout={onLayoutRootView}>
+                  <RootStack />
+                </SafeAreaProvider>
+              </OverlayProvider>
+            </BottomSheetModalProvider>
+          </GestureHandlerRootView>
+        </KeyboardAvoidingView>
+      </QueryClientProvider>
+    </RecoilRoot>
   );
 };
 

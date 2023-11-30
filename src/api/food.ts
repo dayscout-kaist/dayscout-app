@@ -1,40 +1,37 @@
 import { apiClient } from "@/lib/axios";
 
-import type { FoodContentOptional, FoodInfo } from "@/types/food";
+import type { FoodDetail } from "@/types/food";
+import { AxiosError } from "axios";
 
-export const searchByText = async (query: string): Promise<FoodInfo[]> => {
-  const res = await apiClient.get<FoodInfo[]>("/food/search", {
-    params: { query },
+export const searchByText = async (query: string) => {
+  try {
+    const res = await apiClient.get<FoodDetail[]>("/food/search/byText", {
+      params: { text: query },
+    });
+
+    return res.data;
+  } catch (e) {
+    if (e instanceof AxiosError && e.status === 404) return [];
+    throw e;
+  }
+};
+
+export const searchByBarcode = async (code: number) => {
+  const res = await apiClient.get<FoodDetail>("/food/search/byBarcode", {
+    params: { barcode_number: code },
   });
 
   return res.data;
 };
 
-export const searchByBarcode = async (
-  code: number,
-): Promise<{
-  name: string;
-}> => {
-  const res = await apiClient.get<{ name: string }>("/food/search/barcode", {
-    params: { code },
+export const getFoodDetail = async (foodId: number) => {
+  const res = await apiClient.get<FoodDetail>("/food/detail", {
+    params: { id: foodId },
   });
 
   return res.data;
 };
 
-export const searchByImage = async (
-  localImageUri: string,
-): Promise<FoodContentOptional> => {
-  const formData = new FormData();
-  formData.append("file", {
-    uri: localImageUri,
-    name: "image.jpg",
-    type: "image/jpeg",
-  } as any);
-
-  const res = await apiClient.post<FoodContentOptional>("/food/ocr", formData, {
-    headers: { "Content-Type": "multipart/form-data" },
-  });
-
-  return res.data;
+export const editFood = async () => {
+  const res = await apiClient.post<true>("/food/edit");
 };

@@ -1,16 +1,16 @@
-import React, { useRef, useState } from "react";
-import { ScrollView, View, Text } from "react-native";
+import React, { useState } from "react";
+import { ScrollView, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
-import { BottomButton, BottomSheet } from "@/components";
-import { column, fill, gap, text } from "@/styles";
-import type { ProductWithDetails } from "@/types/product";
+import { Button, ScreenBackground } from "@/components";
+import { useFoodDetail } from "@/hooks/useFoodDetail";
+import { RootStackScreenProps } from "@/navigation/types";
+import { column, gap, text } from "@/styles";
 
 import { BasicInfo } from "./BasicInfo";
-import { Post } from "./Post";
 import { NutritionFacts } from "./NutritionFacts";
-import { ServingSizeRow } from "./NutritionFacts/ServingSizeRow";
+import { Post } from "./Post";
+import { useSelectBottomSheet } from "@/utils/useSelectBottomSheet";
 
 interface ServingSize {
   key: number;
@@ -23,41 +23,33 @@ const servingSizes: ServingSize[] = [
   { key: 2, text: "1회 제공량당" },
 ];
 
-export const FoodDetail: React.FC = () => {
-  const [servingSize, setServingSize] = useState<ServingSize>(servingSizes[0]);
-  const bottomSheetRef = useRef<BottomSheetModal>(null);
+export const FoodDetail: React.FC<RootStackScreenProps<"FoodDetail">> = ({
+  route: {
+    params: { foodId },
+  },
+}) => {
+  const { data: food, isLoading } = useFoodDetail(foodId);
 
   const navigation = useNavigation();
 
-  const data: ProductWithDetails = {
-    id: 100581350,
-    name: "데자와 로얄 밀크티 500ml",
-    imageSrc:
-      "https://sparcs-newara-dev.s3.amazonaws.com/files/snowsuno-in-90s.png",
-    barcodeNumber: 8801097481206,
-    largeCategory: "가공식품",
-    mediumCategory: "차류",
-    smallCategory: "차음료",
-    xSmallCategory: "기타차음료",
-    displayName: "데자와 로얄 밀크티",
-    nutrients: {
-      carbohydrate: 19,
-      protein: 1,
-      fat: 1.5,
-      sugar: 17,
-      energy: 95,
-    },
-    totalWeight: 500,
-  };
+  const [selectedServingSize, setSelectedServingSize] = useState("100g당");
+
+  const { open } = useSelectBottomSheet({
+    title: "영양성분 기준",
+    options: ["100g당", "총 내용량당", "1회 제공량당"],
+    selected: selectedServingSize,
+  });
+
+  if (!food) return null;
 
   return (
-    <View style={fill}>
+    <ScreenBackground>
       <ScrollView>
         <View style={[column, gap(12)]}>
           <BasicInfo
-            name={data.displayName}
-            category={data.smallCategory}
-            imgSrc={data.imageSrc}
+            name={food.content.representName || ""}
+            category={food.content.className || ""}
+            imgSrc={food.imageSrc || ""}
             tags={[
               { title: "추정치", bg: "#ffe5c3", txt: "#ff980f" },
               { title: "1,000회 이상 추가됨", bg: "#fdbec1", txt: "#eb2a2a" },
@@ -68,40 +60,25 @@ export const FoodDetail: React.FC = () => {
             count={7}
             avatarSrc="https://sparcs-newara-dev.s3.amazonaws.com/files/NewAra_Channeltalk.jpg"
             review="맛은 있는데 혈당이 많이 올라요 어쩌구 저쩌구 개발 보름 남았다 파이팅~ 라이라이 차차차 라이 차차차"
-            onPress={() => navigation.navigate("FoodReview")}
+            onPress={() => navigation.navigate("FoodReview", { foodId })}
           />
           <NutritionFacts
             tag={{ title: "유통식품", bg: "#a40fff40", txt: "#a40fff" }}
-            nutrients={data.nutrients}
-            servingSize={servingSize.text}
+            nutrients={food.content.nutrients}
+            servingSize={selectedServingSize}
             onServingSizePress={() => {
-              // TODO: Resolve double tab issue
-              bottomSheetRef.current?.present();
-              bottomSheetRef.current?.expand();
+              open().then(setSelectedServingSize);
             }}
           />
           <View style={{ height: 192 }} />
         </View>
       </ScrollView>
-      <BottomButton
+      <Button
         title="영양성분 계산하기"
         onPress={() => navigation.navigate("FoodCalculate")}
         style="primary"
+        stick="bottom"
       />
-      <BottomSheet ref={bottomSheetRef}>
-        <Text style={[text.h3, text.gray600]}>영양성분 기준</Text>
-        {servingSizes.map(serve => (
-          <ServingSizeRow
-            key={serve.key}
-            value={serve.text}
-            onPress={() => {
-              setServingSize(serve);
-              bottomSheetRef.current?.close();
-            }}
-            selected={serve.key === servingSize.key}
-          />
-        ))}
-      </BottomSheet>
-    </View>
+    </ScreenBackground>
   );
 };
