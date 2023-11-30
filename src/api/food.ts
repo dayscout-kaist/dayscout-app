@@ -1,17 +1,23 @@
 import { apiClient } from "@/lib/axios";
 
-import type { FoodContentOptional, FoodDetail, FoodInfo } from "@/types/food";
+import type { FoodDetail } from "@/types/food";
+import { AxiosError } from "axios";
 
 export const searchByText = async (query: string) => {
-  const res = await apiClient.get<FoodDetail[]>("/food/search/text", {
-    params: { text: query },
-  });
+  try {
+    const res = await apiClient.get<FoodDetail[]>("/food/search/byText", {
+      params: { text: query },
+    });
 
-  return res.data;
+    return res.data;
+  } catch (e) {
+    if (e instanceof AxiosError && e.status === 404) return [];
+    throw e;
+  }
 };
 
 export const searchByBarcode = async (code: number) => {
-  const res = await apiClient.get<FoodDetail>("/food/search/barcode", {
+  const res = await apiClient.get<FoodDetail>("/food/search/byBarcode", {
     params: { barcode_number: code },
   });
 
@@ -20,7 +26,7 @@ export const searchByBarcode = async (code: number) => {
 
 export const getFoodDetail = async (foodId: number) => {
   const res = await apiClient.get<FoodDetail>("/food/detail", {
-    params: { food_id: foodId },
+    params: { id: foodId },
   });
 
   return res.data;

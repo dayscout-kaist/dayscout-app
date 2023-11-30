@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { Animated } from "react-native"; // Temp fix to suppress Animated warning
+import { Animated, KeyboardAvoidingView, Platform } from "react-native"; // Temp fix to suppress Animated warning
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useFonts } from "expo-font";
@@ -9,6 +9,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { RootStack } from "@/navigation/RootStack";
 import { fill } from "@/styles";
+import { OverlayProvider } from "@toss/use-overlay";
 
 const av = new Animated.Value(0);
 av.addListener(() => {});
@@ -34,13 +35,20 @@ const App: React.FC = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <SafeAreaProvider onLayout={onLayoutRootView}>
+      <KeyboardAvoidingView
+        style={fill}
+        behavior={Platform.select({ ios: "padding", android: "height" })}
+      >
         <GestureHandlerRootView style={fill}>
           <BottomSheetModalProvider>
-            <RootStack />
+            <OverlayProvider>
+              <SafeAreaProvider onLayout={onLayoutRootView}>
+                <RootStack />
+              </SafeAreaProvider>
+            </OverlayProvider>
           </BottomSheetModalProvider>
         </GestureHandlerRootView>
-      </SafeAreaProvider>
+      </KeyboardAvoidingView>
     </QueryClientProvider>
   );
 };

@@ -22,14 +22,17 @@ import {
   align,
   justify,
   round,
+  fill,
+  h,
 } from "@/styles";
 import type { ProductWithDetails } from "@/types/product";
 
 import { FreqFood } from "./FreqFood";
-import { LatestFood } from "./LatestFood";
+import { HomeTabScreenProps } from "@/navigation/types";
+import { Clickable } from "@/components";
+import { ActionCard } from "@/screens/Home/ActionCard";
 
-export const Home: React.FC = () => {
-  const navigation = useNavigation();
+export const Home: React.FC<HomeTabScreenProps<"Home">> = ({ navigation }) => {
   const data: ProductWithDetails = {
     id: 100581350,
     name: "데자와",
@@ -53,109 +56,77 @@ export const Home: React.FC = () => {
   };
 
   return (
-    <View style={[column, padding.horizontal(safe.horizontal), gap(16)]}>
-      <Text style={[text.h1, margin.top(48)]}>DAYSCOUT</Text>
+    <ScrollView
+      style={[column, bg.gray50, padding.horizontal(safe.horizontal), gap(16)]}
+    >
+      <View style={[padding.vertical(36)]}>
+        <Text style={[text.gray600, text.h2, { lineHeight: 26 * 1.4 }]}>
+          <Text style={text.primary}>권순호</Text>님 안녕하세요 👋{"\n"}오늘은
+          어떤 음식을 드셨나요?
+        </Text>
+      </View>
 
-      <View style={[row, align.center]}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("HomeTab", { screen: "Search" })}
+      >
         <View
           style={[
-            bg.gray200,
-            { flex: 1 },
-            { height: 40 },
+            bg.gray100,
+            fill,
+            h(46),
             row,
             align.center,
-            round.md,
-            padding.horizontal(8),
+            round.lg,
+            padding.horizontal(12),
+            gap(12),
           ]}
         >
-          <TouchableOpacity
-            onPress={() => navigation.navigate("HomeTab", { screen: "Search" })}
-          >
-            <Icon.search width={30} height={30} fill={colors.gray400} />
-          </TouchableOpacity>
-          <Text style={[text.body1, margin.left(8)]}>
+          <Icon.search width={20} height={20} fill={colors.gray400} />
+          <Text style={[text.body1, text.gray400]}>
             음식 영양성분을 검색해보세요
           </Text>
         </View>
-      </View>
+      </TouchableOpacity>
 
-      <ScrollView>
-        <View style={[row, align.center, justify.between]}>
-          <TouchableWithoutFeedback
-            onPress={() => navigation.navigate("Camera")}
-          >
-            <View
-              style={[
-                column,
-                bg.white,
-                round.lg,
-                { width: 150 },
-                { height: 150 },
-              ]}
-            >
-              <View style={[padding.horizontal(8), margin.top(8)]}>
-                <Text style={[text.sub1]}>카메라로 검색</Text>
-                <Text style={[text.body2]}>바코드, 영양성분표를</Text>
-                <Text style={[text.body2]}>찍어보세요</Text>
-              </View>
-              <View style={[align.end, margin.top(20), margin.right(8)]}>
-                <Icon.camera width={50} height={50} fill={colors.primary} />
-              </View>
-            </View>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback
-            onPress={() => navigation.navigate("HomeTab", { screen: "Posts" })}
-          >
-            <View
-              style={[
-                column,
-                bg.white,
-                round.lg,
-                { width: 150 },
-                { height: 150 },
-              ]}
-            >
-              <View style={[padding.horizontal(8), margin.top(8)]}>
-                <Text style={[text.sub1]}>포스트 추가</Text>
-                <Text style={[text.body2]}>이 음식은 혈당에</Text>
-                <Text style={[text.body2]}>어떤 영향을 줬나요?</Text>
-              </View>
-              <View style={[align.end, margin.top(20), margin.right(8)]}>
-                <Icon.sticker width={50} height={50} fill={colors.primary} />
-              </View>
-            </View>
-          </TouchableWithoutFeedback>
-        </View>
-        <View>
-          <Text style={[text.sub1, padding.vertical(8)]}>최근에 먹은 음식</Text>
-        </View>
-        <ScrollView horizontal={true}>
-          <LatestFood imageSrc={data.imageSrc} name={data.name} />
-          <LatestFood imageSrc={data.imageSrc} name={data.name} />
-          <LatestFood imageSrc={data.imageSrc} name={data.name} />
-          <LatestFood imageSrc={data.imageSrc} name={data.name} />
-        </ScrollView>
-        <View>
-          <Text style={[text.sub1, padding.vertical(8)]}>자주 찾아본 음식</Text>
-        </View>
-        <View style={[column, gap(12)]}>
-          <FreqFood
-            imageSrc={data.imageSrc}
-            name={data.name}
-            nutrients={data.nutrients}
-          />
-          <FreqFood
-            imageSrc={data.imageSrc}
-            name={data.name}
-            nutrients={data.nutrients}
-          />
-          <FreqFood
-            imageSrc={data.imageSrc}
-            name={data.name}
-            nutrients={data.nutrients}
-          />
-        </View>
-      </ScrollView>
-    </View>
+      <View style={[row, gap(18), padding.top(16)]}>
+        <ActionCard sub="유통 식품" title={"바코드로\n찾아보기"} icon="📷" />
+        <ActionCard sub="먹은 음식" title={"직접\n입력하기"} icon="🍔" />
+      </View>
+      {/*<View>*/}
+      {/*  <Text style={[text.sub1, padding.vertical(8)]}>최근에 먹은 음식</Text>*/}
+      {/*</View>*/}
+      {/*<ScrollView horizontal={true}>*/}
+      {/*  <LatestFood imageSrc={data.imageSrc} name={data.name} />*/}
+      {/*  <LatestFood imageSrc={data.imageSrc} name={data.name} />*/}
+      {/*  <LatestFood imageSrc={data.imageSrc} name={data.name} />*/}
+      {/*  <LatestFood imageSrc={data.imageSrc} name={data.name} />*/}
+      {/*</ScrollView>*/}
+      {/*<View>*/}
+      {/*  <Text style={[text.sub1, padding.vertical(8)]}>자주 찾아본 음식</Text>*/}
+      {/*</View>*/}
+      {/*<View style={[column, gap(12)]}>*/}
+      {/*  <FreqFood*/}
+      {/*    imageSrc={data.imageSrc}*/}
+      {/*    name={data.name}*/}
+      {/*    carb={data.nutrients.carbohydrate}*/}
+      {/*    protein={data.nutrients.protein}*/}
+      {/*    fat={data.nutrients.fat}*/}
+      {/*  />*/}
+      {/*  <FreqFood*/}
+      {/*    imageSrc={data.imageSrc}*/}
+      {/*    name={data.name}*/}
+      {/*    carb={data.nutrients.carbohydrate}*/}
+      {/*    protein={data.nutrients.protein}*/}
+      {/*    fat={data.nutrients.fat}*/}
+      {/*  />*/}
+      {/*  <FreqFood*/}
+      {/*    imageSrc={data.imageSrc}*/}
+      {/*    name={data.name}*/}
+      {/*    carb={data.nutrients.carbohydrate}*/}
+      {/*    protein={data.nutrients.protein}*/}
+      {/*    fat={data.nutrients.fat}*/}
+      {/*  />*/}
+      {/*</View>*/}
+    </ScrollView>
   );
 };
