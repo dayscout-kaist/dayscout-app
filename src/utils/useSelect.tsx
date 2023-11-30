@@ -8,17 +8,18 @@ import { OptionRow } from "@/components/BottomSheet";
 interface Props<T extends string> {
   title: string;
   options: T[];
-  selected: T | null;
+  initial: T | null;
 }
 
-export const useSelectBottomSheet = <T extends string>({
+export const useSelect = <T extends string>({
   title,
   options,
-  selected,
+  initial,
 }: Props<T>) => {
   const overlay = useOverlay();
+  const [selected, setSelected] = React.useState<T | null>(initial);
 
-  const open = useCallback(
+  const openBottomSheet = useCallback(
     () =>
       new Promise<T>(resolve =>
         overlay.open(({ isOpen, close }) => (
@@ -50,5 +51,10 @@ export const useSelectBottomSheet = <T extends string>({
     [title, options, selected, overlay],
   );
 
-  return { open };
+  const open = useCallback(
+    () => openBottomSheet().then(setSelected),
+    [openBottomSheet, setSelected],
+  );
+
+  return { open, selected };
 };

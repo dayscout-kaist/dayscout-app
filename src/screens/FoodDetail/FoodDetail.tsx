@@ -10,7 +10,7 @@ import { column, gap, text } from "@/styles";
 import { BasicInfo } from "./BasicInfo";
 import { NutritionFacts } from "./NutritionFacts";
 import { Post } from "./Post";
-import { useSelectBottomSheet } from "@/utils/useSelectBottomSheet";
+import { useSelect } from "@/utils/useSelect";
 
 interface ServingSize {
   key: number;
@@ -32,12 +32,10 @@ export const FoodDetail: React.FC<RootStackScreenProps<"FoodDetail">> = ({
 
   const navigation = useNavigation();
 
-  const [selectedServingSize, setSelectedServingSize] = useState("100g당");
-
-  const { open } = useSelectBottomSheet({
+  const { open, selected } = useSelect({
     title: "영양성분 기준",
     options: ["100g당", "총 내용량당", "1회 제공량당"],
-    selected: selectedServingSize,
+    initial: "100g당",
   });
 
   if (!food) return null;
@@ -68,10 +66,8 @@ export const FoodDetail: React.FC<RootStackScreenProps<"FoodDetail">> = ({
           <NutritionFacts
             tag={{ title: "유통식품", bg: "#a40fff40", txt: "#a40fff" }}
             nutrients={food.content.nutrients}
-            servingSize={selectedServingSize}
-            onServingSizePress={() => {
-              open().then(setSelectedServingSize);
-            }}
+            servingSize={selected || "100g당"}
+            onServingSizePress={open}
           />
           <View style={{ height: 192 }} />
         </View>
