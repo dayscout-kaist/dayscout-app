@@ -1,10 +1,9 @@
 import { apiClient } from "@/lib/axios";
 
-import type { FoodDetail } from "@/types/food";
-import { AxiosError } from "axios";
+import type { Food, FoodDetail } from "@/types/food";
 
 export const searchByText = async (query: string) => {
-  const res = await apiClient.get<FoodDetail[]>("/food/search/byText", {
+  const res = await apiClient.get<Food[]>("/food/search/byText", {
     params: { text: query },
   });
 

@@ -1,5 +1,6 @@
 // import type { Unit } from "@/types/unit";
 import type { Optional } from "@/utils/types";
+import * as stream from "stream";
 
 export interface Nutrients {
   carbohydrate?: number;
@@ -9,40 +10,7 @@ export interface Nutrients {
   energy?: number;
 }
 
-/**
- * @deprecated
- */
-export interface FoodContent {
-  totalWeight: number;
-  unit: Unit; // DB에서 가져오는 경우에는 항상 AbsoluteUnit
-  primaryUnit: "g" | "ml";
-  nutrients: {
-    energy?: number;
-    carbohydrate?: number;
-    protein?: number;
-    fat?: number;
-    sugar?: number;
-  };
-}
-
-/**
- * @deprecated
- */
-export type FoodContentOptional = Optional<
-  FoodContent,
-  "totalWeight" | "unit" | "primaryUnit"
->;
-
-/**
- * @deprecated
- */
-export interface FoodInfo {
-  name: string;
-  category: string;
-  manufacturer: string;
-  content: FoodContent;
-}
-
+export type FoodType = "general" | "distribution";
 export type Unit = "absolute" | "total" | "single";
 
 export interface BaseFoodContent {
@@ -70,13 +38,26 @@ export interface TagInfo {
   id: number;
   name: string;
   colorBackground?: string;
+  /**
+   * @deprecated
+   */
   colorBorder?: string;
+}
+
+export interface Food {
+  id: number;
+  name: string;
+  representName: string;
+  className: string;
+  type: FoodType;
+  tag: TagInfo[];
+  imageSrc?: string;
 }
 
 export interface FoodDetail {
   id: number;
   name: string;
-  tag?: TagInfo[];
+  tag: TagInfo[];
   content: GeneralFoodContent | DistributionFoodContent;
   imageSrc?: string;
 }
