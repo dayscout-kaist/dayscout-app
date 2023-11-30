@@ -10,43 +10,18 @@ import {
 
 import { bg, fill, inline, text } from "@/styles";
 import { HomeTabScreenProps } from "@/navigation/types";
+import { useScrollHeader } from "@/hooks/useScrollHeader";
 
 export const Posts: React.FC<HomeTabScreenProps<"Posts">> = ({
   navigation,
 }) => {
-  const yOffset = useRef(new Animated.Value(0)).current;
-  const headerOpacity = yOffset.interpolate({
-    inputRange: [0, 50],
-    outputRange: [0, 1],
-    extrapolate: "clamp",
-  });
-
-  const fullHeight = Dimensions.get("window").height;
-
-  useEffect(() => {
-    navigation.setOptions({
-      headerStyle: {
-        opacity: headerOpacity,
-      },
-    });
-  }, [headerOpacity, navigation]);
+  const scroll = useScrollHeader();
+  const { height: fullHeight } = Dimensions.get("window");
 
   return (
     <Animated.ScrollView // TODO: Componentize
-      onScroll={Animated.event(
-        [
-          {
-            nativeEvent: {
-              contentOffset: {
-                y: yOffset,
-              },
-            },
-          },
-        ],
-        { useNativeDriver: true },
-      )}
-      scrollEventThrottle={16}
       style={[bg.gray50, fill]}
+      {...scroll}
     >
       <View
         style={[
