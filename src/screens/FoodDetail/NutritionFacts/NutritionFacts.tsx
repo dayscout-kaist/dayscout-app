@@ -21,9 +21,10 @@ import { NutrientRow } from "./NutrientRow";
 export const NutritionFacts: React.FC<{
   tag: { title: string; bg: ColorValue; txt: ColorValue };
   nutrients: Nutrients;
+  suggestions?: Nutrients;
   servingSize: string;
   onServingSizePress: () => void;
-}> = ({ tag, nutrients, servingSize, onServingSizePress }) => (
+}> = ({ tag, nutrients, suggestions, servingSize, onServingSizePress }) => (
   <View style={[padding.top(20), bg.white]}>
     <View style={[gap(13), padding.horizontal(safe.horizontal)]}>
       <View style={gap(8)}>
@@ -54,12 +55,27 @@ export const NutritionFacts: React.FC<{
           <Icon.down width={28} height={28} fill={colors.gray400} />
         </TouchableOpacity>
         <View style={gap(12)}>
-          <View style={gap(6)}>
-            <NutrientRow name="탄수화물" value={nutrients.carbohydrate} />
-            <NutrientRow name="   당류" value={nutrients.sugar} />
-          </View>
-          <NutrientRow name="단백질" value={nutrients.protein} />
-          <NutrientRow name="지방" value={nutrients.fat} />
+          <NutrientRow
+            name="탄수화물"
+            value={nutrients.carbohydrate}
+            suggestion={suggestions?.carbohydrate}
+          />
+          <NutrientRow
+            sub
+            name="당류"
+            value={nutrients.sugar}
+            suggestion={suggestions?.sugar}
+          />
+          <NutrientRow
+            name="단백질"
+            value={nutrients.protein}
+            suggestion={suggestions?.protein}
+          />
+          <NutrientRow
+            name="지방"
+            value={nutrients.fat}
+            suggestion={suggestions?.fat}
+          />
         </View>
       </View>
       <View style={[bg.gray50, { height: 1 }]} />

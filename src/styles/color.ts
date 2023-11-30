@@ -10,6 +10,8 @@ export const colors = {
   gray500: "#6d6d6d",
   gray600: "#444444",
   red400: "#f83535",
+  warning: "#FF5050",
+  warningTrans: "#FF505033",
 } as const;
 
 export type ColorKeys = keyof typeof colors;
