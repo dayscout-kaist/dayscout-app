@@ -1,6 +1,6 @@
 import { useOverlay } from "@toss/use-overlay";
 import React, { type ReactNode, useCallback } from "react";
-import { BottomSheet } from "@/components";
+import { BottomSheet } from "@/components/BottomSheet";
 import { padding, safe, text } from "@/styles";
 import { Text } from "react-native";
 
