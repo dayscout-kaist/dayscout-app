@@ -1,7 +1,7 @@
 import React from "react";
-import { type ColorValue, Text, TouchableOpacity, View } from "react-native";
+import { type ColorValue, Text, View } from "react-native";
 
-import { ActionBox, Tag } from "@/components";
+import { ActionBox, Clickable, Tag } from "@/components";
 import { Icon } from "@/icons";
 import {
   align,
@@ -47,8 +47,8 @@ export const NutritionFacts: React.FC<{
         </Text>
       </View>
       <View style={gap(12)}>
-        <TouchableOpacity
-          style={[
+        <Clickable
+          viewStyle={[
             row,
             align.center,
             round.md,
@@ -61,7 +61,7 @@ export const NutritionFacts: React.FC<{
         >
           <Text style={[text.btn2, text.gray400]}>{servingSize}</Text>
           <Icon.down width={28} height={28} fill={colors.gray400} />
-        </TouchableOpacity>
+        </Clickable>
         <View style={gap(12)}>
           <NutrientRow
             name="탄수화물"
