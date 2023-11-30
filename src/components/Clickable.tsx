@@ -1,11 +1,11 @@
 import React from "react";
 import { Motion } from "@legendapp/motion";
 import { bg, springMotion } from "@/styles";
-import type { ViewStyle } from "react-native";
+import type { StyleProp, ViewStyle } from "react-native";
 
 interface Props extends React.ComponentProps<typeof Motion.Pressable> {
   children: React.ReactNode;
-  viewStyle?: ViewStyle;
+  viewStyle?: StyleProp<ViewStyle>;
 }
 
 export const Clickable: React.FC<Props> = ({
