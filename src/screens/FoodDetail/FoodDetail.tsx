@@ -169,7 +169,7 @@ export const FoodDetail: React.FC<RootStackScreenProps<"FoodDetail">> = ({
         title="영양성분 계산하기"
         onPress={async () => {
           if (food.content.suggestedNutrients) await suggestionFeedback();
-          navigation.navigate("FoodCalculate");
+          navigation.navigate("FoodCalculate", { food });
         }}
         variant="primary"
         stick="bottom"

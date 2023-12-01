@@ -6,6 +6,7 @@ import type {
 import type { StackScreenProps } from "@react-navigation/stack";
 
 import type { GenderTxt } from "@/types/auth";
+import { FoodDetail } from "@/types/food";
 
 export type AuthStackParamList = {
   Landing: undefined;
@@ -31,7 +32,7 @@ export type RootStackParamList = {
   EditProfile: undefined;
   FoodReview: { foodId: number };
   AddReview: undefined;
-  FoodCalculate: undefined;
+  FoodCalculate: { food: FoodDetail } | undefined;
   Help: undefined;
 };
 
