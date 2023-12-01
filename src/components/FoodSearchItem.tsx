@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { ImageBackground, Text, View, Animated } from "react-native";
 import { Motion } from "@legendapp/motion";
 
@@ -10,16 +10,18 @@ import {
   fill,
   gap,
   h,
+  margin,
   padding,
   round,
   row,
   text,
   w,
 } from "@/styles";
-import type { TagInfo } from "@/types/food";
+import type { FoodType, TagInfo } from "@/types/food";
 
 import { Clickable } from "./Clickable";
 import { Tag } from "./Tag";
+import { Tags } from "@/components/Tags";
 
 interface Props {
   onPress?: () => void;
@@ -27,10 +29,22 @@ interface Props {
   tags: TagInfo[];
   name: string;
   category: string;
+  type: FoodType;
 }
 
-const Item: React.FC<Props> = ({ onPress, imageSrc, tags, name, category }) => (
-  <Clickable onPress={onPress} viewStyle={round.lg}>
+const Item: React.FC<Props> = ({
+  onPress,
+  imageSrc,
+  tags,
+  name,
+  category,
+  type,
+}) => (
+  <Clickable
+    onPress={onPress}
+    style={margin.horizontal(-12)}
+    viewStyle={round.md}
+  >
     <View style={[row, gap(12), align.center, padding(12)]}>
       <View
         style={[
@@ -56,16 +70,7 @@ const Item: React.FC<Props> = ({ onPress, imageSrc, tags, name, category }) => (
         </ImageBackground>
       </View>
       <View style={[column, gap(6), fill]}>
-        <View style={[row, gap(8)]}>
-          {tags.map(tag => (
-            <Tag
-              key={tag.id}
-              name={tag.name}
-              color={tag.colorBorder}
-              bgColor={tag.colorBackground}
-            />
-          ))}
-        </View>
+        <Tags tags={tags} type={type} />
         <View style={[row, gap(8), { alignItems: "center" }]}>
           <Text
             style={[text.sub2, text.gray600, { flexShrink: 1 }]}
@@ -88,25 +93,38 @@ const Item: React.FC<Props> = ({ onPress, imageSrc, tags, name, category }) => (
 const Skeleton: React.FC = React.memo(() => {
   const blink = useBlink();
 
-  return randomArray(5, { min: 100, max: 200 }).map((value, index) => (
-    <Motion.View
-      key={index}
-      style={[row, gap(12), align.center, padding(12)]}
-      {...blink}
-    >
-      <Motion.View style={[h(56), w(56), round.md, bg.gray100]} />
-      <View style={[column, gap(6), fill]}>
-        <View style={[row, gap(8)]}>
-          {randomArray(2, { min: 30, max: 60 }).map((value, index) => (
-            <View key={index} style={[h(26), w(value), bg.gray100, round.sm]} />
-          ))}
+  return useMemo(() => randomArray(5, { min: 100, max: 200 }), []).map(
+    (value, index) => (
+      <Motion.View
+        key={index}
+        style={[
+          row,
+          gap(12),
+          align.center,
+          padding(12),
+          margin.horizontal(-12),
+        ]}
+        {...blink}
+      >
+        <Motion.View style={[h(56), w(56), round.md, bg.gray100]} />
+        <View style={[column, gap(6), fill]}>
+          <View style={[row, gap(8)]}>
+            {useMemo(() => randomArray(2, { min: 30, max: 60 }), []).map(
+              (value, index) => (
+                <View
+                  key={index}
+                  style={[h(26), w(value), bg.gray100, round.sm]}
+                />
+              ),
+            )}
+          </View>
+          <View style={[row, gap(8), { alignItems: "center" }]}>
+            <View style={[h(24), w(value), bg.gray100, round.sm]} />
+          </View>
         </View>
-        <View style={[row, gap(8), { alignItems: "center" }]}>
-          <View style={[h(24), w(value), bg.gray100, round.sm]} />
-        </View>
-      </View>
-    </Motion.View>
-  ));
+      </Motion.View>
+    ),
+  );
 });
 
 const randomArray = (length: number, scope: { min: number; max: number }) =>

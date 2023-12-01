@@ -16,6 +16,7 @@ import {
   text,
   bg,
   column,
+  margin,
 } from "@/styles";
 import { TossFace } from "@/utils/TossFace";
 
@@ -28,7 +29,13 @@ export const ActionBox: React.FC<{
   onPress: () => void;
 }> = ({ icon, main, desc, onPress }) => {
   return (
-    <View style={[padding.vertical(10), padding.horizontal(12)]}>
+    <View
+      style={[
+        padding.vertical(10),
+        padding.horizontal(12),
+        margin.horizontal(-24),
+      ]}
+    >
       <Clickable onPress={onPress} viewStyle={round.md}>
         <Animated.View
           style={[

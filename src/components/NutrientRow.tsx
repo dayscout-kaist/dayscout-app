@@ -29,7 +29,9 @@ export const NutrientRow: React.FC<{
         {name}
       </Text>
       <Text style={[text.body1, suggestion ? text.gray300 : text.gray600]}>
-        {value !== undefined ? `${value}g` : "정보 없음"}
+        {value !== undefined
+          ? `${parseFloat(value.toFixed(2))} g`
+          : "정보 없음"}
         {suggestion && " → "}
         {suggestion && <Text style={text.warning}>{suggestion}g</Text>}
       </Text>

@@ -1,19 +1,14 @@
 import { apiClient } from "@/lib/axios";
 
-import type { FoodDetail } from "@/types/food";
-import { AxiosError } from "axios";
+import type { Food, FoodDetail } from "@/types/food";
 
 export const searchByText = async (query: string) => {
-  try {
-    const res = await apiClient.get<FoodDetail[]>("/food/search/byText", {
-      params: { text: query },
-    });
+  const res = await apiClient.get<Food[]>("/food/search/byText", {
+    params: { text: query },
+  });
 
-    return res.data;
-  } catch (e) {
-    if (e instanceof AxiosError && e.status === 404) return [];
-    throw e;
-  }
+  if (res.data.length === 0) throw new Error("No results found");
+  return res.data;
 };
 
 export const searchByBarcode = async (barcode: number) => {

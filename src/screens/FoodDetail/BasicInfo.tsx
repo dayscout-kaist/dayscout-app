@@ -7,16 +7,18 @@ import {
   View,
 } from "react-native";
 
-import { Tag } from "@/components";
+import { Tag, Tags } from "@/components";
 import { align, bg, gap, h, padding, row, safe, text } from "@/styles";
+import { FoodType, TagInfo } from "@/types/food";
 
 export const BasicInfo: React.FC<{
   name: string;
   category: string;
+  type: FoodType;
   imgSrc: string;
-  tags: { title: string; bg: ColorValue; txt: ColorValue }[];
+  tags: TagInfo[];
   description: string;
-}> = ({ name, category, imgSrc, tags, description }) => {
+}> = ({ name, category, imgSrc, tags, description, type }) => {
   return (
     <View style={[bg.white]}>
       <ImageBackground
@@ -36,19 +38,12 @@ export const BasicInfo: React.FC<{
         ]}
       >
         <View style={[gap(8)]}>
-          <View style={[row, gap(8)]}>
-            {/*{tags.map(({ title, bg, txt }) => (*/}
-            {/*  <Tag key={title} bgClr={bg} txtClr={txt}>*/}
-            {/*    {title}*/}
-            {/*  </Tag>*/}
-            {/*))}*/}
-          </View>
-          <View style={[row, align.baseline, gap(8)]}>
+          <Tags tags={tags} type={type} />
+          <View style={[align.baseline, gap(8)]}>
             <Text style={[text.h2, text.gray600]}>{name}</Text>
             <Text style={[text.sub1, text.gray300]}>{category}</Text>
           </View>
         </View>
-        <Text style={[text.body2, text.gray300]}>{description}</Text>
       </View>
     </View>
   );
