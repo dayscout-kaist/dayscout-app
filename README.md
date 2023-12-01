@@ -111,7 +111,7 @@ yarn start
 
 ### **배포**
 
-- **서버:** SPARCS에서 제공하는 운영적인 물리서버 사용.
+- **서버:** SPARCS에서 운영중인 물리서버 사용.
 - **앱 배포:** 스토어에는 배포하지 않고, apk 형태로 Android만 배포
 
 ### **협업 및 커뮤니케이션**
@@ -120,13 +120,12 @@ yarn start
 - **코드 리뷰:** PR에 대한 코드 리뷰 및 동료의 승인 후 메인 브랜치에 머지.
 - **슬랙 통합:** PR이 발생할 때마다 Slack을 통해 팀에 알림.
 - **Daily Sync-Up:** Slack에서 'Daily Sync-Up' 채널을 통해 팀원들이 매일 진행한 작업을 공유.
+- **Notion**: https://www.notion.so/tech4impact/1-43baff771cb446e8a8fa347e1a564529?pvs=4
 
 ## **연관 프로젝트**
 
 **App**: https://github.com/dayscout-kaist/dayscout-app
 
 **Server**: https://github.com/dayscout-kaist/dayscout-server
-
-**Notion**: https://www.notion.so/tech4impact/1-43baff771cb446e8a8fa347e1a564529?pvs=4
 
 **Figma**: https://www.figma.com/file/71wz4p6TslN9U1ZsVL3Qgb/Dayscout-app?type=design&node-id=1940%3A3909&mode=design&t=VlOnTfgnHv63Gs9N-1
