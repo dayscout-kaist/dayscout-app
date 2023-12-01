@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 
 export const useCurrentWeek = () => {
-  const today = new Date();
+  const today = new Date(new Date().setHours(0, 0, 0, 0));
 
   return {
     today,

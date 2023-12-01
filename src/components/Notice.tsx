@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View } from "react-native";
 
-import { bg, center, fill, h, justify, margin, text } from "@/styles";
+import { bg, center, fill, h, justify, text } from "@/styles";
 import { TossFace } from "@/utils/TossFace";
 
 export const Notice: React.FC<{ icon: string; msg: string }> = ({

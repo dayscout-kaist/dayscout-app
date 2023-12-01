@@ -10,6 +10,7 @@ import type {
   RootStackParamList,
 } from "@/navigation/types";
 import {
+  AddPost,
   AddReview,
   BarcodeSearch,
   Camera,
@@ -18,8 +19,8 @@ import {
   FoodCalculate,
   FoodDetail,
   FoodReview,
-  Help,
   Greet,
+  Help,
   Inbody,
   Landing,
   Nickname,
@@ -101,6 +102,11 @@ export const RootStack: React.FC = () => {
             />
             <Stack.Screen name="EditProfile" component={EditProfile} />
             <Stack.Screen name="FoodReview" component={FoodReview} />
+            <Stack.Screen
+              name="AddPost"
+              component={AddPost}
+              options={{ title: "" }}
+            />
             <Stack.Screen name="AddReview" component={AddReview} />
             <Stack.Screen
               name="FoodCalculate"
