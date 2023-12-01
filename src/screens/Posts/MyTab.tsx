@@ -12,6 +12,7 @@ import {
   fill,
   gap,
   h,
+  inline,
   margin,
   padding,
   round,
@@ -81,7 +82,7 @@ export const MyTab: React.FC = () => {
       </View>
       <View style={[fill, margin.bottom(60 + insets.bottom)]}>
         <View style={[gap(16)]}>
-          <View style={bg.white}>
+          <View style={[bg.white, inline]}>
             <ActionBox
               icon="🍞"
               main="더 먹은 음식이 있나요?"

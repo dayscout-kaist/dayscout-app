@@ -30,32 +30,61 @@ import type { ProductWithDetails } from "@/types/product";
 import { HomeTabScreenProps } from "@/navigation/types";
 import { ActionCard } from "@/screens/Home/ActionCard";
 import { StatusBar } from "expo-status-bar";
-import { Clickable } from "@/components";
+import { Clickable, Notice } from "@/components";
 import { useUserInfo } from "@/hooks/useUserInfo";
+import { PostItem } from "@/screens/Posts/PostItem";
+import { usePosts } from "@/hooks";
+import { formatDate8Digits } from "@/utils/format";
 
-export const Home: React.FC<HomeTabScreenProps<"Home">> = ({ navigation }) => {
-  const data: ProductWithDetails = {
-    id: 100581350,
+const data = [
+  {
     name: "데자와",
-    imageSrc:
-      "https://sparcs-newara-dev.s3.amazonaws.com/files/NewAra_Channeltalk.jpg",
-    barcodeNumber: 8801097481206,
-    largeCategory: "가공식품",
-    mediumCategory: "차류",
-    smallCategory: "차음료",
-    xSmallCategory: "기타차음료",
-    displayName: "데자와 로얄 밀크티",
-    nutrients: {
-      carbohydrate: 19,
-      protein: 1,
-      fat: 1.5,
-      sugar: 17,
-      energy: 95,
-    },
-    totalWeight: 500,
-  };
-
+    intake: 100,
+    date: "2023-11-30T16:48:47.984017+09:00",
+    img: "https://sparcs-newara-dev.s3.amazonaws.com/files/NewAra_Channeltalk.jpg",
+    msg: null,
+  },
+  {
+    name: "초코파이",
+    intake: 240,
+    date: "2023-11-30T09:09:47.984017+09:00",
+    img: "https://sparcs-newara-dev.s3.amazonaws.com/files/NewAra_Channeltalk.jpg",
+    msg: "짧은 포스트 메시지",
+  },
+  {
+    name: "견과류",
+    intake: 30,
+    date: "2023-11-30T00:49:47.984017+09:00",
+    img: "https://sparcs-newara-dev.s3.amazonaws.com/files/NewAra_Channeltalk.jpg",
+    msg: "길고 길다란 길고 길다란 길고 길다란 포스트 메시지",
+  },
+  {
+    name: "데자와",
+    intake: 100,
+    date: "2023-11-30T16:48:47.984017+09:00",
+    img: "https://sparcs-newara-dev.s3.amazonaws.com/files/NewAra_Channeltalk.jpg",
+    msg: null,
+  },
+  {
+    name: "초코파이",
+    intake: 240,
+    date: "2023-11-30T09:09:47.984017+09:00",
+    img: "https://sparcs-newara-dev.s3.amazonaws.com/files/NewAra_Channeltalk.jpg",
+    msg: "짧은 포스트 메시지",
+  },
+  {
+    name: "견과류",
+    intake: 30,
+    date: "2023-11-30T00:49:47.984017+09:00",
+    img: "https://sparcs-newara-dev.s3.amazonaws.com/files/NewAra_Channeltalk.jpg",
+    msg: "길고 길다란 길고 길다란 길고 길다란 포스트 메시지",
+  },
+];
+export const Home: React.FC<HomeTabScreenProps<"Home">> = ({ navigation }) => {
   const { data: userInfo } = useUserInfo();
+  const { data: posts } = usePosts(
+    formatDate8Digits(new Date(new Date().setHours(0, 0, 0, 0))),
+  );
 
   return (
     <ScrollView
@@ -102,41 +131,36 @@ export const Home: React.FC<HomeTabScreenProps<"Home">> = ({ navigation }) => {
         />
         <ActionCard sub="먹은 음식" title={"직접\n입력하기"} icon="🍔" />
       </View>
-      {/*<View>*/}
-      {/*  <Text style={[text.sub1, padding.vertical(8)]}>최근에 먹은 음식</Text>*/}
-      {/*</View>*/}
-      {/*<ScrollView horizontal={true}>*/}
-      {/*  <LatestFood imageSrc={data.imageSrc} name={data.name} />*/}
-      {/*  <LatestFood imageSrc={data.imageSrc} name={data.name} />*/}
-      {/*  <LatestFood imageSrc={data.imageSrc} name={data.name} />*/}
-      {/*  <LatestFood imageSrc={data.imageSrc} name={data.name} />*/}
-      {/*</ScrollView>*/}
-      {/*<View>*/}
-      {/*  <Text style={[text.sub1, padding.vertical(8)]}>자주 찾아본 음식</Text>*/}
-      {/*</View>*/}
-      {/*<View style={[column, gap(12)]}>*/}
-      {/*  <FreqFood*/}
-      {/*    imageSrc={data.imageSrc}*/}
-      {/*    name={data.name}*/}
-      {/*    carb={data.nutrients.carbohydrate}*/}
-      {/*    protein={data.nutrients.protein}*/}
-      {/*    fat={data.nutrients.fat}*/}
-      {/*  />*/}
-      {/*  <FreqFood*/}
-      {/*    imageSrc={data.imageSrc}*/}
-      {/*    name={data.name}*/}
-      {/*    carb={data.nutrients.carbohydrate}*/}
-      {/*    protein={data.nutrients.protein}*/}
-      {/*    fat={data.nutrients.fat}*/}
-      {/*  />*/}
-      {/*  <FreqFood*/}
-      {/*    imageSrc={data.imageSrc}*/}
-      {/*    name={data.name}*/}
-      {/*    carb={data.nutrients.carbohydrate}*/}
-      {/*    protein={data.nutrients.protein}*/}
-      {/*    fat={data.nutrients.fat}*/}
-      {/*  />*/}
-      {/*</View>*/}
+      <View style={[margin.top(24)]}>
+        <Text style={[text.h3, text.gray600, margin.bottom(12)]}>
+          오늘 먹은 음식
+        </Text>
+
+        <View
+          style={[
+            bg.white,
+            round.lg,
+            padding.vertical(24),
+            padding.horizontal(18),
+            gap(8),
+          ]}
+        >
+          {posts && posts?.length > 0 ? (
+            posts.map((el, idx) => (
+              <PostItem
+                key={idx}
+                idx={idx + 1}
+                post={el}
+                onPress={() => {
+                  navigation.navigate("AddPost", { post: el });
+                }}
+              />
+            ))
+          ) : (
+            <Notice icon="🔎" msg="오늘의 첫 음식을 기록해 보세요!" />
+          )}
+        </View>
+      </View>
     </ScrollView>
   );
 };

@@ -95,7 +95,7 @@ export const Search: React.FC<HomeTabScreenProps<"Search">> = ({
             main="바코드가 있는 식품이라면"
             desc="카메라로 스캔하기"
             icon="📷"
-            onPress={() => {}}
+            onPress={() => navigation.navigate("BarcodeSearch")}
           />
         </View>
       )}

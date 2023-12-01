@@ -12,6 +12,7 @@ import {
   bg,
   colors,
   fill,
+  gap,
   h,
   justify,
   margin,
@@ -57,14 +58,17 @@ export const EnterContent: React.FC<Props> = ({
       >
         <View style={[row, justify.between, align.center, padding(12)]}>
           <Text style={[text.h3, text.gray600]}>음식 정보</Text>
-          <Motion.View animate={{ rotate: expanded ? "0deg" : "-90deg" }}>
-            <Icon.down_wide fill={colors.gray500} width={30} height={30} />
-          </Motion.View>
+          <View style={[row, align.center, gap(12)]}>
+            <Text style={[text.sub2, text.gray300]}>{foodName}</Text>
+            <Motion.View animate={{ rotate: expanded ? "0deg" : "-90deg" }}>
+              <Icon.down_wide fill={colors.gray300} width={30} height={30} />
+            </Motion.View>
+          </View>
         </View>
       </Clickable>
       <Motion.View
         style={[{ overflow: "hidden" }]}
-        animate={{ height: expanded ? 450 : 0 }}
+        animate={{ height: expanded ? 360 : 0 }}
       >
         {editing ? (
           <View />

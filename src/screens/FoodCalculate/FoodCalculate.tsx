@@ -14,7 +14,7 @@ import { RootStackScreenProps } from "@/navigation/types";
 import { Nutrients } from "@/types/food";
 
 import { EnterContent } from "./EnterContent";
-import { useTextInput } from "@/hooks";
+import { useDialog, useTextInput } from "@/hooks";
 
 export const FoodCalculate: React.FC<RootStackScreenProps<"FoodCalculate">> = ({
   navigation,
@@ -28,6 +28,19 @@ export const FoodCalculate: React.FC<RootStackScreenProps<"FoodCalculate">> = ({
 
   const intake = useTextInput();
   const amount = parseFloat(intake.value);
+
+  const open = useDialog({
+    title: "음식 기록이 완료되었어요",
+    contents: (
+      <View style={[padding.vertical(12)]}>
+        <Text style={[text.body2, text.gray400]}>
+          1시간 뒤 혈당 포스트 기록 알림을 보내드릴까요?
+        </Text>
+      </View>
+    ),
+    confirm: "받을게요",
+    cancel: "안 받을래요",
+  });
 
   return (
     <View style={fill}>
@@ -44,7 +57,7 @@ export const FoodCalculate: React.FC<RootStackScreenProps<"FoodCalculate">> = ({
         <Section>
           <View style={[gap(16), padding.bottom(18)]}>
             <Text style={[text.h3, text.gray600]}>섭취량 입력하기</Text>
-            <NutrientInput input={intake} />
+            <NutrientInput input={intake} placeholder="섭취량을 입력하세요" />
             <View style={[w("fill"), row, gap(8)]}>
               <SmallButton title="반의 반" style={fill} />
               <SmallButton title="반" style={fill} />
@@ -64,7 +77,9 @@ export const FoodCalculate: React.FC<RootStackScreenProps<"FoodCalculate">> = ({
       </ScrollView>
       <Button
         title="나의 기록에 추가하기"
-        onPress={() => navigation.navigate("FoodCalculate")}
+        onPress={() =>
+          open().then(() => navigation.navigate("HomeTab", { screen: "Posts" }))
+        }
         variant="primary"
         stick="bottom"
       />
