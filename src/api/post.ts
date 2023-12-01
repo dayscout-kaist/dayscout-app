@@ -26,3 +26,11 @@ export const getPostsByDate = async (
     intake: intakes[idx],
   }));
 };
+
+export const getPostsByFoodId = async (foodId: number): Promise<PostRes[]> => {
+  const res = await apiClient.get<PostRes[]>("/review/search/byFoodId", {
+    params: { id: foodId },
+  });
+
+  return res.data;
+};

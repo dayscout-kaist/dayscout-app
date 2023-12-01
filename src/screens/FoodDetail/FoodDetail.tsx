@@ -120,9 +120,11 @@ export const FoodDetail: React.FC<RootStackScreenProps<"FoodDetail">> = ({
           />
           <Post
             count={7}
-            avatarSrc="https://sparcs-newara-dev.s3.amazonaws.com/files/NewAra_Channeltalk.jpg"
-            review="맛은 있는데 혈당이 많이 올라요 어쩌구 저쩌구 개발 보름 남았다 파이팅~ 라이라이 차차차 라이 차차차"
-            onPress={() => navigation.navigate("FoodReview", { foodId })}
+            avatarSrc="https://sparcs-newara-dev.s3.amazonaws.com/files/dayscout-profile.png"
+            review="맛은 있는데 혈당이 많이 올라요."
+            onPress={() =>
+              navigation.navigate("FoodReview", { foodId, foodName: food.name })
+            }
           />
           <Section>
             <View style={[gap(8)]}>

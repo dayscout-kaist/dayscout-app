@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ScrollView, Text, TextInput, View } from "react-native";
 
 import { Button, Clickable } from "@/components";
@@ -19,14 +19,18 @@ import {
   text,
 } from "@/styles";
 import { formatDate } from "@/utils/format";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const AddPost: React.FC<RootStackScreenProps<"AddPost">> = ({
+  navigation,
   route: {
     params: { post },
   },
 }) => {
   const isKeyboardVisible = useKeyboardVisibile();
   const { data: allTags } = useTags();
+
+  const queryClient = useQueryClient();
 
   return (
     <View style={fill}>
@@ -71,28 +75,49 @@ export const AddPost: React.FC<RootStackScreenProps<"AddPost">> = ({
             ]}
           >
             {allTags?.map(({ id, name, colorBackground: color }) => (
-              <Clickable key={id} viewStyle={round.md}>
-                <View
-                  style={[
-                    center,
-                    h(33),
-                    padding.horizontal(15),
-                    { backgroundColor: color + "33" },
-                  ]}
-                >
-                  <Text style={[text.sub1, { color }]}>{name}</Text>
-                </View>
-              </Clickable>
+              <ClickableTag key={id} name={name} color={color} />
             ))}
           </View>
         </View>
       </ScrollView>
       <Button
         title="저장"
-        onPress={() => {}}
+        onPress={async () => {
+          await queryClient.invalidateQueries({
+            queryKey: ["postDate"],
+          });
+          navigation.navigate("HomeTab", { screen: "Posts" });
+        }}
         variant="primary"
         stick={isKeyboardVisible ? "keyboard" : "bottom"}
       />
     </View>
+  );
+};
+
+const ClickableTag: React.FC<{ name: string; color: string }> = ({
+  name,
+  color: activeColor,
+}) => {
+  const [selected, setSelected] = useState(false);
+
+  const color = selected ? activeColor : colors.gray300;
+
+  return (
+    <Clickable
+      viewStyle={round.md}
+      onPress={() => setSelected(selected => !selected)}
+    >
+      <View
+        style={[
+          center,
+          h(33),
+          padding.horizontal(15),
+          { backgroundColor: color + "33" },
+        ]}
+      >
+        <Text style={[text.sub1, { color }]}>{name}</Text>
+      </View>
+    </Clickable>
   );
 };

@@ -31,7 +31,7 @@ export type RootStackParamList = {
   BarcodeSearch: undefined;
   FoodDetail: { foodId: number };
   EditProfile: undefined;
-  FoodReview: { foodId: number };
+  FoodReview: { foodId: number; foodName: string };
   AddPost: { post: Post };
   AddReview: undefined;
   FoodCalculate: { food: FoodDetail } | undefined;

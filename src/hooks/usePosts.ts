@@ -10,7 +10,7 @@ export const usePosts = (date: string) => {
   const token = useRecoilValue(tokenState);
 
   return useQuery({
-    queryKey: ["postDate", date],
+    queryKey: ["postDate"],
     queryFn: () => getPostsByDate(date, token ?? ""),
   });
 };
