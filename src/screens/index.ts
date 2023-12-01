@@ -1,3 +1,4 @@
+export * from "./AddPost";
 export * from "./AddReview";
 export * from "./Auth";
 export * from "./BarcodeSearch";

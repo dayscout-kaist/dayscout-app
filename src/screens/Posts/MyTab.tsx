@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useNavigation } from "@react-navigation/native";
 
-import { ActionBox } from "@/components";
-import { useCurrentWeek } from "@/hooks";
+import { ActionBox, Clickable, Notice } from "@/components";
+import { useCurrentWeek, usePosts } from "@/hooks";
 import {
   bg,
   center,
@@ -19,58 +19,20 @@ import {
   safe,
   text,
 } from "@/styles";
+import { formatDate8Digits } from "@/utils/format";
 
 import { PostItem } from "./PostItem";
 
-const data = [
-  {
-    name: "데자와",
-    intake: 100,
-    date: "2023-11-30T16:48:47.984017+09:00",
-    img: "https://sparcs-newara-dev.s3.amazonaws.com/files/NewAra_Channeltalk.jpg",
-    msg: null,
-  },
-  {
-    name: "초코파이",
-    intake: 240,
-    date: "2023-11-30T09:09:47.984017+09:00",
-    img: "https://sparcs-newara-dev.s3.amazonaws.com/files/NewAra_Channeltalk.jpg",
-    msg: "짧은 포스트 메시지",
-  },
-  {
-    name: "견과류",
-    intake: 30,
-    date: "2023-11-30T00:49:47.984017+09:00",
-    img: "https://sparcs-newara-dev.s3.amazonaws.com/files/NewAra_Channeltalk.jpg",
-    msg: "길고 길다란 길고 길다란 길고 길다란 포스트 메시지",
-  },
-  {
-    name: "데자와",
-    intake: 100,
-    date: "2023-11-30T16:48:47.984017+09:00",
-    img: "https://sparcs-newara-dev.s3.amazonaws.com/files/NewAra_Channeltalk.jpg",
-    msg: null,
-  },
-  {
-    name: "초코파이",
-    intake: 240,
-    date: "2023-11-30T09:09:47.984017+09:00",
-    img: "https://sparcs-newara-dev.s3.amazonaws.com/files/NewAra_Channeltalk.jpg",
-    msg: "짧은 포스트 메시지",
-  },
-  {
-    name: "견과류",
-    intake: 30,
-    date: "2023-11-30T00:49:47.984017+09:00",
-    img: "https://sparcs-newara-dev.s3.amazonaws.com/files/NewAra_Channeltalk.jpg",
-    msg: "길고 길다란 길고 길다란 길고 길다란 포스트 메시지",
-  },
-];
-
 export const MyTab: React.FC = () => {
+  const [selectedDate, setSelectedDate] = useState<Date>(
+    new Date(new Date().setHours(0, 0, 0, 0)),
+  );
+
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
   const { today, weekdays } = useCurrentWeek();
+
+  const { data: posts } = usePosts(formatDate8Digits(selectedDate));
 
   return (
     <View style={fill}>
@@ -85,33 +47,40 @@ export const MyTab: React.FC = () => {
         ]}
       >
         {weekdays.map(date => (
-          <View
-            key={date.getTime()}
-            style={[
-              fill,
-              center,
-              round.md,
-              h(40),
-              date.getTime() === today.getTime() ? bg.primary : bg.gray50,
-            ]}
+          <Clickable
+            style={[fill]}
+            viewStyle={[round.md]}
+            onPress={() => setSelectedDate(date)}
           >
-            <Text
+            <View
+              key={date.getTime()}
               style={[
-                text.sub2,
-                date < today
-                  ? text.gray500
-                  : date > today
-                    ? text.gray300
-                    : text.white,
+                fill,
+                center,
+                h(40),
+                date.getTime() === selectedDate.getTime()
+                  ? bg.primary
+                  : bg.gray50,
               ]}
             >
-              {date.getDate()}
-            </Text>
-          </View>
+              <Text
+                style={[
+                  text.sub2,
+                  formatDate8Digits(selectedDate) === formatDate8Digits(date)
+                    ? text.white
+                    : date > today
+                      ? text.gray300
+                      : text.gray500,
+                ]}
+              >
+                {date.getDate()}
+              </Text>
+            </View>
+          </Clickable>
         ))}
       </View>
-      <View style={margin.bottom(60 + insets.bottom)}>
-        <View style={gap(16)}>
+      <View style={[fill, margin.bottom(60 + insets.bottom)]}>
+        <View style={[gap(16)]}>
           <View style={bg.white}>
             <ActionBox
               icon="🍞"
@@ -128,9 +97,20 @@ export const MyTab: React.FC = () => {
               bg.white,
             ]}
           >
-            {data.map((el, idx) => (
-              <PostItem key={idx} idx={idx + 1} {...el} onPress={() => {}} />
-            ))}
+            {posts && posts?.length > 0 ? (
+              posts.map((el, idx) => (
+                <PostItem
+                  key={idx}
+                  idx={idx + 1}
+                  post={el}
+                  onPress={() => {
+                    navigation.navigate("AddPost", { post: el });
+                  }}
+                />
+              ))
+            ) : (
+              <Notice icon="🔎" msg="오늘의 첫 음식을 기록해 보세요!" />
+            )}
           </View>
         </View>
       </View>
