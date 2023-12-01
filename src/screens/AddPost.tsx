@@ -20,23 +20,22 @@ import {
 } from "@/styles";
 import { formatDate } from "@/utils/format";
 
-export const AddPost: React.FC<RootStackScreenProps<"AddPost">> = () => {
+export const AddPost: React.FC<RootStackScreenProps<"AddPost">> = ({
+  route: {
+    params: { post },
+  },
+}) => {
   const isKeyboardVisible = useKeyboardVisibile();
   const { data: allTags } = useTags();
-
-  const name = "덴마크 초코초코 우유";
-  const intake = 100;
-  const date = "2023-11-30T16:48:47.984017+09:00";
-  const msg = "";
 
   return (
     <View style={fill}>
       <ScrollView>
         <View style={padding.horizontal(safe.horizontal)}>
           <View style={[gap(8), margin.bottom(32), padding.top(24)]}>
-            <Text style={[text.h2, text.gray600]}>{name}</Text>
+            <Text style={[text.h2, text.gray600]}>{post.name}</Text>
             <Text style={[text.body1, text.gray400]}>
-              {intake}g ∙ {formatDate(date)}
+              {post.intake}g ∙ {formatDate(post.createdAt)}
             </Text>
           </View>
           <TextInput
