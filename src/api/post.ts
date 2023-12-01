@@ -1,6 +1,16 @@
 import { apiClient } from "@/lib/axios";
 import type { Post, PostRes } from "@/types/post";
 
+const names = [
+  "데자와",
+  "우리밀 호박약과",
+  "제주말차 초코 밀크티",
+  "프로틴 쉐이크 카카오",
+  "브리에뜨 둘세 데 레체",
+] as const;
+
+const intakes = [120, 30, 230, 240, 180] as const;
+
 export const getPostsByDate = async (
   date: string,
   token: string,
@@ -10,5 +20,9 @@ export const getPostsByDate = async (
     token,
   });
 
-  return res.data.map(el => ({ ...el, name: "식품명", intake: 420 }));
+  return res.data.map((el, idx) => ({
+    ...el,
+    name: names[idx],
+    intake: intakes[idx],
+  }));
 };

@@ -48,12 +48,12 @@ export const MyTab: React.FC = () => {
       >
         {weekdays.map(date => (
           <Clickable
+            key={date.getTime()}
             style={[fill]}
             viewStyle={[round.md]}
             onPress={() => setSelectedDate(date)}
           >
             <View
-              key={date.getTime()}
               style={[
                 fill,
                 center,
@@ -100,7 +100,7 @@ export const MyTab: React.FC = () => {
             {posts && posts?.length > 0 ? (
               posts.map((el, idx) => (
                 <PostItem
-                  key={idx}
+                  key={el.id}
                   idx={idx + 1}
                   post={el}
                   onPress={() => {
