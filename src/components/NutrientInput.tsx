@@ -36,14 +36,16 @@ const unitRatios = {
 type Unit = keyof typeof unitRatios;
 
 interface Props {
+  input: {
+    value: string;
+    onChangeText: (value: string) => void;
+  };
   placeholder?: string;
 }
 
-export const NutrientInput: React.FC<Props> = ({ placeholder = "" }) => {
+export const NutrientInput: React.FC<Props> = ({ input, placeholder = "" }) => {
   const [showKeyboard, setShowKeyboard] = useState(false);
   const [selectedUnit, setSelectedUnit] = useState<Unit>("g");
-
-  const input = useTextInput();
 
   const value = useMemo(
     () =>

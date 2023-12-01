@@ -1,7 +1,6 @@
 import React from "react";
 import {
   type GestureResponderEvent,
-  TouchableOpacity,
   Text,
   ViewStyle,
   View,

@@ -13,6 +13,7 @@ import {
   round,
   inline,
   align,
+  safe,
 } from "@/styles";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Icon } from "@/icons";
@@ -21,7 +22,7 @@ import { HomeTabScreenProps } from "@/navigation/types";
 import { useTextInput } from "@/hooks";
 import { useFoodSearch } from "@/hooks/useFoodSearch";
 import { TagInfo } from "@/types/food";
-import { ActionBox } from "@/components";
+import { ActionBox, Notice } from "@/components";
 
 const staticTags: TagInfo[] = [
   { id: 0, name: "추정치" },
@@ -75,6 +76,7 @@ export const Search: React.FC<HomeTabScreenProps<"Search">> = ({
   navigation,
 }) => {
   const searchQuery = useTextInput();
+  const insets = useSafeAreaInsets();
 
   const { data, error, isLoading, isFetching } = useFoodSearch(
     searchQuery.value,
@@ -87,33 +89,38 @@ export const Search: React.FC<HomeTabScreenProps<"Search">> = ({
   return (
     <View style={[bg.white, fill]}>
       <SearchBarHeader input={searchQuery} />
-      {!searchQuery.value && (
-        <ActionBox
-          main="바코드가 있는 식품이라면"
-          desc="카메라로 스캔하기"
-          icon="📷"
-          onPress={() => {}}
-        />
+      {!isLoading && !data && !error && (
+        <View style={inline}>
+          <ActionBox
+            main="바코드가 있는 식품이라면"
+            desc="카메라로 스캔하기"
+            icon="📷"
+            onPress={() => {}}
+          />
+        </View>
       )}
-      <ScrollView style={[padding.horizontal(12), margin.top(15)]}>
-        {error && <Text>{error.name}</Text>}
-        {searchQuery.value && !data && <FoodSearchItem.Skeleton />}
+      <ScrollView
+        contentContainerStyle={[
+          { flexGrow: 1 },
+          padding.bottom(60 + insets.bottom),
+        ]}
+        style={[margin.top(15), inline]}
+      >
+        {error && <Notice icon="🔍" msg="음식을 찾을 수 없어요" />}
+        {isLoading && <FoodSearchItem.Skeleton />}
         {data &&
-          (data.length > 0 ? (
-            data.map(food => (
-              <FoodSearchItem
-                key={food.id}
-                onPress={() =>
-                  navigation.navigate("FoodDetail", { foodId: food.id })
-                }
-                imageSrc={food.imageSrc}
-                tags={staticTags}
-                name={food.name}
-                category={food.content?.className || ""}
-              />
-            ))
-          ) : (
-            <Text>검색 결과가 없습니다.</Text>
+          data.map(food => (
+            <FoodSearchItem
+              key={food.id}
+              onPress={() =>
+                navigation.navigate("FoodDetail", { foodId: food.id })
+              }
+              imageSrc={food.imageSrc}
+              tags={food.tag}
+              name={food.name}
+              category={food.className || ""}
+              type={food.type}
+            />
           ))}
       </ScrollView>
     </View>

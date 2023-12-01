@@ -35,4 +35,4 @@ export const safe = {
   bottom: 34,
 } as const satisfies Record<string, DimensionValue>;
 
-export const inline: FlexStyle = { paddingHorizontal: 24 };
+export const inline = padding.horizontal(safe.horizontal);
