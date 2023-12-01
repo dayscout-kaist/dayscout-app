@@ -116,7 +116,7 @@ yarn start
 ### **배포**
 
 - **서버:** SPARCS에서 운영중인 물리서버 사용.
-- **앱 배포:** 스토어에는 배포하지 않고, apk 형태로 Android만 배포
+- **앱 배포:** 스토어에는 배포하지 못했고, 아이폰에서 expo go 앱을 설치해 exp://app.dayscout.sparcsandbox.com 에서 테스트 가능.
 
 ### **협업 및 커뮤니케이션**
 
