@@ -92,6 +92,20 @@ cp .env.example .env.local
 yarn start
 ```
 
+### Deployment
+
+To deploy the app, you need to install [EAS CLI](https://docs.expo.io/build/introduction/#installing-the-eas-cli).
+
+```bash
+npm install -g eas-cli
+```
+
+Deploy to preview branch.
+
+```bash
+yarn deploy:preview
+```
+
 ## **개발 환경**
 
 ### **앱 개발**
